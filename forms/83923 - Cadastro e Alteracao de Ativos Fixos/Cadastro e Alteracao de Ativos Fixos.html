@@ -1,0 +1,716 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/portal/resources/style-guide/css/fluig-style-guide.min.css"/>			
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+		<script type="text/javascript" src="/portal/resources/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>						
+		<script src="http://style.fluig.com/js/fluig-style-guide.min.js"></script>
+		<script src="js/radiocustom.js"></script>			
+		<script src="js/Fornecedores_SAP_1.js"></script>
+		<script src="js/Fornecedores_SAP_2.js"></script>
+		<script src="js/Main.js"></script>
+		<script src="js/Required.js"></script>
+		<script src="js/radiocustom.js"></script>
+		<script src="js/Anexar_Arquivos.js"></script>
+		<link href="css/radiocustom.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="fluig-style-guide">
+			<form name="form" role="form">
+				<!--Painel Informacoes do Solicitante-->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title fs-txt-center">Dados Solicitante</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="form-group col-sm-4">
+								<label class="control-label">Solicitante:</label>
+								<input class="form-control" type="text" id="inputSolicitante" name="inputSolicitante" readonly/>
+							</div>
+							<div class="form-group col-sm-6" id="divEmpresa">
+								<label for="selectEmpresa" class="control-label">Empresa:</label>
+								<select class="form-control" name="selectEmpresa" id="selectEmpresa">
+									<option value=""></option>
+									<option value="B001">B001 - GS INIMA BRASIL LTDA.</option>
+									<option value="B002">B002 - AMBIENT SERVICOS AMBIENTAIS DE RIBEIRAO PRETO S.A.</option>
+									<option value="B003">B003 - SESAMM - SERVIÇOS DE SANEAMENTO DE MOGI MIRIM S.A.</option>
+									<option value="B004">B004 - ARAUCÁRIA SANEAMENTO S.A.</option>
+									<option value="B005">B005 - SANEVAP - SANEAMENTO DO VALE DO PARAIBA S.A.</option>
+									<option value="B006">B006 - SANAMA - SANEAMENTO ALTA MACEIO S.A.</option>
+									<option value="B007">B007 - CAEPA - COMPANHIA DE AGUA E ESGOTO DE PARAIBUNA S.A.</option>
+									<option value="B008">B008 - COMPANHIA AGUAS DE SANTA RITA S.A.</option>
+									<option value="B009">B009 - SAMAR - SOLUÇÕES AMBIENTAIS DE ARAÇATUBA S.A.</option>
+									<option value="B010">B010 - GS INIMA INDUSTRIAL S.A.</option>
+									<option value="B011">B011 - GS INIMA SOLUÇÕES EM SANEAMENTO</option>
+									<option value="B012">B012 - PALMEIRAS SANEAMENTO</option>
+									<option value="B013">B013 - SANEOURO - OURO PRETO SERVICOS DE SANEAMENTO S.A.</option>
+									<option value="B014">B014 - GS INIMA INDUSTRIAL JECEABA S.A.</option>
+									<option value="B015">B015 - AQUAPOLO AMBIENTAL S.A.</option>
+									<option value="B016">B016 - GS INIMA INDUSTRIAL TRIUNFO S.A.</option>
+									<option value="B017">B017 - SANEL SANEAMENTO DE LUIZ ANTONIO S.A.</option>
+									<option value="B701">B701 - CONSORCIO CONSTRUTOR ALTA MACEIO</option>
+									<!--<option value="BJ02">BJ02 - CONSORCIO CONSTRUTOR VALE DO PARAIBA</option>-->
+								</select>
+							</div>
+							<div class="form-group col-sm-2">
+								<label class="control-label">Data da Solicitação</label>
+								<input class="form-control" type="text" id="inputDataSolicitacao" name="inputDataSolicitacao" readonly/>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="display: none;">
+						<label class="control-label">Atv</label>
+						<input class="form-control" type="text" id="inputHiddenAtividade" name="inputHiddenAtividade"/>
+						<label class="control-label">CC</label>
+						<input class="form-control" type="text" id="inputHiddenCC" name="inputHiddenCC"/>
+						<label class="control-label">Email</label>
+						<input class="form-control" type="text" id="inputHiddenEmail" name="inputHiddenEmail"/>
+						<label class="control-label">CountLines</label>
+						<input class="form-control" type="text" id="inputCountLines" name="inputCountLines"/>
+						<label class="control-label">AqCountChar</label>
+						<input class="form-control" type="text" id="inputAqCountChar" name="inputAqCountChar"/>
+						<label class="control-label">baixaCountChar</label>
+						<input class="form-control" type="text" id="inputbaixaCountChar" name="inputbaixaCountChar"/>
+						<label class="control-label">transfCountChar</label>
+						<input class="form-control" type="text" id="inputtransfCountChar" name="inputtransfCountChar"/>
+						<label class="control-label">vendaCountChar</label>
+						<input class="form-control" type="text" id="inputvendaCountChar" name="inputvendaCountChar"/>
+						<label class="control-label">doacaoCountChar</label>
+						<input class="form-control" type="text" id="inputdoacaoCountChar" name="inputdoacaoCountChar"/>
+					</div>
+				</div>
+				<!--Fim Painel Informacoes do Solicitante-->
+
+				<div class="panel">
+					<div class="panel-body">
+						<!--Painel NavBar-->
+						<ul class="nav nav-tabs" role="tablist">
+							<li id="Orientacoes" name="Orientacoes" class="tab-pane fade in active"><a id="aOrientacoes" href="#divOrientacoes" role="tab" data-toggle="tab">Orientações</a></li>
+							<li id="Aquisicao" name="Aquisicao"><a id="aAquisicao" href="#divAquisicao" role="tab" data-toggle="tab">Aquisição</a></li>
+							<li id="Baixa" name="Baixa"><a id="aBaixa" href="#divBaixa" role="tab" data-toggle="tab">Baixa</a></li>
+							<li id="Transferencia" name="Transferencia"><a id="aTransferencia" href="#divTransferencia" role="tab" data-toggle="tab">Transferência</a></li>
+							<li id="Venda" name="Venda"><a id="aVenda" href="#divVenda" role="tab" data-toggle="tab">Venda</a></li>
+							<li id="Doacao" name="Doacao"><a id="aDoacao" href="#divDoacao" role="tab" data-toggle="tab">Doação</a></li>
+						</ul>
+						<!--Fim Painel NavBar-->
+	
+						<div class="tab-content">
+							<!--Painel Orientações-->
+							<div class="tab-pane fade in active" id="divOrientacoes">
+								<div class="panel panel-default col-sm-2">
+									<div id="divOperacao">
+										<label for="selectOperacao" class="control-label">Operação</label>
+										<select class="form-control" id="selectOperacao" name="selectOperacao">
+											<option value=""></option>
+											<option value="Novo Ativo">Novo Ativo</option>				                    
+											<option value="Novo Ativo Baixa">Novo Ativo + Baixa</option>
+											<option value="Baixa">Baixa</option>
+											<option value="Transferencia">Transferência</option>
+											<option value="Doacao">Doação</option>
+											<option value="Venda">Venda</option>
+										</select>
+									</div>
+								</div>
+								<div class="panel panel-default orientacoes col-sm-6" style="background-color: #fff40066; border-left: 1px solid black;">
+									<div>
+										<p><b><u>Quando solicitar cadastro de ativo:</u></b></p>									
+										<p>- Para materiais ou serviços com maior que R$1.200,00 e/ou se a durabilidade for superior a um ano.</p>
+										<p>- Porém caso o material possuir o valor menor que R$1.200,00, mas durabilidade superior a um ano, por gentileza consultar a área de patrimônio para confirmar se será necessário solicitar a criação de um ativo.</p>
+										<p>- Se o serviço prestado para montagem/instalação do ativo também incorporar um ativo.</p>
+										<br/>
+										<p><b><u>Orientação para opções de operação:</u></b></p>									
+										<p><b>Melhoria:</b> É um ativo que já existe, mas necessita de outro recurso para melhora.</p>
+										<p><b>Ampliação:</b> Uma sala, estação, prédio existente que é ampliado.</p>
+										<p><b>SubItem:</b> Mesmo que seja somente um material, mas a quantidade seja maior que 1, colocar um subitem(uma linha) para cadaum. Ex.: 3 Suportes de Notebook; Colocar três linhas de suporte de notebook, cada linha com 1 unidade. Para serviço, avaliar se pode ser colocado em uma linha, ou pedir auxílio do contábil.</p>
+										<p><b>Centro de Lucro:</b> O centro de lucro é o início do número de elemento PEP. Ex.: Elemento PEP OWB300100.03.40.00.0 o centro de lucro será OWB300100 (O número inicial do elemento PEP até o primeiro ponto.</p>
+									</div>
+								</div>
+							</div>
+							<!--Fim Painel Orientações-->
+	
+							<!--Painel Aquisições-->
+							<div class="tab-pane fade" id="divAquisicao">			    	
+								<div class="row">
+									<div class="form-group col-sm-4" id="divTipoAquisicao">
+										<label for="selectAquisicaoTipo" class="control-label">Tipo de Aquisição</label>
+										<select class="form-control" id="selectAquisicaoTipo" name="selectAquisicaoTipo">
+											<option value=""></option>
+											<option value="Nova">Nova Aquisição</option>				                    
+											<option value="Ampliacao">Ampliação</option>
+											<option value="Melhoria">Melhoria</option>
+											<option value="Subitem">SubItem</option>									
+										</select>
+									</div>
+									<!--div class="col-sm-2" id="divAquisicaoCodItemPrinc" >
+									<label class="control-label">Código Material</label>
+									<input class="form-control" type="text" id="inputAquisicaoCodItemPrinc" name="inputAquisicaoCodItemPrinc" mask="00000000"/>
+									</div-->								                
+									<div class="form-group col-sm-4" id="divAquisicaoCodigoAtivo">
+										<label class="control-label">Código do Ativo</label>
+										<input class="form-control" type="text" id="inputAquisicaoCodigoAtivo" name="inputAquisicaoCodigoAtivo" mask="000000000000"/>
+									</div>
+									<div class="form-group col-sm-4" id="divAquisicaoNrSubPrincipal">
+										<label class="control-label">Sub Nº</label>
+										<input class="form-control" type="text" id="inputAquisicaoNrSubPrincipal" name="inputAquisicaoNrSubPrincipal" mask="000"/>
+									</div>														
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-2" id="divAquisicaoQtd">
+										<label class="control-label">Qtd.</label>
+										<input class="form-control" type="text" id="inputAquisicaoQtd" name="inputAquisicaoQtd"/>
+									</div>
+									<div class="form-group col-sm-2" id="divAquisicaoCodigoItem">
+										<label class="control-label">Código Material</label>
+										<input class="form-control" type="text" id="inputAquisicaoCodigoItem" name="inputAquisicaoCodigoItem" mask="00000000"/>
+									</div>
+									<div class="form-group col-sm-4" id="divAquisicaoLocalizacao">
+										<label class="control-label">Localização</label>
+										<input class="form-control bs-docs-popover-hover" type="text" id="inputAquisicaoLocalizacao" name="inputAquisicaoLocalizacao" data-toggle="popover" title="" data-content="Departamento, local de instalação que não seja empresa ou cidade. Ex: Gerador de energia, caixa de chegada, poço1, etc." data-original-title="Popover title"/>
+									</div>
+									<div class="form-group col-sm-4" id="divAquisicaoUsuario">
+										<label class="control-label">Usuário</label>
+										<input class="form-control bs-docs-popover-hover" type="text" id="inputAquisicaoUsuario" name="inputAquisicaoUsuario" data-toggle="popover" title="" data-content="Quem utilizará?" data-original-title="Popover title"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-4" id="divAquisicaoCentroLogistico">
+										<label class="control-label">Centro Logístico</label>
+										<input class="form-control" type="text" id="inputAquisicaoCentroLogistico" name="inputAquisicaoCentroLogistico" mask="AAAA"/>
+									</div>						
+									<div class="form-group col-sm-4" id="divAquisicaoCentroLucro">
+										<label class="control-label">Centro de Lucro</label>
+										<input class="form-control bs-docs-popover-hover" type="text" id="inputAquisicaoCentroLucro" name="inputAquisicaoCentroLucro" data-toggle="popover" title="" data-content="Inicio do PEP, ex: PEP OWB300100.03.40.00.0, o centro de lucro sera OWB300100" data-original-title="Popover title"/>
+									</div>
+									<div class="form-group col-sm-4" id="divAquisicaoCentroCusto">
+										<label class="control-label">Centro de Custo</label>
+										<input class="form-control" type="text" id="inputAquisicaoCentroCusto" name="inputAquisicaoCentroCusto"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12" id="divAquisicaoDescricaoAtivo">
+										<label class="control-label">Descrição do Ativo</label>
+										<textarea id="inputAquisicaoDescricaoAtivo" name="inputAquisicaoDescricaoAtivo" class="form-control" rows="3" placeholder="Favor detalhar o máximo de informação possível, ex: cor, marca, modelo, material, tamanho, potencia, serie, etc."></textarea>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<table tablename="tableSubItem" id="tableSubItem" addbuttonlabel="Adicionar SubItem" class="table">
+											<thead>
+												<tr>
+													<th>Sub Nº</th>
+													<th>Quantidade</th>
+													<th>Código Material</th>											
+													<th>Descrição</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="tableRow">
+													<td class="form-group col-sm-1">
+														<div id="divnrSubItem">													
+															<input class="form-control nrSubItem" type="text" id="inputnrSubItem" name="inputnrSubItem" mask="000" readonly/>
+														</div>												
+													</td>
+													<td class="form-group col-sm-1">
+														<div id="divTableAquisicaoQtd">													
+															<input class="form-control" type="text" id="inputTableAquisicaoQtd" name="inputTableAquisicaoQtd"/>
+														</div>												
+													</td>
+													<td class="form-group col-sm-2">
+														<div id="divTableAquisicaoCodigoItem">													
+															<input class="form-control" type="text" id="inputTableAquisicaoCodigoItem" name="inputTableAquisicaoCodigoItem" mask="00000000"/>
+														</div>
+													</td>
+													<td class="form-group col-sm-7">
+														<div id="divAquisicaoDescricaoAtivo">													
+															<textarea id="inputTableAquisicaoDescAtivo" name="inputTableAquisicaoDescAtivo" class="form-control" rows="3" placeholder="Favor detalhar o máximo de informação possível, ex: cor, marca, modelo, material, tamanho, potencia, serie, etc."></textarea>
+														</div>
+													</td>
+													<td class="form-group col-sm-1">
+														<div id="divAquisicaoCountChar">													
+															<input class="form-control" type="text" id="inputTableAquisicaoCountChar" name="inputTableAquisicaoCountChar"/>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>											
+							</div>
+							<!--Fim Painel Aquisições-->
+	
+							<!--Painel Baixa-->
+							<div class="tab-pane fade" id="divBaixa">
+								<div class="row">
+									<div class="form-group col-sm-4" id="divTipoBaixa">
+										<label for="selectBaixaTipo" class="control-label">Tipo de Baixa</label>
+										<select class="form-control" id="selectBaixaTipo" name="selectBaixaTipo">
+											<option value=""></option>
+											<option value="Quebra">Quebra</option>
+											<option value="Desgaste">Desgaste</option>
+											<option value="Sinistro">Sinistro</option>				                    
+										</select>
+									</div>
+									<div class="form-group col-sm-2" id="divBaixaPlacaPatrimonio">
+										<label class="control-label">Placa Patrimônio</label>
+										<input class="form-control" type="text" id="inputBaixaPlacaPatrimonio" name="inputBaixaPlacaPatrimonio"/>
+									</div>
+									<div class="form-group col-sm-2" id="divBaixaLocalizacao">
+										<label class="control-label">Localização</label>
+										<input class="form-control" type="text" id="inputBaixaLocalizacao" name="inputBaixaLocalizacao"/>
+									</div>
+									<div class="form-group col-sm-2" id="divBaixaDataAquisicao">
+										<label class="control-label">Data Aquisição</label>
+										<input class="form-control data" type="text" id="inputBaixaDataAquisicao" name="inputBaixaDataAquisicao"/>
+									</div>
+									<div class="form-group col-sm-2" id="divBaixaCodAtivo">
+										<label class="control-label">Código do Ativo</label>
+										<input class="form-control" type="text" id="inputBaixaCodAtivo" name="inputBaixaCodAtivo" mask="000000000000"/>
+									</div>					
+								</div>
+								<div class="row">							
+									<div class="form-group col-sm-12" id="divBaixaFornecedor">
+										<label class="control-label">Fornecedor</label>
+										<div class="input-group">
+											<input class="form-control" type="text" name="inputBaixaFornecedor" id="inputBaixaFornecedor" style="margin-top: 1px;">
+											<span class="input-group-btn">
+												<button id="modalBtnFornec" name="modalBtnFornec" class="btn btn-default fluigicon fluigicon-search fluigicon-sm"></button>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12" id="divBaixaDescricaoAtivo">
+										<label class="control-label">Descrição do Ativo</label>
+										<textarea id="inputBaixaDescricaoAtivo" name="inputBaixaDescricaoAtivo" class="form-control" rows="3" placeholder="Favor detalhar o máximo de informação possível, ex: cor, marca, modelo, material, tamanho, potencia, serie, etc."></textarea>
+									</div>
+								</div>
+							</div>
+							<!--Fim Painel Baixa-->
+	
+							<!--Painel Venda-->
+							<div class="tab-pane fade" id="divVenda">
+								<div class="row">
+									<div class="form-group col-sm-2" id="divVendaPlacaPatrimonio">
+										<label class="control-label">Placa Patrimônio</label>
+										<input class="form-control" type="text" id="inputVendaPlacaPatrimonio" name="inputVendaPlacaPatrimonio"/>
+									</div>
+									<div class="form-group col-sm-2" id="divVendaDataAquisicao">
+										<label class="control-label">Data Aquisição</label>
+										<input class="form-control data" type="text" id="inputVendaDataAquisicao" name="inputVendaDataAquisicao"/>
+									</div>
+									<div class="form-group col-sm-2" id="divVendaDataVenda">
+										<label class="control-label">Data Venda</label>
+										<input class="form-control data" type="text" id="inputVendaDataVenda" name="inputVendaDataVenda"/>
+									</div>
+									<div class="form-group col-sm-2" id="divVendaDataAquisicao">
+										<label class="control-label">Valor de Venda</label>
+										<input class="form-control monetario" type="text" id="inputVendaValorVenda" name="inputVendaValorVenda" mask="#00.000.000.000.000,00"/>
+									</div>
+									<div class="form-group col-sm-2">
+										<label class="control-label">&nbsp;</label>
+										<button type="button" class="btn btn-danger" id="btnVendaAnexarArquivos" name="btnVendaAnexarArquivos" data-file-upload onclick="anexarArquivo();"><strong>Anexar Arquivos</strong></button>
+									</div>
+								</div>
+								<div class="row">	
+									<div class="form-group col-sm-4" id="divVendaCPFCNPJ">
+										<label class="control-label">Comprador (CPF / CNPJ)</label>
+										<input class="form-control" type="text" id="inputVendaCPFCNPJ" name="inputVendaCPFCNPJ"/>
+									</div>
+									<div class="form-group col-sm-2" id="divVendaNrAtivo">
+										<label class="control-label">Numero do Ativo</label>
+										<input class="form-control" type="text" id="inputVendaNrAtivo" name="inputVendaNrAtivo"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12" id="divVendaDescricaoAtivo">
+										<label class="control-label">Descrição do Ativo</label>
+										<textarea id="inputVendaDescricaoAtivo" name="inputVendaDescricaoAtivo" class="form-control" rows="3" placeholder="Favor detalhar o máximo de informação possível, ex: cor, marca, modelo, material, tamanho, potencia, serie, etc."></textarea>
+									</div>
+								</div>
+							</div>
+							<!--Fim Painel Venda-->
+	
+							<!--Painel Doação-->
+							<div class="tab-pane fade" id="divDoacao">							
+								<div class="row">
+									<div class="form-group col-sm-2" id="divDoacaoPlacaPatrimonio">
+										<label class="control-label">Placa Patrimônio</label>
+										<input class="form-control" type="text" id="inputDoacaoPlacaPatrimonio" name="inputDoacaoPlacaPatrimonio"/>
+									</div>
+									<div class="form-group col-sm-2" id="divDoacaoDataAquisicao">
+										<label class="control-label">Data Aquisição</label>
+										<input class="form-control data" type="text" id="inputDoacaoDataAquisicao" name="inputDoacaoDataAquisicao"/>
+									</div>
+									<div class="form-group col-sm-2" id="divDoacaoDataDoacao">
+										<label class="control-label">Data Doação</label>
+										<input class="form-control data" type="text" id="inputDoacaoDataDoacao" name="inputDoacaoDataDoacao"/>
+									</div>
+									<div class="form-group col-sm-2" id="divDaocaoValorResid">
+										<label class="control-label">Valor Residual</label>
+										<input class="form-control monetario" type="text" id="inputDaocaoValorResid" name="inputDaocaoValorResid"/>
+									</div>
+									<div class="form-group col-sm-2">
+										<label class="control-label col-sm-12">&nbsp;</label>
+										<button type="button" class="btn btn-danger" id="btnDoacaoAnexarArquivos" name="btnDoacaoAnexarArquivos" data-file-upload onclick="anexarArquivo();"><strong>Anexar Arquivos</strong></button>
+									</div>
+								</div>
+								<div class="row">							
+									<div class="form-group col-sm-4" id="divDoacaoCPFCNPJ">
+										<label class="control-label">Beneficiário (CPF / CNPJ)</label>
+										<input class="form-control" type="text" id="inputDoacaoCPFCNPJ" name="inputDoacaoCPFCNPJ"/>
+									</div>
+									<div class="form-group col-sm-2" id="divDoacaoNrAtivo">
+										<label class="control-label">Numero do Ativo</label>
+										<input class="form-control" type="text" id="inputDoacaoNrAtivo" name="inputDoacaoNrAtivo"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-7" id="divDoacaoDescricaoAtivo">
+										<label class="control-label">Descrição do Ativo</label>
+										<textarea id="inputDoacaoDescricaoAtivo" name="inputDoacaoDescricaoAtivo" class="form-control" rows="3" placeholder="Favor detalhar o máximo de informação possível, ex: cor, marca, modelo, material, tamanho, potencia, serie, etc."></textarea>
+									</div>
+								</div>
+							</div>
+							<!--Fim Painel Doação-->
+	
+							<!--Painel Transferencia-->
+							<div class="tab-pane" id="divTransferencia">
+								<div class="row">
+									<div class="col-sm-6" id="divtTransfPatrimonio">
+										<label class="control-label">Placa Patrimônio</label>
+										<input class="form-control" type="text" id="inputTransfPatrimonio" name="inputTransfPatrimonio"/>
+									</div>
+									<div class="col-sm-6" id="divDataTransferencia">
+										<label class="control-label">Data Transferência</label>
+										<input class="form-control data" type="text" id="inputDataTransferencia" name="inputDataTransferencia"/>
+									</div>
+								</div>	
+								<div class="row">
+									<table class="table" noaddbutton="true" nodeletebutton="true">
+										<thead>
+											<tr>
+												<th class="center"><strong>De</strong></th>
+												<th class="center"><strong>Para</strong></th>
+											</tr>
+										</thead>
+										<tbody>											
+											<tr>
+												<td>
+													<div>
+														<label class="control-label">Localização</label>
+														<input class="form-control" type="text" id="inputTransfDeLocalizacao" name="inputTransfDeLocalizacao"/>
+													</div>														
+												</td>
+												<td>
+													<div>
+														<label class="control-label">Localização</label>
+														<input class="form-control" type="text" id="inputTransfParaLocalizacao" name="inputTransfParaLocalizacao"/>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<div>
+														<label class="control-label">Usuário</label>
+														<input class="form-control" type="text" id="inputTransfDeUsuario" name="inputTransfDeUsuario"/>
+													</div>														
+												</td>
+												<td>
+													<div>
+														<label class="control-label">Usuário</label>
+														<input class="form-control" type="text" id="inputTransfParaUsuario" name="inputTransfParaUsuario"/>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<div>
+														<label class="control-label">Centro Lucro</label>
+														<input class="form-control" type="text" id="inputTransfDeCentroLucro" name="inputTransfDeCentroLucro"/>
+													</div>														
+												</td>
+												<td>
+													<div>
+														<label class="control-label">Centro Lucro</label>
+														<input class="form-control" type="text" id="inputTransfParaCentroLucro" name="inputTransfParaCentroLucro"/>
+													</div>
+												</td>
+											</tr>
+											<tr id="trTransfCentroCusto" name="trTransfCentroCusto">
+												<td class="cols-sm-6">
+													<div>
+														<label class="control-label">Centro Custo</label>
+														<input class="form-control" type="text" id="inputTransfDeCentroCusto" name="inputTransfDeCentroCusto"/>
+													</div>														
+												</td>
+												<td>
+													<div>
+														<label class="control-label">Centro Custo</label>
+														<input class="form-control" type="text" id="inputTransfParaCentroCusto" name="inputTransfParaCentroCusto"/>
+													</div>
+												</td>
+											</tr>
+											<tr id="trTransfClassesAtivos" name="trTransfClassesAtivos">
+												<td>
+													<div>
+														<label class="control-label">Classes Ativos</label>
+														<input class="form-control" type="text" id="inputTransfDeClassesAtivos" name="inputTransfDeClassesAtivos"/>
+													</div>														
+												</td>
+												<td>
+													<div>
+														<label class="control-label">Classes Ativos</label>
+														<input class="form-control" type="text" id="inputTransfParaClassesAtivos" name="inputTransfParaClassesAtivos"/>
+													</div>
+												</td>
+											</tr>								
+										</tbody>
+									</table>
+								</div>
+								<div class="row">
+									<div class="form-group 12" id="divMotivoTransferencia">
+										<label class="control-label">Motivo da Transferência</label>
+										<textarea id="inputTransfMotivoTransf" name="inputTransfMotivoTransf" class="form-control" rows="3" placeholder="Favor detalhar o motivo da transferência, ex: a transferência será realizada, pois eu o/a solicitante adquiri um novo notebook/telefone, o meu será transferido para outro colaborador, pois o material ainda está apto pra uso."></textarea>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group 12" id="divTransfDescAtivo">
+										<label class="control-label">Descrição do Ativo</label>
+										<textarea id="inputTransfDescAtivo" name="inputTransfDescAtivo" class="form-control" rows="3" placeholder="Favor detalhar a descrição do ativo a ser transferido."></textarea>
+									</div>
+								</div>
+							</div>
+							<!--Fim Painel Transferencia-->
+						</div>
+					</div>
+				</div>
+
+				<!--Painel Analise Contabil-->
+				<div class="panel panel-default" id="divanaliseContabil">
+					<div class="panel-heading">
+						<h4 class="panel-title">Análise Contábil</h4>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="form-group col-sm-2" id="divselectAnaliseContabil">
+								<label for="selectAnaliseContabil" class="control-label">Status</label>
+								<select class="form-control" id="selectAnaliseContabil" name="selectAnaliseContabil">
+									<option value=""></option>
+									<option value="aprovado">Aprovado</option>
+									<option value="cancelado">Cancelado</option>	                    		                    
+								</select>	                
+							</div>
+							<div class="form-group col-sm-10" id="divJustificativaanaliseContabil">
+								<label for="txtareaAnaliseContabil" class="control-label">Justificativa</label>
+								<textarea class="form-control" id="txtareaAnaliseContabil" name="txtareaAnaliseContabil" rows="3"></textarea>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<!--Fim Painel Analise Contabil-->
+
+				<div id="modalFornec" name="modalFornec" class="modal_custom" style="display: none;">
+					<div class="modal_content_custom">
+						<div class="modal-header-custom col-sm-12" style="text-align: center;">
+							<span class="modal_closeBtn">&times;</span>
+							<h2> Consultar Fornecedores</h2>
+						</div>
+						<div id="divModalSearch" class="form-group col-sm-12" style="text-align: center;">
+							<div class="input-group col-sm-12" style="text-align: center;">
+								<input class="modalSearchFornec" id="modalSearchCNPJ" name="modalSearch" checked data-radiocharm-label="CNPJ/CPF" data-radiocharm-icon="far fa-check-circle" type="radio" value="CNPJ">
+								<input class="modalSearchFornec" id="modalSearchName" name="modalSearch" data-radiocharm-label="Nome" data-radiocharm-icon="far fa-check-circle" type="radio" value="Nome">
+								<input class="modalSearchFornec" id="modalSearchNr" name="modalSearch" data-radiocharm-label="Nº" data-radiocharm-icon="far fa-check-circle" type="radio" value="Nr">
+							</div>
+							<div>
+								<div class="col-sm-12">
+									<input type="text" id="modalInputCNPJCPF" name="modalInputCNPJCPF" class="form-control modalInputFornec" placeholder="Coloque o CNPJ sem pontos.">
+								</div>
+								<div class="col-sm-12">
+									<input type="text" id="modalInputName" name="modalInputName" class="form-control modalInputFornec" style="display: none" placeholder="Coloque o Nome ou parte dele.">
+								</div>
+								<div class="col-sm-12">
+									<input type="text" id="modalInputNr" name="modalInputNr" class="form-control modalInputFornec" style="display: none" placeholder="Coloque o Número do fornecedor.">
+								</div>
+							</div>
+							<div class="col-sm-12" style="text-align: center;">
+								<button id="modal_BtnBuscaFornec" name="modal_BtnBuscaFornec" class="col-sm-12 btn btn-default" style="background: #005a6f;color: #fff;text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);"><strong>Buscar</strong></button>
+							</div>
+						</div>
+						<table id="modalTableFornecedores" class="table-custom col-sm-12">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Nome</th>
+									<th>CPF/CNPJ</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<style type="text/css">
+					input.col-sm-2{
+						min-width: 150px;
+					}
+					input#inputAquisicaoQtd.form-control{
+						min-width: 58px;
+					}
+					table#modalTableFornecedores th td{
+						border: 1px solid black;
+						border-collapse: collapse;
+						opacity: 0.95;
+					}
+					table#modalTableFornecedores th td{
+						display: none;
+						border: 1px solid black;
+						border-collapse: collapse;
+						opacity: 0.95;
+					}
+					table#modalTableFornecedores th td{
+						padding: 10px;
+						text-align: center;
+					}
+					table#modalTableFornecedores th{
+						background-color: #a70000;
+						color: white;
+						padding: 2px;
+					}
+					table#modalTableFornecedores tr:nth-child(even){
+						background-color: #e8e8e8;
+					}
+					table#modalTableFornecedores tr:nth-child(odd){
+						background-color: white;
+					}
+					table#modalTableFornecedores tr:hover,table#modalTableFornecedores tr:focus{
+						background-color: #ece185;
+						color: white;
+						text-decoration: none;
+						cursor: pointer;
+					}
+					.modal_custom{
+						display: none;
+						position: fixed;
+						z-index: 10;
+						left: 0;
+						top: 0;
+						height: 100%;
+						width: 100%;
+						overflow: auto;
+						background-color: rgba(0,0,0,0.5);
+					}
+					.modal_content_custom{
+						background-color: #f4f4f4;
+						margin: 20% auto;
+						padding: 20px;
+						width: 70%;
+						box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
+						animation-name: modalopen;
+						animation-duration: 2s;
+					}
+					.modal-header-custom{
+						background: #005a6f;
+						padding: 15px;
+						color: #fff;
+						border-radius: 5px;
+					}
+					.modal-header-custom h2{
+						margin: 0;
+					}
+					#modalPedidos .modal_content_custom{
+						max-width: 100%;
+						width: auto !important;
+						display: table;
+					}
+					#modalFornec .modal_content_custom{
+						max-width: 100%;
+						width: auto !important;
+						display: table;
+						border-radius: 5px;
+					}
+					@keyframes modalopen {
+						from {opacity: 0}
+						to {opacity: 1}
+					}
+					#modalTableFornecedores .table-custom{
+						width: 100%;
+					}
+					.modal_closeBtn{
+						color: #ccc;
+						float: right;
+						font-size: 20px;
+					}
+					.modal_closeBtn:hover,.modal_closeBtn:focus{
+						color: #ff0000;
+						text-decoration: none;
+						cursor: pointer;
+					}
+					.fluig-style-guide .panel .orientacoes {
+						border: 0;
+						margin-bottom: 20px;
+						border-left: 1px solid black;
+						border-radius: 0px;
+					}
+					.fluig-style-guide .panel {
+						margin-bottom: 20px;
+						background-color: transparent;
+						border: 0;
+						border-radius: 0px;
+						box-shadow: none;
+					}
+					.center{
+						text-align: center;
+					}
+					.stopAnimation{
+						background-color: transparent;
+					}
+					.animation{
+						background-color: yellow;
+						-webkit-animation: blinkTab 4s infinite;
+						-moz-animation: blinkTab 4s infinite;							
+						animation: blinkTab 4s infinite;							
+					}
+					@-webkit-keyframes blinkTab {
+						0%   {background-color: yellow;}
+						49%  {background-color: transparent;}
+						50%  {background-color: yellow;}
+						99%  {background-color: transparent;}
+						100% {background-color: yellow;}
+					}
+					@-moz-keyframes blinkTab {
+						0%   {background-color: yellow;}
+						49%  {background-color: transparent;}
+						50%  {background-color: yellow;}
+						99%  {background-color: transparent;}
+						100% {background-color: yellow;}
+					}						
+					@keyframes blinkTab {
+						0%   {background-color: yellow;}
+						49%  {background-color: transparent;}
+						50%  {background-color: yellow;}
+						99%  {background-color: transparent;}
+						100% {background-color: yellow;}
+					}
+					.col-sm-1{
+						min-width: 70px;
+					}
+					.col-sm-2{
+						min-width: 180px;
+					}
+					.col-sm-7{
+						min-width: 606px;
+					}
+					.hide{
+						display: none;
+					}
+					.show{
+						display: block;
+					}
+				</style>
+			</form>
+		</div>
+	</body>
+</html>

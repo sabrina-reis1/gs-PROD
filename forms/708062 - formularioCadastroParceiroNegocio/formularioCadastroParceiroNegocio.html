@@ -1,0 +1,782 @@
+<html>
+    <head>
+        <script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+        <link rel="stylesheet" href="https://style.fluig.com/css/fluig-style-guide-docs.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"/>
+        <script type="text/javascript" src="/portal/resources/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+        <script language="javascript" type="text/javascript" src="custom.js"></script>
+        <link rel="stylesheet" href="https://style.fluig.com/css/fluig-style-guide-docs.min.css"/>
+        <script src="/resources/js/jquery/jquery.js"></script>
+        <script src="/resources/js/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+        <script src="/resources/js/mustache/mustache-min.js"></script>
+        <script src="/resources/style-guide/js/fluig-style-guide.min.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css"/>
+        <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+        <link href="/resources/style-guide/css/fluig-style-guide-filter.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/style-guide/css/fluig-style-guide-ratingstars.min.css" rel="stylesheet" type="text/css"/>
+        <script src="/resources/style-guide/js/fluig-style-guide-filter.min.js"></script>
+        <script src="/resources/style-guide/js/fluig-style-guide-ratingstars.min.js"></script>
+        <link href="/webdesk/customresources?cid=1&resourceName=temaFormulario/0.css" type="text/css" rel="stylesheet"/>
+    </head>
+    <body onload="showHide()">
+        <div class="fluig-style-guide">
+            <form name="form" role="form">
+                <div class="page-header">
+                    <h1>Cadastro Parceiro de Negócio</h1>
+                </div>
+                <!-- INFORMACOES GERAIS -->
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Dados Gerais</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="form-group col-sm-8 col-xs-12">
+                                        <label class="col-sm-4 control-label" style="padding-left: 1px">Empresa</label>
+                                        <div class="col-sm-8">
+                                            <!--<select name="empresa" class="form-control" dataset="dsEmpCadFor" datasetkey="EMPRESA" datasetvalue="nomeEmpresa"></select>!-->
+                                            <input type="zoom" class="form-control" id="zEmpresa" name="zEmpresa"
+                                                data-zoom="{
+                                                        'displayKey':'empresa',
+                                                        'datasetId':'dsEmpCadastroFornecedor',
+                                                        'maximumSelectionLength':'1',
+                                                        'fields':[
+                                                            {
+                                                            'field':'empresa',
+                                                            'label':'Empresa',
+                                                            'standard':'true'
+                                                            },{
+                                                            'field':'codigo',
+                                                            'label':'Codigo'
+                                                            
+                                                            }
+                                                        ]
+                                                    }"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div hidden class="col-sm-2">
+                                        <input type="text" class="form-control" name="ccInserido" id="ccInserido"/>
+                                        <input type="text" class="form-control" name="codExterno" id="codExterno"/>
+                                        <div class="col-sm-2 form-group">
+                                            <label class="control-label">Num Processo:</label>
+                                            <input type="text" id="num_processo" name="num_processo" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div hidden class="row">
+                                    <div class="form-group col-sm-10 col-xs-12">
+                                        <label class="col-sm-2 control-label" style="padding-left: 1px">E-mail</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="email" name="email" readonly="readonly" style="padding-left: 5px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-8">
+                                        <label class="col-sm-4 control-label">Solicitante:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="nmSolicitante" id="nmSolicitante" placeholder="Solicitante"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <input type="text" class="form-control" name="idempresa" id="idempresa"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label class="col-sm-3 control-label">Data da Solicitação</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="data_sol" class="form-control" id="data_sol"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label class="col-sm-3 control-label">Motivo da Solicitação</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="drop_motivo" id="drop_motivo" onchange="change()">
+                                                <option value="INC">INCLUSÃO</option>
+                                                <option value="ALT">ALTERAÇÃO</option>
+                                                <option value="AMP">AMPLIAÇÃO</option>
+                                                <option value="BLOQ">BLOQUEIO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label class="col-sm-4 control-label">Grupo Tesouraria(SAP)</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="drop_eixo" id="drop_eixo">
+                                                <option value="f1">F1 | FORNECEDORES NACIONAIS</option>
+                                                <option value="f2">F2 | FORNECEDORES INTERNACIONAIS</option>
+                                                <option value="f3">F3 | TRIBUTOS</option>
+                                                <option value="f4">F4 | INSTITUIÇÃO FINANCEIRA</option>
+                                                <option value="f5">F5 | SALÁRIOS</option>
+                                                <option value="f6">F6 | FORNECEDORES EMPRESAS DO GRUPO</option>
+                                                <option value="c1">C1 | RECEITAS (CONST, OPER, CONCES)</option>
+                                                <option value="c2">C2 | OUTRAS RECEITAS EMP DO GRUPO</option>
+                                                <!--<option value="a1">Fornecedor Nacional</option>
+                                                <option value="a2">Fornecedor Estrangeiro</option>
+                                                <option value="a3">Empresa do Grupo</option>
+                                                <option value="a4">Energia Elétrica</option>
+                                                <option value="a6">Encargos Sociais</option>
+                                                <option value="a7">Beneficios</option>
+                                                <option value="a8">Impostos</option>
+                                                <option value="a11">Financiamentos</option>
+                                                <option value="a12">Telefonia</option>
+                                                <option value="a13">Sindicatos</option>
+                                                <option value="a14">Seguros</option>
+                                                <option value="a15">Doações</option>
+                                                <option value="a16">Comunicação e Propaganda</option>
+                                                <option value="a17">Programa de visita</option>
+                                                <option value="a18">Viagens e Estadias</option>-->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4"></div>
+                                    <div class="form-group col-sm-4" name="divcodfornecedor" id="divcodfornecedor">
+                                        <label class="col-sm-3 control-label" id="lblcodfornecedor" style="display: none">Código fornecedor</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" type="number" name="codfornecedor" id="codfornecedor" mask="0000000" style="display: none"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AVALIACAO DA QUALIDADE -->
+                    <div class="panel panel-default" id="paineldados">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Dados Cadastrais</a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label class="col-sm-1 control-label" id="lblnmrazao">Nome/Razão Social</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" name="nmrazao" id="nmrazao" style="text-transform: uppercase"/>
+                                        </div>
+                                        <label class="col-sm-1 control-label">Categoria:</label>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" name="drop_tipo" id="drop_tipo" onchange="showHide();">
+                                                <option value="pj">Pessoa Jurídica</option>
+                                                <option value="pf">Pessoa Física</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-1 control-label" id="lblmei">MEI:</label>
+                                        <div class="col-sm-1">
+                                            <select class="form-control" name="drop_mei" id="drop_mei" onchange="showHide();">
+                                                <option value="N">NÃO</option>
+                                                <option value="S">SIM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label class="col-sm-1 control-label" id="lblservico">Tipo de Serviço</label>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" name="tpservico" id="tpservico" onchange="showHide();">
+                                                <option value="alv">ALVENARIA</option>
+                                                <option value="carp">CARPINTARIA</option>
+                                                <option value="elet">ELETRICIDADE</option>
+                                                <option value="man">MANUTENÇÃO OU REPARO DE VEÍCULOS</option>
+                                                <option value="pint">PINTURA</option>
+                                                <option value="hid">HIDRÁULICA</option>
+                                                <option value="out">OUTROS</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label" id="lbldtnasc">Data de Nascimento</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="dtnasc" id="dtnasc" class="form-control"/>
+                                        </div>
+                                        <label class="col-sm-2 control-label" id="lblcpf">CPF do Empreendedor</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="cpf" id="cpf" class="form-control" mask="000.000.000-00"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label id="lblcpfcnpj" class="col-sm-1 control-label">CNPJ/CPF</label>
+                                        <div class="col-sm-2">
+                                            <input type="number" name="cpfcnpj" class="form-control" id="cpfcnpj"/>
+                                        </div>
+                                        <label id="lblinscrest" class="col-sm-1 control-label" style="display: none">Inscrição Estadual</label>
+                                        <label id="inputRG" class="col-sm-1 control-label">RG</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" name="inscrest" id="inscrest" class="form-control"/>
+                                        </div>
+                                        <label id="lblinscrmun" class="col-sm-1 control-label" style="display: none" >Inscrição Municipal</label>
+                                        <label id="inputNISPIS" class="col-sm-1 control-label">NIS/PIS</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" name="inscrmun" id="inscrmun" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label class="col-sm-1 control-label">CEP</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="cep" id="cep" class="form-control" mask="00000-000"/>
+                                    </div>
+                                    <label class="col-sm-1 control-label">Bairro</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" name="bairro" id="bairro" class="form-control" style="text-transform: uppercase"/>
+                                    </div>
+                                    <label class="col-sm-1 control-label">Cidade</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" name="cidade" id="cidade" class="form-control" style="text-transform: uppercase"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label class="col-sm-1 control-label">Endereço</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" name="ende" id="ende" class="form-control" style="text-transform: uppercase"/>
+                                    </div>
+                                    <label class="col-sm-1 control-label">N&deg;</label>
+                                    <div class="col-sm-1" style="width: 8.999999995%">
+                                        <input type="number" name="num" id="num" class="form-control" style="text-transform: uppercase"/>
+                                    </div>
+                                    <label class="col-sm-1 control-label"> UF</label>
+                                    <div class="col-sm-1">
+                                        <input type="text" name="uf" id="uf" class="form-control" style="text-transform: uppercase"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label class="col-sm-1 control-label">Complemento</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="compl" id="compl" class="form-control" style="text-transform: uppercase"/>
+                                    </div>
+                                    <label class="col-sm-1 control-label">Tipo de Contratação</label>
+                                    <!--<div class="col-sm-7">
+                                        <input type="text" name="ramoativ" id="ramoativ" class="form-control" style="text-transform: uppercase"/>
+                                    </div>-->
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="ramoativ" id="ramoativ">
+                                            <option value=""></option>
+                                            <option value="prestServ">Prestação de Serviços</option>
+                                            <option value="matEquip">Materiais e Equipamentos</option>
+                                            <option value="ambos">Ambos</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" id="painelfin">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Financeiro</a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label class="col-sm-12 control-label">Formas de Pagamento</label>
+                                </div>
+                                <div class="form-group col-sm-9" name="checkformapagamento" id="checkformapagamento">
+                                    <div class="col-sm-2">
+                                        <label><input type="checkbox" name="ted" />TED</label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label><input type="checkbox" name="doc" />DOC</label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label><input type="checkbox" name="boleto" />BOLETO</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label><input type="checkbox" name="transferencia" />TRANSFERÊNCIA</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label><input type="checkbox" name="fundofixo" />FUNDO FIXO</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field" data-type="tabledetail" data-show-properties="" data-field-name="Dados Bancários">
+                                <div class="form-input">
+                                    <div class="form-group col-sm-12">
+                                        <table tablename="tabledetailname1" class="table" noaddbutton="true">
+                                            <thead>
+                                                <tr class="tableHeadRow">
+                                                <th class="tableColumn">Banco</th>
+                                                <th class="tableColumn">Agência</th>
+                                                <th class="tableColumn">Conta corrente</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="tableBodyRow">
+                                                    <td class="fs-v-align-middle">
+                                                        <div class="form-input">
+                                                            <input name="column1_1" class="form-control" type="text" style="text-transform: uppercase"/>
+                                                        </div>
+                                                    </td>
+                                                    <td class="fs-v-align-middle">
+                                                        <div class="form-input">
+                                                            <input name="column2_1" class="form-control" type="text"/>
+                                                        </div>
+                                                    </td>
+                                                    <td class="fs-v-align-middle">
+                                                        <div class="form-input">
+                                                            <input name="column3_1" class="form-control" type="text"/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button type="button" name="btnnew" class="btn btn-primary" onclick="addLinhaTabela('tabledetailname1')">Novo Registro</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" id="painelcontato">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Contato</a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="txttelefone " class="col-sm-1 control-label">Telefone com DDD</label>
+                                    <div class="col-sm-2">
+                                        <input type="tel" class="form-control" name="txttelefone" id="txttelefone" mask="(00) 0000-0000"/>
+                                    </div>
+                                    <label for="txtcel" class="col-sm-1 control-label">Celular</label>
+                                    <div class="col-sm-2">
+                                        <input type="tel" class="form-control" name="txtcel" id="txtcel" mask="(00) 90000-0000"/>
+                                    </div>
+                                    <label for="txtfax" class="col-sm-1 control-label">Fax</label>
+                                    <div class="col-sm-2">
+                                        <input type="tel" class="form-control" name="txtfax" id="txtfax" mask="(00) 0000-0000"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="txttelefone " class="col-sm-1 control-label">E-mail</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="txtemail" id="txtemail" style="text-transform: uppercase"/>
+                                    </div>
+                                    <label for="txtcel" class="col-sm-1 control-label">Site</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="txtsite" id="txtsite" style="text-transform: uppercase"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="txttelefone " class="col-sm-1 control-label">Contato</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="txtcontato" id="txtcontato" style="text-transform: uppercase"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" id="painelfiscal">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Dados Fiscais</a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="inputEmail3" class="col-sm-1 control-label">Simples Nacional</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" name="drop_nacional" id="drop_nacional">
+                                            <option value="Holding">Sim</option>
+                                            <option value="Engenharia">Não se Aplica</option>
+                                            <option value="operacao">Não</option>
+                                        </select>
+                                    </div>
+                                    <!--<label for="inputEmail3" class="col-sm-1 control-label">Cadastro CPOM</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" name="drop_cpom" id="drop_cpom">
+                                            <option value="Holding">Sim</option>
+                                            <option value="Engenharia">Não se Aplica</option>
+                                            <option value="operacao">Não</option>
+                                        </select>
+                                    </div>-->
+                                    <label for="inputEmail3" class="col-sm-1 control-label">Contribuinte IPI</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" name="drop_contribuinte" id="drop_contribuinte">
+                                            <option value="Holding">Sim</option>
+                                            <option value="operacao">Não</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="col-sm-6 control-label">Parceiro</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" name="txtnumerofornecedor" id="txtnumerofornecedor" mask="0000000"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label class="control-label col-sm-1">Tipo</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" onchange="inserevalor();" id="tp_forn" name="tp_forn">
+                                            <option value="tpvazio"></option>
+                                            <option value="zpan">Fornecedores Diversos(ZPAN)</option>
+                                            <option value="zpas">Fornecedores Empresa Associada(ZPAS)</option>
+                                            <option value="zpae">Fornecedores Empresa Estrangeira(ZPAE)</option>
+                                            <option value="zpgr">Fornecedores Empresas Grupo(ZPGR)</option>
+                                            <option value="zsdf">Fornecedores sem dados Fiscais(ZSDF)</option>
+                                            <option value="zemp">Fornecedores Viagens(ZEMP)</option>
+                                            <option value="tpvazio"></option>
+                                            <option value="Y004">PESSOA JURÍDICA</option>
+                                            <option value="Y005">PESSOA FÍSICA</option>
+                                            <option value="Y001">COLABORADOR</option>
+                                            <option value="Y003">INTERNACIONAL</option>
+                                            <option value="Y002">EMPRESA GRUPO</option>
+                                            <option value="Y006">SEM DADOS FISCAIS</option>
+                                            <option value="Y007">INSTITUIÇÕES FINANCEIRAS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" id="painelcont">
+                    <div class="panel-heading">
+                        <!--<h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Dados Contábeis</a>
+                        </h4>-->
+                        <h4 class="panel-title">Dados Contábeis</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-sm-3">
+                                <label for="tp_forn" class="control-label">Tipo:</label>
+                                <select class="form-control" onchange="inserevalor();" id="tp_forn" name="tp_forn">
+                                    <!--<option value="tpvazio"></option>
+                                    <option value="zpan">Fornecedores Diversos(ZPAN)</option>
+                                    <option value="zpas">Fornecedores Empresa Associada(ZPAS)</option>
+                                    <option value="zpae">Fornecedores Empresa Estrangeira(ZPAE)</option>
+                                    <option value="zpgr">Fornecedores Empresas Grupo(ZPGR)</option>
+                                    <option value="zsdf">Fornecedores sem dados Fiscais(ZSDF)</option>
+                                    <option value="zemp">Fornecedores Viagens(ZEMP)</option>-->
+                                    <option value="tpvazio"></option>
+                                    <option value="Y004">PESSOA JURÍDICA</option>
+                                    <option value="Y005">PESSOA FÍSICA</option>
+                                    <option value="Y001">COLABORADOR</option>
+                                    <option value="Y003">INTERNACIONAL</option>
+                                    <option value="Y002">EMPRESA GRUPO</option>
+                                    <option value="Y006">SEM DADOS FISCAIS</option>
+                                    <option value="Y007">INSTITUIÇÕES FINANCEIRAS</option>
+                                </select>                           
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="cc" class="control-label">Conta Contábil:</label>
+                                <input class="form-control" type="text" name="cc" id="cc"/>
+                                <!--<input type="text" name="cc" id="cc" class="col-sm-5 form-control"/>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--PANEL OBS ETAPA CONTABILIDADE -->
+                <div class="panel panel-default" name="obsContabilidade" id="obsContabilidade">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Observação Contabilidade</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-sm-10 col-xs-12">
+                                <label class="col-sm-2 control-label" name="obsInformacoesContabil" id="obsInformacoesContabil">Observação:</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="2" id="txtInfoContabil" name="txtInfoContabil" class="form-control" style="text-transform: uppercase"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--PANEL OBS ETAPA FISCAL -->
+                <div class="panel panel-default" name="obsFiscal" id="obsFiscal">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Observação Fiscal</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-sm-10 col-xs-12">
+                                <label class="col-sm-2 control-label" name="obsInformacaoFiscal" id="obsInformacaoFiscal">Observação:</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="2" id="txtInfoFiscal" name="txtInfoFiscal" class="form-control" style="text-transform: uppercase"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--PANEL OBS ETAPA FINANCEIRO -->
+                <div class="panel panel-default" name="obsFinanceiro" id="obsFinanceiro">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Observação Financeiro</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-sm-10 col-xs-12">
+                                <label class="col-sm-2 control-label" name="obsInformacaoFinanceiro" id="obsInformacaoFinanceiro">Observação:</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="2" id="txtInfoFinanceiro" name="txtInfoFinanceiro" class="form-control" style="text-transform: uppercase"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--PANEL APROVA/REPROVA ETAPA FISCAL -->
+                <div class="panel panel-default" name="aprpFiscal" id="aprpFiscal">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Analise GET</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-sm-3">
+                                <label class="col-sm-4 control-label">Aprovação:</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="aprpselectfiscal" name="aprpselectfiscal" onchange="change()">
+                                        <option value="brancofiscal" selected></option>
+                                        <option value="apfiscal">Aprovado</option>
+                                        <option value="rpfiscal">Reprovado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-8">
+                                <label class="col-sm-3 control-label" name="obsRpFiscal" id="obsRpFiscal" style="display: none">Observação:</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="2" id="txtRpFiscal" name="txtRpFiscal" class="form-control" style="display: none" style="text-transform: uppercase"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--PANEL APROVA/REPROVA ETAPA FINANCEIRO -->
+                <div class="panel panel-default" name="aprpFinan" id="aprpFinan">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Analise Financeiro</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-sm-3">
+                                <label class="col-sm-4 control-label">Aprovação:</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="aprpselectfinanceiro" name="aprpselectfinanceiro" onchange="change()">
+                                        <option value="brancofinanceiro" selected></option>
+                                        <option value="apfinanceiro">Aprovado</option>
+                                        <option value="rpfinanceiro">Reprovado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-8">
+                                <label class="col-sm-3 control-label" name="obsRpFinan" id="obsRpFinan" style="display: none">Observação:</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="2" id="txtRpFinan" name="txtRpFinan" class="form-control" style="display: none" style="text-transform: uppercase"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var mobile = /Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent);
+                        if(mobile){
+                            document.getElementById('datarec').type = 'date';
+                            document.getElementById('dtent').type = 'date';
+                            document.getElementById('dataprog').type = 'date';
+                            document.getElementById('dtnasc').type = 'date';
+                            $('#datarec').datepicker();
+                            $('#dtent').datepicker();
+                            $('#dataprog').datepicker();
+                            $('#dtnasc').datepicker();
+                        }else{
+                            FLUIGC.calendar('#datarec');
+                            FLUIGC.calendar('#dtent');
+                            FLUIGC.calendar('#dataprog');
+                            FLUIGC.calendar('#dtnasc');
+                            FLUIGC.calendar('#datasaida', { pickDate: true, pickTime: true, sideBySide: true});
+                            FLUIGC.calendar('#dataret', { pickDate: true, pickTime: true, sideBySide: true});
+                        }
+                    });
+
+                    function addLinhaTabela(tabela) {
+                        alert('Somente serão aceitas contas Bancárias em nome do fornecedor cadastrado.');
+                        wdkAddChild(tabela);
+                    }
+                    var razao = document.getElementById('nmrazao');
+                    var cgc = document.getElementById('cgc');
+                </script>
+                <script type="text/javascript">
+                    function showHide(){
+                        var visible = 'visible';
+                        var hidden = 'hidden';
+                        var comboTp = document.getElementById('drop_tipo').value;
+                        var comboMei = document.getElementById('drop_mei').value;
+                        var comboServ = document.getElementById('tpservico').value;
+                        if(comboTp == 'pj' && comboMei == 'S' && comboServ != 'out'){
+                            document.getElementById('lblcpfcnpj').innerHTML = 'CNPJ';
+                            document.getElementById('lblinscrest').innerHTML = 'IE';
+                            document.getElementById('lblinscrmun').innerHTML = 'IM';
+                            document.getElementById('drop_mei').style.visibility = visible;
+                            document.getElementById('lblmei').style.visibility = visible;
+                            document.getElementById('lblservico').style.visibility = visible;
+                            document.getElementById('tpservico').style.visibility = visible;
+                            document.getElementById('lbldtnasc').style.visibility = visible;
+                            document.getElementById('dtnasc').style.visibility = visible;
+                            document.getElementById('cpf').style.visibility = visible;
+                            document.getElementById('lblcpf').style.visibility = visible;
+                            $('#lblinscrest').show();
+                            $('#inputRG').hide();
+                            $('#lblinscrmun').show();
+                            $('#inputNISPIS').hide();
+                        }else if(comboTp == 'pj' && comboMei == 'N'){
+                            document.getElementById('lblcpfcnpj').innerHTML = 'CNPJ';
+                            document.getElementById('lblinscrest').innerHTML = 'IE';
+                            document.getElementById('lblinscrmun').innerHTML = 'IM';
+                            document.getElementById('drop_mei').style.visibility = visible;
+                            document.getElementById('lblmei').style.visibility = visible;
+                            document.getElementById('lblservico').style.visibility = hidden;
+                            document.getElementById('tpservico').style.visibility = hidden;
+                            document.getElementById('lbldtnasc').style.visibility = hidden;
+                            document.getElementById('dtnasc').style.visibility = hidden;
+                            document.getElementById('cpf').style.visibility = hidden;
+                            document.getElementById('lblcpf').style.visibility = hidden;
+                            $('#lblinscrest').show();
+                            $('#inputRG').hide();
+                            $('#lblinscrmun').show();
+                            $('#inputNISPIS').hide();
+                        }else if(comboTp == 'pj' && comboMei == 'S' && comboServ == 'out'){
+                            document.getElementById('lblcpfcnpj').innerHTML = 'CNPJ';
+                            document.getElementById('lblinscrest').innerHTML = 'IE';
+                            document.getElementById('lblinscrmun').innerHTML = 'IM';
+                            document.getElementById('drop_mei').style.visibility = visible;
+                            document.getElementById('lblmei').style.visibility = visible;
+                            document.getElementById('lblservico').style.visibility = visible;
+                            document.getElementById('tpservico').style.visibility = visible;
+                            document.getElementById('lbldtnasc').style.visibility = hidden;
+                            document.getElementById('dtnasc').style.visibility = hidden;
+                            document.getElementById('cpf').style.visibility = hidden;
+                            document.getElementById('lblcpf').style.visibility = hidden;
+                            $('#lblinscrest').show();
+                            $('#inputRG').hide();
+                            $('#lblinscrmun').show();
+                            $('#inputNISPIS').hide();
+                        }else if(comboTp == 'pf'){
+                            document.getElementById('lblcpfcnpj').innerHTML = 'CPF';
+                            document.getElementById('lblinscrest').innerHTML = 'RG';
+                            document.getElementById('lblinscrmun').innerHTML = 'NIT/PIS';
+                            document.getElementById('drop_mei').style.visibility = hidden;
+                            document.getElementById('lblmei').style.visibility = hidden;
+                            document.getElementById('lblservico').style.visibility = hidden;
+                            document.getElementById('tpservico').style.visibility = hidden;
+                            document.getElementById('lbldtnasc').style.visibility = visible;
+                            document.getElementById('dtnasc').style.visibility = visible;
+                            document.getElementById('cpf').style.visibility = hidden;
+                            document.getElementById('lblcpf').style.visibility = hidden;
+                            $('#lbldtnasc').show();
+                            $('#lblinscrest').hide();
+                            $('#inputRG').show();
+                            $('#lblinscrmun').hide();
+                            $('#inputNISPIS').show();
+                        }
+                    }
+                </script>
+                <script type="text/javascript">
+                    function inserevalor(){
+                        var selecao = document.getElementById('tp_forn').value;
+                        if(selecao == 'Y004'){
+                            document.getElementById('cc').value = '21101001';
+                            document.getElementById('cc').disabled = false;
+                        }else if(selecao == 'Y005'){
+                            document.getElementById('cc').value = '21101001';
+                            document.getElementById('cc').disabled = false;
+                        }else if(selecao == 'Y001'){
+                            document.getElementById('cc').value = '21101007';
+                            document.getElementById('cc').disabled = false;
+                        }else{
+                            document.getElementById('cc').value = ' ';
+                            document.getElementById('cc').disabled = true;
+                        }
+                    }
+                </script>
+                <script>
+                    $('#aprpselectcontabil').on('change', function () {
+                        var optionSelected = $('option:selected', this);
+                        var valueSelected = this.value;
+                        if(valueSelected == 'rpcontabil'){
+                            $('#txtRpContabil').show();
+                            $('#obsRpContabil').show();
+                        }else{
+                            $('#txtRpContabil').hide();
+                            $('#obsRpContabil').hide();
+                        }
+                    });
+                </script>
+                <script>
+                    $('#aprpselectfiscal').on('change', function () {
+                        var optionSelected = $('option:selected', this);
+                        var valueSelected = this.value;
+                        if(valueSelected == 'rpfiscal'){
+                            $('#txtRpFiscal').show();
+                            $('#obsRpFiscal').show();
+                        }else{
+                            $('#txtRpFiscal').hide();
+                            $('#obsRpFiscal').hide();
+                        }
+                    });
+                </script>
+                <script>
+                    $('#aprpselectfinanceiro').on('change', function () {
+                        var optionSelected = $('option:selected', this);
+                        var valueSelected = this.value;
+                        if(valueSelected == 'rpfinanceiro'){
+                            $('#txtRpFinan').show();
+                            $('#obsRpFinan').show();
+                        }else{
+                            $('#txtRpFinan').hide();
+                            $('#obsRpFinan').hide();
+                        }
+                    });
+                </script>
+                <script>
+                    $('#drop_motivo').on('change', function () {
+                        var optionSelected = $('option:selected', this);
+                        var valueSelected = this.value;
+                        if(valueSelected == 'INC'){
+                            $('#lblcodfornecedor').hide();
+                            $('#codfornecedor').hide();
+                        }else{
+                            $('#lblcodfornecedor').show();
+                            $('#codfornecedor').show();
+                        }
+                    });
+                </script>
+                <script type="text/javascript" src="cep.js"></script>
+            </form>
+        </div>
+    </body>
+</html>

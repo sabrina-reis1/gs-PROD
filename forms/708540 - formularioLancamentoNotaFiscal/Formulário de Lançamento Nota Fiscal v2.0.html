@@ -1,0 +1,734 @@
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+       <!-- <link type="text/css" rel="stylesheet" href="./style/style.css">-->
+        <script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+        <script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+        <script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+        <!-- CUSTOM -->
+        <link href="/resources/style-guide/css/fluig-style-guide-filter.min.css" rel="stylesheet" type="text/css">
+        <link href="/resources/style-guide/css/fluig-style-guide-ratingstars.min.css" rel="stylesheet" type="text/css">
+        <script src="/resources/style-guide/js/fluig-style-guide-filter.min.js"></script>
+        <script src="/resources/style-guide/js/fluig-style-guide-ratingstars.min.js"></script>
+        <script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+        <script src="js/SAP_Integracao.js"></script>
+        <script src="SAP_Integracao_Fornecedores.js"></script>
+        <script src="SAP_Integracao_Fornecedores_2.js"></script>
+        <script src="js/Principal.js"></script>
+        <script src="js/radiocustom.js"></script>
+        <script src="SAP_Integracao_Pedido.js"></script>
+       <!-- <link href="css/radiocustom.css" rel="stylesheet">-->
+       <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">-->
+    </head>
+    <body>
+        <div class="fluig-style-guide">
+            <form name="form" role="form">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Lançamento Nota Fiscal / Fatura</h3>
+                    </div>
+                    <div class="panel-body">
+                        <fieldset>
+                           <!--  <legend><strong>Outras Opções</strong></legend> -->
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label for="switchLancFinanc" class="control-label">Lanç. Financeiro</label>
+                                    <div>
+                                        <input id="switchLancFinanc" name="switchLancFinanc" type="checkbox"
+                                            data-on-color="success" data-off-color="danger" data-on-text="Sim"
+                                            data-off-text="Não">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="switchFundoFixo" class="control-label">Fundo Fixo</label>
+                                    <div>
+                                        <input id="switchFundoFixo" name="switchFundoFixo" type="checkbox"
+                                            data-on-color="success" data-off-color="danger" data-on-text="Sim"
+                                            data-off-text="Não">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="switchAdiantamento" class="control-label">Adiantamento</label>
+                                    <div>
+                                        <input id="switchAdiantamento" name="switchAdiantamento" type="checkbox"
+                                            data-on-color="success" data-off-color="danger" data-on-text="Sim"
+                                            data-off-text="Não">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="switchMeiPf" class="control-label">MEI / Autônomo</label>
+                                    <div>
+                                        <input id="switchMeiPf" name="switchMeiPf" type="checkbox" data-on-color="success"
+                                            data-off-color="danger" data-on-text="Sim" data-off-text="Não">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2" id="divFrete" name="divFrete" data-toggle="popover" title="" 
+                                    data-content="Selecionar apenas para lançamento de FRETE VINCULADO A AQUISIÇÃO DE MERCADORIAS (planejado ou não). Para lançamento de Frete NÃO Vinculado a Aquisição de Mercadorias (Remessa para Conserto, por exemplo), deverá ser feito Pedido de Compra." 
+                                    data-original-title="Título Texto!">
+                                    <label for="switchFrete" class="control-label">Frete Vinc. Pedido</label>
+                                    <input id="switchFrete" name="switchFrete" type="checkbox" data-on-color="success" data-off-color="danger" data-on-text="Sim" data-off-text="Não">
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <!-- <div class="form-group col-sm-4">
+                                    <label for="switchBoleto" class="control-label">Boleto</label>
+                                    <input type="checkbox" name="switchBoleto" id="switchBoleto" data-on-color="success" data-off-color="danger" data-on-text="Sim" data-off-text="Não">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="switchTED" class="control-label">TED</label>
+                                    <input type="checkbox" name="switchTED" id="switchTED" data-on-color="success" data-off-color="danger" data-on-text="Sim" data-off-text="Não">
+                                </div> -->
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="panel-body">
+                        <fieldset>
+                            <legend><strong>Dados do lançamento</strong></legend>
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-3" id="divnumMigo" name="divnumMigo"
+                                    style="width: 19.79999%;">
+                                    <label for="nummigo" class="control-label">Migo:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Nº</span>
+                                        <input class="form-control required" type="text" name="nummigo" id="nummigo"
+                                            tabindex="1">
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnnumMigo" class="btn btn-default fluigicon"
+                                                onclick="IntegracaoSAP()">&#8635;</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="drop_emp" class="control-label">Empresa:</label>
+                                    <select class="form-control" name="drop_emp" id="drop_emp" tabindex="2">
+                                        <option value=""></option>
+                                        <option value="B001">B001 - GS INIMA BRASIL LTDA. (10)</option>
+                                        <option value="B002">B002 - AMBIENT SERVICOS AMBIENTAIS DE RIBEIRAO PRETO S/A (1)
+                                        </option>
+                                        <option value="B003">B003 - SESAMM - SERVIÇOS DE SANEAMENTO DE MOGI MIRIM S.A. (7)
+                                        </option>
+                                        <option value="B004">B004 - ARAUCÁRIA SANEAMENTO S.A. (3)</option>
+                                        <option value="B005">B005 - SANEVAP - SANEAMENTO DO VALE DO PARAIBA S.A. (5)
+                                        </option>
+                                        <option value="B006">B006 - SANAMA - SANEAMENTO ALTA MACEIO S.A. (8)</option>
+                                        <option value="B007">B007 - CAEPA - COMPANHIA DE AGUA E ESGOTO DE PARAIBUNA S/A (11)
+                                        </option>
+                                        <option value="B008">B008 - COMPANHIA AGUAS DE SANTA RITA S.A. (12)</option>
+                                        <option value="B009">B009 - SAMAR - SOLUÇÕES AMBIENTAIS DE ARAÇATUBA SA (13)
+                                        </option>
+                                        <option value="B010">B010 - GS INIMA INDUSTRIAL (15)</option>
+                                        <option value="B011">B011 - GS INIMA SOLUÇÕES EM SANEAMENTO (17)</option>
+                                        <option value="B012">B012 - PALMEIRAS SANEAMENTO S.A.</option>
+                                        <option value="B013">B013 - SANEOURO (16)</option>
+                                        <option value="B014">B014 - JECEABA S.A. (19)</option>
+                                        <option value="B015">B015 - AQUAPOLO S.A. (18)</option>
+                                        <option value="B016">B016 - DISTRIBUIDORA DE ÁGUA TRIUNFO S.A. (20)</option>
+                                        <option value="B017">B017 - SANEL SANEAMENTO DE LUIZ ANTONIO S.A. (21)</option>
+                                        <option value="B701">B701 - CONSORCIO CONSTRUTOR ALTA MACEIO (9)</option>
+                                        <!--<option value="BJ02">BJ02 - CONSORCIO CONSTRUTOR VALE DO PARAIBA (6)</option>-->
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label col-sm-12">&nbsp;</label>
+                                    <button type="button" class="btn btn-danger" id="btnAnexarArquivos"
+                                        name="btnAnexarArquivos" data-file-upload onclick="anexarArquivo();"><strong>Anexar
+                                            Arquivos</strong></button>
+                                </div>
+                                <div class="col-sm-12"><!--Update-->
+                                    <div class="form-group col-sm-3" id="divnumPedido" name="divnumPedido"><!--Update-->
+                                    <label for="numFretePedido" class="control-label">Pedido:</label><!--Update-->
+                                    <div class="input-group"><!--Update-->
+                                        <span class="input-group-addon">Nº</span><!--Update-->
+                                        <input class="form-control required" type="text" name="numFretePedido" id="numFretePedido"><!--Update-->
+                                    </div><!--Update-->
+                                    </div><!--Update-->
+                                </div><!--Update-->
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <div class="form-group col-sm-2" id="divNumMiro" name="divNumMiro">
+                                    <label for="nummiro" class="control-label">Miro:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Nº</span>
+                                        <input class="form-control required" type="text" name="nummiro" id="nummiro">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-2" id="divnrFat" name="divnrFat">
+                                    <label for="numfatura" class="control-label">Fatura</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Nº</span>
+                                        <input class="form-control" type="text" name="numfatura" id="numfatura">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7 form-group">
+                                <fieldset>
+                                    <!-- <legend style="width: 86%;"><strong>Fornecedor</strong></legend> -->
+                                    <div class="form-group col-sm-3">
+                                        <label for="numfornecedor" class="control-label">Cód. Fornecedor</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Nº</span>
+                                            <input class="form-control" type="text" name="numfornecedor" id="numfornecedor"
+                                                tabindex="3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-8">
+                                        <label for="descfornecedor" class="control-label">Razão Social</label>
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" name="descfornecedor"
+                                                id="descfornecedor" tabindex="4">
+                                            <span class="input-group-btn">
+                                                <button id="modalBtnFornec" name="modalBtnFornec"
+                                                    class="btn btn-default fluigicon fluigicon-search fluigicon-sm"></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-6">
+                                <fieldset>
+                                   <!--  <legend><strong>Datas</strong></legend> -->
+                                    <div class="form-group col-sm-4 divData has-error">
+                                        <label for="dtdoc" class="control-label"> Data Documento</label>
+                                        <div class="input-group">
+                                            <input class="form-control calendario required-integracaoSAP"
+                                                type="text" name="dtdoc" id="dtdoc" tabindex="5">
+                                            <span class="input-group-addon calendario-icon" id="calendDtDoc"
+                                                name="calendDtDoc">
+                                                <span class="fluigicon fluigicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-4 divData has-error">
+                                        <label for="dtlanc" class="control-label">Data Lançamento</label>
+                                        <div class="input-group">
+                                            <input class="form-control calendario required-integracaoSAP"
+                                                type="text" name="dtlanc" id="dtlanc" tabindex="6">
+                                            <span class="input-group-addon" id="calendDtLanc" name="calendDtLanc">
+                                                <span class="fluigicon fluigicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-4 divData has-error">
+                                        <label for="dtvenc" class="control-label"> Data Vencimento</label>
+                                        <div class="input-group">
+                                            <input class="form-control calendario" type="text" name="dtvenc"
+                                                id="dtvenc" tabindex="7" onblur="validaData()">
+                                            <span class="input-group-addon" id="calendDtVenc" name="calendDtVenc">
+                                                <span class="fluigicon fluigicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div id="fismsgsucesso" name="fismsgsucesso" class="alert" role="alert"
+                                        style="display: none; text-align: right;">
+                                        <strong>Data de vencimento dentro do prazo.</strong>
+                                    </div>
+                                    <div id="fismsgwarning" name="fismsgwarning" class="alert" role="alert"
+                                        style="display: none; text-align: right;">
+                                        <strong>Lançamento fora do prazo, a solicitação será encaminhada para aprovação do
+                                            diretor presidente.</strong>
+                                    </div>
+                                    <div id="fismsgerro" name="fismsgerro" class="alert" role="alert"
+                                        style="display: none; text-align: right;">
+                                        <strong>Data de vencimento fora do prazo mínimo estipulado.</strong>
+                                    </div>
+                                    <div id="fismsgretroativa" name="fismsgretroativa" class="alert"
+                                        role="alert" style="display: none; text-align: right;">
+                                        <strong>Data de vencimento retroativa.</strong>
+                                    </div>
+                                    <div id="divJustSol" class="col-sm-12" style="display: none;">
+                                        <textarea id="txtJustSol" name="txtJustSol" class="form-control rerquired" rows="3"
+                                            placeholder="Justificativa"></textarea>
+                                    </div>
+                                    <div id="divJustRecusa" class="col-sm-12" style="display: none;">
+                                        <textarea id="txtJustRecusa" name="txtJustRecusa" class="form-control rerquired"
+                                            rows="3" placeholder="Justificativa Recusa"></textarea>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-4 form-group" id="dvparcelas" name="dvparcelas" style="display: none;">
+                                <fieldset>
+                                    <legend><strong>Parcelas</strong></legend>
+                                    <div class="form-group">
+                                        <table tablename="tableparc" tableid="tableparc" class="table" noaddbutton="true"
+                                            nodeletebutton="true">
+                                            <thead>
+                                                <tr class="tableHeadRow">
+                                                    <th class="tableColumn ">Vencimento</th>
+                                                    <th class="tableColumn">Valor</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="linha">
+                                                <tr class="tableBodyRow">
+                                                    <td class="fs-v-align-middle form-group col-sm-1">
+                                                        <div class="form-input input-group date"
+                                                            style="width: 80.999999995%">
+                                                            <input id="column0_1" name="column0_1"
+                                                                class="form-control colunadata calendario" type="text">
+                                                            <span class="input-group-addon">
+                                                                <span class="fluigicon fluigicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="fs-v-align-middle colunavalor form-group col-sm-1">
+                                                        <div class="form-input input-group" style="width: 90.999999995%">
+                                                            <span class="input-group-addon">R$</span>
+                                                            <input id="column2_1" name="column2_1" class="form-control"
+                                                                type="text">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-7">
+                                <fieldset>
+                                    <!-- <legend style="width: 86%;"><strong>Outras Informações</strong></legend> -->
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                        <label for="numnf" class="control-label">Nota de Remessa</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Nº</span>
+                                            <input class="form-control" type="text" name="numnf" id="numnf" tabindex="8">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                        <label for="valornf" class="control-label">Valor</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">R$</span>
+                                            <input class="form-control required" type="text" name="valornf" id="valornf"
+                                                mask="#00.000.000.000.000,00" tabindex="9">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label class="control-label col-sm-12">&nbsp;</label>
+                                        <button type="button" class="btn btn-danger" id="btnparcela" name="btnparcela"
+                                            data-modal-pedidos
+                                            onclick="myModal('tableparc')"><strong>Parcelas</strong></button>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-7">
+                                <fieldset>
+                                    <div class="form-group col-sm-3">
+                                        <label class="control-label col-sm-12">&nbsp;</label>
+                                        <button id="btnModalPedido" name="btnModalPedido"
+                                            class="btn btn-danger"><strong>Pedidos</strong></button>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div hidden class="col-sm-12">
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">Numero Solicitacao:</label>
+                                    <input type="text" name="numsolicitacao" id="numsolicitacao" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">Solicitante:</label>
+                                    <input type="text" name="solicitante" id="solicitante" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">dataFiltro:</label>
+                                    <input type="text" name="dataFiltro" id="dataFiltro" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">datalancFiltro:</label>
+                                    <input type="text" name="datalancFiltro" id="datalancFiltro" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">data:</label>
+                                    <input type="text" name="data_sol" id="data_sol" class="form-control">
+                                    <input type="hidden" name="novaDataReprovado" id="novaDataReprovado">
+                                    <input type="hidden" name="atividadeAtual" id="atividadeAtual">
+                                    <input type="hidden" name="tipoFornecedor" id="tipoFornecedor">
+                                    <input type="hidden" name="qtdDias" id="qtdDias">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">somadata:</label>
+                                    <input type="text" name="somadata" id="somadata" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">dtMinima:</label>
+                                    <input type="text" name="dtMinima" id="dtMinima" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">diadasemana:</label>
+                                    <input type="text" name="weekday" id="weekday" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">nmsolicitacao:</label>
+                                    <input type="text" name="nmsolic" id="nmsolic" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">StatusLancFinanc:</label>
+                                    <input type="text" name="inputLancFinanc" id="inputLancFinanc" class="form-control"
+                                        value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">StatusFundoFixo:</label>
+                                    <input type="text" name="inputFundoFixo" id="inputFundoFixo" class="form-control"
+                                        value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">StatusFrete:</label>
+                                    <input type="text" name="inputFrete" id="inputFrete" class="form-control" value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">AprovFistatus:</label>
+                                    <input type="text" name="inputAprovFisStatus" id="inputAprovFisStatus"
+                                        class="form-control" value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">Adiantamento:</label>
+                                    <input type="text" name="inputAdiantamento" id="inputAdiantamento" class="form-control" value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">Boleto:</label>
+                                    <input type="text" name="inputBoleto" id="inputBoleto" class="form-control" value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">TED:</label>
+                                    <input type="text" name="inputTED" id="inputTED" class="form-control" value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">prazoAceitavel:</label>
+                                    <input type="text" name="inputprazoAceitavel" id="inputprazoAceitavel"
+                                        class="form-control" value="Undefined">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">tipoFornecedor:</label>
+                                    <input type="text" name="inputtipoFornecedor" id="inputtipoFornecedor"
+                                        class="form-control" value="0">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">OutrasOpções:</label>
+                                    <input type="text" name="inputtipoSolicitacao" id="inputtipoSolicitacao"
+                                        class="form-control" value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">NrTask:</label>
+                                    <input type="text" name="nrtask" id="nrtask" class="form-control" value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">Fluxo:</label>
+                                    <input type="text" name="inputFluxo" id="inputFluxo" class="form-control" value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID:</label>
+                                    <input type="text" name="inputdocumentId1" id="inputdocumentId1" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID2:</label>
+                                    <input type="text" name="inputdocumentId2" id="inputdocumentId2" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID3:</label>
+                                    <input type="text" name="inputdocumentId3" id="inputdocumentId3" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID4:</label>
+                                    <input type="text" name="inputdocumentId4" id="inputdocumentId4" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID5:</label>
+                                    <input type="text" name="inputdocumentId5" id="inputdocumentId5" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID6:</label>
+                                    <input type="text" name="inputdocumentId6" id="inputdocumentId6" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID7:</label>
+                                    <input type="text" name="inputdocumentId7" id="inputdocumentId7" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID8:</label>
+                                    <input type="text" name="inputdocumentId8" id="inputdocumentId8" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID9:</label>
+                                    <input type="text" name="inputdocumentId9" id="inputdocumentId9" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">documentID10:</label>
+                                    <input type="text" name="inputdocumentId10" id="inputdocumentId10" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">coligadaResumida:</label>
+                                    <input type="text" name="inputcoligResum" id="inputcoligResum" class="form-control"
+                                        value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">fluxoDP:</label>
+                                    <input type="text" name="inputfluxoDP" id="inputfluxoDP" class="form-control" value="">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">StatusRecusaFiscal:</label>
+                                    <input type="text" name="inputstatusRecusaFiscal" id="inputstatusRecusaFiscal"
+                                        class="form-control" value="">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div id="divAnaliseFiscal" name="divAnaliseFiscal" class="col-sm-12">
+                    <fieldset>
+                        <legend><strong>Aprovação Fiscal</strong></legend>
+                        <div class="col-sm-1" name="divAprovaRecusaFiscal" id="divAprovaRecusaFiscal">
+                            <label for="aprovaRecusaFiscal" class="control-label">Status:</label>
+                            <select class="form-control" name="aprovaRecusaFiscal" id="aprovaRecusaFiscal">
+                                <option value=""></option>
+                                <option value="Aprovado">Aprovado</option>
+                                <option value="Recusado">Recusado</option>
+                            </select>
+                        </div>
+                        <div id="divmotivoRecusaFiscal" name="divmotivoRecusaFiscal" class="col-sm-2"
+                            style="display: none;">
+                            <label for="motivoRecusaFiscal" class="control-label">Motivo:</label>
+                            <select class="form-control" name="motivoRecusaFiscal" id="motivoRecusaFiscal">
+                                <option value=""></option>
+                                <option value="1">1 - Anexo Ilegível/Incorreto</option>
+                                <option value="2">2 - Duplicidade</option>
+                                <option value="3">3 - Migo Incorreta</option>
+                                <option value="4">4 - NF Cacelada</option>
+                                <option value="5">5 - Divergência Pedido X NF</option>
+                                <option value="6">6 - Vencimento Incorreto</option>
+                                <option value="7">7 - Solicitação Incorreta</option>
+                                <option value="8">8 - NF Incorreta</option>
+                                <option value="9">9 - IVA Incorreto</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <div id="divJustFisc" class="col-sm-12" style="display: none;">
+                                <textarea id="txtJustFisc" name="txtJustFisc" class="form-control" rows="3"
+                                    placeholder="Justificativa"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="modalFornec" name="modalFornec" class="modal_custom" style="display: none;">
+                    <div class="modal_content_custom">
+                        <div class="modal-header-custom col-sm-12" style="text-align: center;">
+                            <span class="modal_closeBtn">&times;</span>
+                            <h2> Consultar Fornecedores</h2>
+                        </div>
+                        <div id="divModalSearch" class="form-group col-sm-12" style="text-align: center;">
+                            <div class="input-group col-sm-12" style="text-align: center;">
+                                <input class="modalSearchFornec" id="modalSearchCNPJ" name="modalSearch" checked
+                                    data-radiocharm-label="CNPJ/CPF" data-radiocharm-icon="far fa-check-circle"
+                                    type="radio" value="CNPJ">
+                                <input class="modalSearchFornec" id="modalSearchName" name="modalSearch"
+                                    data-radiocharm-label="Nome" data-radiocharm-icon="far fa-check-circle"
+                                    type="radio" value="Nome">
+                                <input class="modalSearchFornec" id="modalSearchNr" name="modalSearch"
+                                    data-radiocharm-label="Nº" data-radiocharm-icon="far fa-check-circle"
+                                    type="radio" value="Nr">
+                            </div>
+                            <div>
+                                <div class="col-sm-12">
+                                    <input type="text" id="modalInputCNPJCPF" name="modalInputCNPJCPF"
+                                        class="form-control modalInputFornec"
+                                        placeholder="Coloque o CNPJ sem pontos.">
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <input type="text" id="modalInputName" name="modalInputName"
+                                        class="form-control modalInputFornec" style="display: none"
+                                        placeholder="Coloque o Nome ou parte dele.">
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <input type="text" id="modalInputNr" name="modalInputNr"
+                                        class="form-control modalInputFornec" style="display: none"
+                                        placeholder="Coloque o Número do fornecedor.">
+                                </div>
+                            </div>
+                            <div class="col-sm-12" style="text-align: center;">
+                                <button id="modal_BtnBuscaFornec" name="modal_BtnBuscaFornec"
+                                    class="col-sm-2 col-sm-offset-10 btn btn-default"
+                                    style="background: #005a6f;color: #fff;text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);"><strong>Buscar</strong></button>
+                            </div>
+                        </div>
+                        <table id="modalTableFornecedores" class="table-custom col-sm-12" align="center">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome</th>
+                                    <th>CPF/CNPJ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="modalPedidos" name="modalPedidos" class="modal_custom" style="display: none;">
+                    <div class="modal_content_custom">
+                        <span class="modal_closeBtn">&times;</span>
+                        <div class="jqxTree form-group col-sm-12">
+                            <ul id="listPedidos">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <style type="text/css">
+                    table#modalTableFornecedores th td {
+                        border: 1px solid black;
+                        border-collapse: collapse;
+                        opacity: 0.95;
+                    }
+
+                    table#modalTableFornecedores th td {
+                        display: none;
+                        border: 1px solid black;
+                        border-collapse: collapse;
+                        opacity: 0.95;
+                    }
+
+                    table#modalTableFornecedores th td {
+                        padding: 10px;
+                        text-align: center;
+                    }
+
+                    table#modalTableFornecedores th {
+                        background-color: #a70000;
+                        color: white;
+                        padding: 2px;
+                    }
+
+                    table#modalTableFornecedores tr:nth-child(even) {
+                        background-color: #e8e8e8;
+                    }
+
+                    table#modalTableFornecedores tr:nth-child(odd) {
+                        background-color: white;
+                    }
+
+                    table#modalTableFornecedores tr:hover,
+                    table#modalTableFornecedores tr:focus {
+                        background-color: #ece185;
+                        color: white;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+                    .modal_custom {
+                        display: none;
+                        position: fixed;
+                        z-index: 10;
+                        left: 0;
+                        top: 0;
+                        height: 100%;
+                        width: 100%;
+                        overflow: auto;
+                        background-color: rgba(0, 0, 0, 0.5);
+                    }
+
+                    .modal_content_custom {
+                        background-color: #f4f4f4;
+                        margin: 20% auto;
+                        padding: 20px;
+                        width: 70%;
+                        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+                        animation-name: modalopen;
+                        animation-duration: 2s;
+                    }
+
+                    .modal-header-custom {
+                        background: #005a6f;
+                        padding: 15px;
+                        color: #fff;
+                        border-radius: 5px;
+                    }
+
+                    .modal-header-custom h2 {
+                        margin: 0;
+                    }
+
+                    #modalPedidos .modal_content_custom {
+                        max-width: 100%;
+                        width: auto !important;
+                        display: table;
+                    }
+
+                    #modalFornec .modal_content_custom {
+                        max-width: 100%;
+                        width: auto !important;
+                        display: table;
+                        border-radius: 5px;
+                    }
+
+                    @keyframes modalopen {
+                        from {
+                            opacity: 0
+                        }
+
+                        to {
+                            opacity: 1
+                        }
+                    }
+
+                    #modalTableFornecedores .table-custom {
+                        width: 100%;
+                    }
+
+                    .modal_closeBtn {
+                        color: #ccc;
+                        float: right;
+                        font-size: 20px;
+                    }
+
+                    .modal_closeBtn:hover,
+                    .modal_closeBtn:focus {
+                        color: #ff0000;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+                    #dvparcelas {
+                        float: right;
+                        position: absolute;
+                        right: 0;
+                        bottom: -160;
+                        border: 1px solid #e5e5e5;
+                    }
+
+                    .fluig-style-guide .alert:before {
+                        font-family: Flat-Icons;
+                        font-size: 24px;
+                        line-height: 64px;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        display: flex;
+                        flex-direction: column;
+                        width: 64px;
+                        height: 100%;
+                        text-align: center;
+                        border-top-left-radius: 4px;
+                        border-bottom-left-radius: 4px;
+                        justify-content: flex-end;
+                        align-items: center;
+                    }
+
+                    @media (min-width: 992px) {
+                        .fluig-style-guide .col-md-3 {
+                            width: 40%;
+                        }
+                    }
+                </style>
+            </form>
+        </div>
+    </body>
+</html>

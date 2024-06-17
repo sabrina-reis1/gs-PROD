@@ -1,0 +1,451 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+		<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+		<script src="script.js"></script>
+        <script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+	</head>
+	<body>
+		<div class="fluig-style-guide">
+			<form name="form" role="form">
+				<div class="panel panel-default">
+					<div class="panel-heading fs-txt-center">
+                        <h1 class="panel-title">Solicitação de Declaração/Nota Fiscal de Devolução/Simples Remessa</h1>
+					</div>
+					<div class="panel-body">
+						<div class="panel panel-default"> <!-- CABEÇALHO PRINCIPAL -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Cabeçalho Principal</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-2">
+										<label for="inputDataSolicitacao" class="control-label">Data da Solicitação:</label>
+										<input type="text" name="inputDataSolicitacao" id="inputDataSolicitacao" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="inputSolicitante" class="control-label">Solicitante:</label>
+										<input type="text" name="inputSolicitante" id="inputSolicitante" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-6">
+										<label for="selectEmpresaRemetente" class="control-label">Empresa Remetente:</label>
+										<select name="selectEmpresaRemetente" id="selectEmpresaRemetente" class="form-control"></select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="selectOperacao" class="control-label">Operação:</label>
+										<select name="selectOperacao" id="selectOperacao" class="form-control">
+											<option value=""></option>
+											<option value='5210/6210'>5210/6210 | Devolução de Compra para Utilização na Prestação de Serviço</option>
+											<option value='5412/6412'>5412/6412 | Devolução de Compra de Bem para o Ativo Imobilizado (Mercadoria Sujeita a Substituição Tributária)</option>
+											<option value='5413/6413'>5413/6413 | Devolução de Compra de Material para Uso ou Consumo (Mercadoria Sujeita a Substituição Tributária)</option>
+											<option value='5553/6553'>5553/6553 | Devolução de Compra de Bem para o Ativo Imobilizado</option>
+											<option value='5556/6556'>5556/6556 | Devolução de Compra de Material para uso ou consumo</option>
+											<option value='5901/6901'>5901/6901 | Remessa para Industrialização por Encomenda</option>
+											<option value='5909/6909'>5909/6909 | Retorno de Bem Recebido por Contrato de Comodato ou Locação</option>
+											<option value='5910/6910'>5910/6910 | Remessa em Bonificação, Doação ou Brinde</option>
+											<option value='5913/6913'>5913/6913 | Retorno de Mercadoria ou Bem Recebido para Demonstração</option>
+											<option value='5915/6915'>5915/6915 | Remessa de Mercadoria ou Bem para Conserto ou Reparo</option>
+											<option value='5920/6920'>5920/6920 | Remessa de Vasilhame ou Sacaria</option>
+											<option value='5921/6921'>5921/6921 | Devolução de Vasilhame ou Sacaria</option>
+											<option value='5949/6949'>5949/6949 | Outras Saídas Não Especificadas</option>
+											<option value='5949/6949'>5949/6949 | Remessa para Empréstimo</option>
+											<option value='5949/6949'>5949/6949 | Remessa de Resíduos</option>
+											<option value='5949/6949'>5949/6949 | Remessa para Teste</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="selectMotivoOperacao" class="control-label">Motivo Operação:</label>
+										<select name="selectMotivoOperacao" id="selectMotivoOperacao" class="form-control">
+											<option value=""></option>
+											<option value="MercadoriaDivergentedoPedido">Mercadoria Divergente do Pedido</option>
+											<option value="MercadoriacomDefeito">Mercadoria com Defeito</option>
+											<option value="Outros">Outros - Descrever abaixo</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-3">
+										<label class="control-label">Data e Hora da Remessa</label>
+										<input type="text" name="inputDataHoraRemessa" id="inputDataHoraRemessa" class="form-control" mask="00/00/0000 00:00:00">
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="textareaJustificativaRemessa" class="control-label">Justificativa:</label>
+										<textarea name="textareaJustificativaRemessa" id="textareaJustificativaRemessa" rows="3" class="form-control"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default"> <!-- NOTA FISCAL DE ORIGEM -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Nota Fiscal de Origem</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-3">
+										<label for="inputNotaFiscalOrigem" class="control-label">Número Nota Fiscal de Origem:</label>
+										<input type="text" name="inputNotaFiscalOrigem" id="inputNotaFiscalOrigem" class="form-control">
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputDataVencimentoBoleto" class="control-label">Data de Vencimento:</label>
+										<input type="text" name="inputDataVencimentoBoleto" id="inputDataVencimentoBoleto" class="form-control">
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="" class="control-label">Pagamento efetuado junto ao fornecedor?</label>
+										<input type="checkbox" name="switchPgtoJuntoFornecedor" id="switchPgtoJuntoFornecedor" class="form-control" data-size="small" data-on-color="success" data-off-color="danger" data-on-text="SIM" data-off-text="NÃO">
+									</div>
+									<div class="form-group col-sm-3 fs-txt-center">
+										<input class="btn btn-info" id="btnAnexarNFOrigem" name="btnAnexarNFOrigem" value="ANEXAR NF ORIGEM">
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="textareaObsNFOrigem" class="control-label">Observações:</label>
+										<textarea name="textareaObsNFOrigem" id="textareaObsNFOrigem" rows="3" class="form-control" placeholder="Descrever a negociação com fornecedor"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default"> <!-- DADOS DO DESTINATÁRIO -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Dados do Destinatário</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="inputFornecedorDestinatario" class="control-label">Razão Social:</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fluigicon fluigicon-search icon-sm"></i></span>
+											<input type="text" name="inputFornecedorDestinatario" id="inputFornecedorDestinatario" class="form-control" placeholder="Insira começo do nome/razão social ou código do fornecedor e aperte o ENTER">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-3">
+										<label for="inputCNPJDestinatario" class="control-label">CNPJ:</label>
+										<input type="text" name="inputCNPJDestinatario" id="inputCNPJDestinatario" class="form-control" mask="00.000.000/0000-00" readonly>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputIEDestinatario" class="control-label">Incrição Estadual:</label>
+										<input type="text" name="inputIEDestinatario" id="inputIEDestinatario" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputIMDestinatario" class="control-label">Incrição Municipal:</label>
+										<input type="text" name="inputIMDestinatario" id="inputIMDestinatario" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputCepDestinatario" class="control-label">CEP:</label>
+										<input type="text" name="inputCepDestinatario" id="inputCepDestinatario" class="form-control" mask="00000-000" readonly>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-4">
+										<label for="inputEnderecoDestinatario" class="control-label">Endereço:</label>
+										<input type="text" name="inputEnderecoDestinatario" id="inputEnderecoDestinatario" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-1">
+										<label for="inputNumEnderecoDestinatario" class="control-label">Nº:</label>
+										<input type="text" name="inputNumEnderecoDestinatario" id="inputNumEnderecoDestinatario" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputBairroDestinatario" class="control-label">Bairro:</label>
+										<input type="text" name="inputBairroDestinatario" id="inputBairroDestinatario" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="inputComplementoDestinatario" class="control-label">Complemento:</label>
+										<input type="text" name="inputComplementoDestinatario" id="inputComplementoDestinatario" class="form-control" readonly>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-3">
+										<label for="inputCidadeDestinatario" class="control-label">Cidade:</label>
+										<input type="text" name="inputCidadeDestinatario" id="inputCidadeDestinatario" class="form-control" readonly>
+									</div>
+									<div class="form-group col-sm-2">
+										<label for="inputUFDestinatario" class="control-label">UF:</label>
+										<input type="text" name="inputUFDestinatario" id="inputUFDestinatario" class="form-control" maxlength="2" readonly>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputContatoDestinatario" class="control-label">Contato:</label>
+										<input type="text" name="inputContatoDestinatario" id="inputContatoDestinatario" class="form-control">
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="" class="control-label">Endereço de entrega diferente do cadastro do destinatário?</label>
+										<input type="checkbox" name="switchDiferenteEnderecoEntrega" id="switchDiferenteEnderecoEntrega" class="form-control" data-size="small" data-on-color="success" data-off-color="danger" data-on-text="SIM" data-off-text="NÃO">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default"> <!-- LOCAL DA ENTREGA -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Local da Entrega</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-3">
+										<label for="inputCepEntrega" class="control-label">CEP:</label>
+										<input type="text" name="inputCepEntrega" id="inputCepEntrega" class="form-control endEntrega" mask="00000-000" readonly>
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="inputEnderecoEntrega" class="control-label">Endereço:</label>
+										<input type="text" name="inputEnderecoEntrega" id="inputEnderecoEntrega" class="form-control endEntrega" readonly>
+									</div>
+									<div class="form-group col-sm-1">
+										<label for="inputNumEnderecoEntrega" class="control-label">Nº:</label>
+										<input type="text" name="inputNumEnderecoEntrega" id="inputNumEnderecoEntrega" class="form-control endEntrega" readonly>
+									</div>
+									<div class="form-group col-sm-4">
+										<label for="inputBairroEntrega" class="control-label">Bairro:</label>
+										<input type="text" name="inputBairroEntrega" id="inputBairroEntrega" class="form-control endEntrega" readonly>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-3">
+										<label for="inputComplementoEntrega" class="control-label">Complemento:</label>
+										<input type="text" name="inputComplementoEntrega" id="inputComplementoEntrega" class="form-control endEntrega" readonly>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputCidadeEntrega" class="control-label">Cidade:</label>
+										<input type="text" name="inputCidadeEntrega" id="inputCidadeEntrega" class="form-control endEntrega" readonly>
+									</div>
+									<div class="form-group col-sm-1">
+										<label for="inputUFEntrega" class="control-label">UF:</label>
+										<input type="text" name="inputUFEntrega" id="inputUFEntrega" class="form-control endEntrega" maxlength="2" readonly>
+									</div>
+									<div class="form-group col-sm-3">
+										<label for="inputContatoEntrega" class="control-label">Contato:</label>
+										<input type="text" name="inputContatoEntrega" id="inputContatoEntrega" class="form-control endEntrega" readonly>
+									</div>
+									<div class="form-group col-sm-2">
+										<label for="inputTelefoneEntrega" class="control-label">Telefone:</label>
+										<input type="text" name="inputTelefoneEntrega" id="inputTelefoneEntrega" class="form-control endEntrega" mask="(00) 00000-0000" readonly>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default"> <!-- DADOS DA TRANSPORTADORA -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Dados da Transportadora</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-4">
+										<label for="selectResponsavelTransporte" class="control-label">Responsável Transporte:</label>
+										<select name="selectResponsavelTransporte" id="selectResponsavelTransporte" class="form-control">
+											<option value=""></option>
+											<option value="destinatario">Por conta do destinatário</option>
+											<option value="remetente">Por conta do remetente</option>
+											<option value="proprioRemetente">Transporte próprio por conta do Remetente</option>
+											<option value="proprioDestinatario">Transporte próprio por conta do Destinatário</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-8">
+										<label for="inputTransportadoraRemetente" class="control-label">Transportadora:</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fluigicon fluigicon-search icon-sm"></i></span>
+											<input type="text" name="inputTransportadoraRemetente" id="inputTransportadoraRemetente" class="form-control transportadora" placeholder="Insira começo do nome/razão social ou código do fornecedor e aperte o ENTER">	
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="inputCNPJTransportadora" class="control-label">CNPJ:</label>
+										<input type="text" name="inputCNPJTransportadora" id="inputCNPJTransportadora" class="form-control transportadora">
+									</div>
+									<div class="form-group col-sm-6">
+										<label for="inputIETransportadora" class="control-label">Inscrição Estadual:</label>
+										<input type="text" name="inputIETransportadora" id="inputIETransportadora" class="form-control transportadora">
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="textareaObsTransportadora" class="control-label">Observação:</label>
+										<textarea name="textareaObsTransportadora" id="textareaObsTransportadora" class="form-control"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default"> <!-- ITENS -->
+							<div class="panel-heading">
+								<h3 class="panel-title">Itens</h3>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-12 fs-txt-center">
+										<input class="btn btn-info" id="btnAdicionarItem" name="btnAdicionarItem" value="ADICIONAR ITEM">
+									</div>
+								</div>
+								<div class="row">
+									<div id="divTableItens" class="form-group col-sm-12">
+										<div class="panel">
+											<div class="panel-body table-responsive">
+												<table id="tableItens" tablename="tableItens" class="table" noaddbutton=true nodeletebutton=true>
+													<thead>
+														<tr>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 5%;">Item</th>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 25%;">Centro Logístico</th>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 25%;">Material</th>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 10%;">Un</th>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 10%;">Qtd</th>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 10%;">R$ Un</th>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 10%;">R$ Total</th>
+															<th class="fs-no-margin fs-no-padding fs-txt-center" style="width: 5%;">&nbsp;</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td class="fs-no-margin fs-no-padding">
+																<input type="text" name="tdItem" id="tdItem" class="form-control" readonly>
+															</td>
+															<td class="fs-no-margin fs-no-padding">
+																<select name="tdCentroLogistico" id="tdCentroLogistico" class="form-control"></select>
+															</td>
+															<td class="fs-no-margin fs-no-padding">
+																<div class="input-group">
+																	<span class="input-group-addon"><i class="fluigicon fluigicon-search icon-sm"></i></span>
+																	<input type="text" name="tdMaterial" id="tdMaterial" class="form-control" placeholder="Digite o código ou texto breve do material...">
+																</div>
+															</td>
+															<td class="fs-no-margin fs-no-padding">
+																<input type="text" name="tdUnidade" id="tdUnidade" class="form-control" readonly>
+															</td>
+															<td class="fs-no-margin fs-no-padding">
+																<input type="text" name="tdQuantidade" id="tdQuantidade" class="form-control">
+															</td>
+															<td class="fs-no-margin fs-no-padding">
+																<input type="text" name="tdValorUnitario" id="tdValorUnitario" class="form-control" mask="#00.000.000.000.000,00">
+															</td>
+															<td class="fs-no-margin fs-no-padding">
+																<input type="text" name="tdValorTotal" id="tdValorTotal" class="form-control valorTotalItem" readonly>
+															</td>
+															<td class="fs-no-margin fs-no-padding">
+																<i id="spanRemover" name="spanRemover" style="color: darkred;" class="fluigicon fluigicon-remove-circle icon-lg fs-txt-center fs-cursor-pointer" onclick="fnCustomDelete(this);"></i>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-4 col-sm-offset-4">
+										<label for="inputValorTotalSolicitacao" class="control-label">Valor Total:</label>
+										<input type="text" name="inputValorTotalSolicitacao" id="inputValorTotalSolicitacao" class="form-control" mask="#00.000.000.000.000,00">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default" id="divFiscal" name="divFiscal"> <!-- FISCAL -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Fiscal</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-3">
+										<label for="" class="control-label">Aprovação Fiscal:</label>
+										<input 
+											type="checkbox" 
+											name="switchAprovacaoFiscal" 
+											id="switchAprovacaoFiscal" 
+											class="form-control"
+											data-size="small"
+											data-on-color="success"
+											data-off-color="danger"
+											data-on-text="SIM"
+											data-off-text="NÃO"
+										>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="textareaJustificativaFiscal" class="control-label">Justificativa Fiscal:</label>
+										<textarea name="textareaJustificativaFiscal" id="textareaJustificativaFiscal" rows="3" class="form-control"></textarea>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-12 fs-txt-center">
+										<input class="btn btn-info nfOrigem" id="btnAnexarNotaFiscal" name="btnAnexarNotaFiscal" value="ANEXAR NOTA FISCAL">
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-3">
+										<label for="inputNumeroNotaFiscal">Número da Nota Fiscal:</label>
+										<input type="text" name="inputNumeroNotaFiscal" id="inputNumeroNotaFiscal" class="form-control">
+									</div>
+									<div class="form-group col-sm-3" id="divNumeroMiro" name="divNumeroMiro">
+										<label for="inputNumeroMiro" class="control-label">Número MIRO:</label>
+										<input type="text" name="inputNumeroMiro" id="inputNumeroMiro" class="form-control">
+									</div>
+									<div class="form-group col-sm-3" id="divNumeroMigo" name="divNumeroMigo">
+										<label for="inputNumeroMigo" class="control-label">Número MIGO:</label>
+										<input type="text" name="inputNumeroMigo" id="inputNumeroMigo" class="form-control">
+									</div>
+									<div class="form-group col-sm-3" id="divNumeroNotaFiscalWriter" name="divNumeroNotaFiscalWriter">
+										<label for="inputNumeroNotaFiscalWriter" class="control-label">Número Nota Fiscal Writer:</label>
+										<input type="text" name="inputNumeroNotaFiscalWriter" id="inputNumeroNotaFiscalWriter" class="form-control">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default" id="divDespachoMercadoria" name="divDespachoMercadoria"> <!-- DESPACHO MERCADORIA -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Despachar Mercadoria</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group col-sm-2">
+										<label for="inputDataSaidaMercadoria" class="control-label">Data de Saída da Mercadoria:</label>
+										<input type="text" name="inputDataSaidaMercadoria" id="inputDataSaidaMercadoria" class="form-control" mask="00/00/0000">
+									</div>
+									<div class="form-group col-sm-2 col-sm-offset-3 fs-txt-center">
+										<input class="btn btn-info" id="btnAnexarDespacho" name="btnAnexarDespacho" value="ANEXAR DESPACHO">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default" id="divInfoSolicitacao" name="divInfoSolicitacao"> <!-- INFORMAÇÕES DA SOLICITAÇÃO -->
+							<div class="panel-heading">
+								<h1 class="panel-title">Informações da Solicitação</h1>
+							</div>
+							<div class="panel-body">
+								<div class="form-group col-sm-2">
+									<label for="inputCodigoProcesso" class="control-label">Código do Processo:</label>
+									<input type="text" name="inputCodigoProcesso" id="inputCodigoProcesso" class="form-control">
+								</div>
+								<div class="form-group col-sm-2">
+									<label for="inputNumeroSolicitacao" class="control-label">Número Solicitação:</label>
+									<input type="text" name="inputNumeroSolicitacao" id="inputNumeroSolicitacao" class="form-control">
+								</div>
+								<div class="form-group col-sm-2">
+									<label for="inputNumeroAtividade" class="control-label">Número Atividade:</label>
+									<input type="text" name="inputNumeroAtividade" id="inputNumeroAtividade" class="form-control">
+								</div>
+								<div class="form-group col-sm-2">
+									<label for="inputUsuarioSolicitante" class="control-label">Usuário Solicitante:</label>
+									<input type="text" name="inputUsuarioSolicitante" id="inputUsuarioSolicitante" class="form-control">
+								</div>
+								<div class="form-group col-sm-2">
+									<label for="inputIDSolicitante" class="control-label">ID Solicitante:</label>
+									<input type="text" name="inputIDSolicitante" id="inputIDSolicitante" class="form-control">
+								</div>
+								<div class="form-group col-sm-2">
+									<label for="inputEmailSolicitante" class="control-label">Email Solicitante:</label>
+									<input type="text" name="inputEmailSolicitante" id="inputEmailSolicitante" class="form-control">
+								</div>
+								<div class="form-group col-sm-2">
+									<label for="inputLoginSolicitante" class="control-label">Login Solicitante:</label>
+									<input type="text" name="inputLoginSolicitante" id="inputLoginSolicitante" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,1523 @@
+<!--*************************************************************************Controle de Versão**************************************************************/
+// Versão 1.0.01 																																		                                       //
+// Alterando campo classeAvaliacao de zoom para input                                                                                                       //
+/**********************************************************************************************************************************************************-->
+<html>
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <title>Cadastro de Materiais</title>
+       <link type="text/css" rel="stylesheet" href="/portal/resources/style-guide/css/fluig-style-guide.min.css"/>
+      <script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+      <script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+      <script type="text/javascript" src="/portal/resources/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+      <script type="text/javascript" src="/portal/resources/js/moment/moment.js"></script>
+      <link rel="stylesheet" href="bootstrap-chosen.css" />
+      <script src="jquery.min.js"></script>
+      <script src="chosen.jquery.js"></script>
+      <script type="text/javascript" src="script.js"></script>
+      <script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+   </head>
+   <body id="body" name="body" onload="validaClasseAvaliacao()">
+      <div class="fluig-style-guide">
+         <form name="form" role="form">
+            <div class="panel panel-default form-group">
+               <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                  <h3 class="panel-title"><strong>Cadastro de Materiais</strong></h3>
+               </div>
+               <div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+               <div hidden class="row">
+                  <div class="form-group col-sm-10 col-xs-12">
+                     <label class="col-sm-2 control-label" style="padding-left: 1px">E-mail</label>
+                     <div class="col-sm-10">
+                        <input type="text" class="form-control" id="email" name="email" readonly="readonly" style="padding-left: 5px">
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="form-group col-sm-6 col-xs-6">
+                     <label for="solicitante" class="col-sm-12 control-label" style="padding-left: 1px">Solicitante</label>
+                     <input type="text" class="form-control col-sm-6" id="solicitante" name="solicitante" readonly="readonly" style="padding-left: 5px">
+                   </div>
+               <!--/div>
+                <div class="row"-->
+                    <div class="form-group col-sm-6 col-xs-6" id="divCentroLogistico" name="divCentroLogistico">
+                        <label for="centroLogistica" class="col-sm-12 control-label" style="padding-left: 1px">Centro Logistico</label>
+                           <select id="centroLogistica" name="centroLogistica" class="form-control">
+                                <option value=""></option>
+                                <!--
+                                =======================================================================
+                                24/08/2023 - Inicio inclusão
+                                GDSI-22063
+                                Matheus Nóbrega Rodrigues
+                                Alteração dos centros logisticos para adequação ao S/4Hana
+                                -->
+                                <option value="B001">B001 | GS INIMA BRASIL</option>
+                                <option value="B002">B002 | AMBIENT</option>
+                                <option value="B003">B003 | SESAMM</option>
+                                <option value="B004">B004 | ARAUCARIA</option>
+                                <option value="B005">B005 | SANEVAP</option>
+                                <option value="B006">B006 | SANAMA</option>
+                                <option value="B007">B007 | CAEPA</option>
+                                <option value="B008">B008 | COMASA</option>
+                                <option value="B009">B009 | SAMAR</option>
+                                <option value="B010">B010 | GS INIMA INDUSTRIAL</option>
+                                <option value="B011">B011 | GS INIMA SERVIÇOS</option>
+                                <option value="B012">B012 | PALMEIRAS</option>
+                                <option value="B013">B013 | SANEOURO</option>
+                                <option value="B014">B014 | ADM JECEABA</option>
+                                <option value="B015">B015 | AQUAPOLO</option>
+                                <option value="B016">B016 | GS INIMA TRIUNFO</option>
+                                <option value="B017">B017 | SANEL</option>
+                                <option value="B701">B701 | CC ALMA</option>
+                                <option value="C002">C002 | AMBIENT-CAPEX</option>
+                                <option value="C006">C006 | SANAMA-CAPEX</option>
+                                <option value="C008">C008 | COMASA-CAPEX</option>
+                                <option value="C009">C009 | SAMAR-CAPEX</option>
+                                <option value="C012">C012 | PALMEIRAS-CAPEX</option>
+                                <option value="C013">C013 | SANEOURO-CAPEX</option>
+                                <option value="C015">C015 | AQUAPOLO-CAPEX</option>
+                                <option value="C016">C016 | GS TRIUNFO-CAPEX</option>
+                                <option value="O002">O002 | AMBIENT-OPEX</option>
+                                <option value="O003">O003 | SESAMM-OPEX</option>
+                                <option value="O006">O006 | SANAMA-OPEX</option>
+                                <option value="O008">O008 | COMASA-OPEX</option>
+                                <option value="O009">O009 | SAMAR-OPEX</option>
+                                <option value="O011">O011 | GS INIMA SERVIÇOS-OPEX</option>
+                                <option value="O012">O012 | PALMEIRAS-OPEX</option>
+                                <option value="O013">O013 | SANEOURO-OPEX</option>
+                                <option value="O015">O015 | AQUAPOLO-OPEX</option>
+                                <option value="O016">O016 | GS INIMA TRIUNFO-OPEX</option>
+                                <option value="O701">O701 | CC ALMA-OPEX</option>
+                                <!--                            
+                                <option value="B001">B001 | GS INIMA BRASIL</option>
+                                <option value="B002">B002 | ADMINISTRAÇÃO AMBIENT</option>
+                                <option value="B003">B003 | ADMINISTRAÇÃO SESAMM</option>
+                                <option value="B004">B004 | ADMINISTRAÇÃO ARAUCÁRIA</option>
+                                <option value="B005">B005 | ADMINISTRAÇÃO SANEVAP</option>
+                                <option value="B006">B006 | ADMINISTRAÇÃO SANAMA</option>
+                                <option value="B007">B007 | ADMINISTRAÇÃO CAEPA</option>
+                                <option value="B008">B008 | ADM AGUAS STA RITA</option>
+                                <option value="B009">B009 | ADM SAMAR</option>
+                                <option value="B010">B010 | GS INIMA INDUSTRIAL</option>
+                                <option value="B011">B011 | GS INIMA SERVIÇOS</option>
+                                <option value="B013">B013 | ADM SANEOURO</option>
+                                <option value="B014">B014 | ADM JECEABA</option>
+                                <option value="B015">B015 | ADM AQUAPOLO</option>
+                                <option value="B016">B016 | ADM TRIUNFO</option>
+                                <option value="B017">B017 | ADM SANEL</option>
+                                <option value="BJ01">BJ01 | ADM.CC ALMA</option>
+                                <option value="BL01">BL01 | CONSTRUÇÃO DE NOVOS INTERCEPTO</option>
+                                <option value="BL02">BL02 | OBRA NOVOS INTERCEPTORES</option>
+                                <option value="BL03">BL03 | OBRA SANEVAP</option>
+                                <option value="BS01">BS01 | SERVIÇOS - OBRAS</option>
+                                <option value="BW03">BW03 | AMPLIAÇÃO DA ETE RP</option>
+                                <option value="BW05">BW05 | OBRA SANAMA</option>
+                                <option value="BW06">BW06 | OBRA ETE</option>
+                                <option value="CG01">CG01 | GESTAO COMERCIAL</option>
+                                <option value="CG02">CG02 | GESTAO COMERCIAL</option>
+                                <option value="CG03">CG03 | GESTAO COMERCIAL</option>
+                                <option value="IR01">IR01 | OPERAÇÃO JECEABA</option>
+                                <option value="IR02">IR02 | OPERAÇÃO AQUAPOLO</option>
+                                <option value="IR03">IR03 | OPERAÇÃO TRIUNFO</option>
+                                <option value="OP01">OP01 | OPERAÇAO AGUA</option>
+                                <option value="OP02">OP02 | OPERAC. AGUA</option>
+                                <option value="OP03">OP03 | OPERAÇÃO SAMAR</option>
+                                <option value="OP04">OP04 | OPERAÇÃO SANEOURO</option>
+                                <option value="OP05">OP05 | OPERAÇÃO SANEL</option>
+                                <option value="OS01">OS01 | SERVIÇOS - O&amp;M</option>
+                                <option value="OW03">OW03 | ETE RIBEIRAO PRETO</option>
+                                <option value="OW04">OW04 | ETE CAIÇARA</option>
+                                <option value="OW05">OW05 | ETE MOGI MIRIM</option>
+                                <option value="OW06">OW06 | OPERAÇÃO SANAMA</option>
+                                <option value="OW07">OW07 | OPERAÇAO ESGOTO</option>
+                                <option value="OW08">OW08 | OPERAC. CATANDUVA</option>
+                                <option value="OW09">OW09 | OPERAC. ESGOTO</option>
+                                <option value="OW10">OW10 | OPERAC. AMERICANA</option>
+                                <option value="OW11">OW11 | OPERAC. OLIMPIA</option>
+                                <option value="OW13">OW13 | OPERAÇÃO BIRIGUI</option>
+                                -->
+                                <!--
+                                24/08/2023 - Fim inclusão
+                                =======================================================================
+                                -->
+                           </select>
+                     </div>
+                </div>
+               	<div class="row">
+                 	<div class="form-group col-sm-2 col-xs-12">
+                     	<label for="datasol" class="col-sm-12 control-label" style="padding-left: 1px">Data</label>
+                     	<input type="text" class="form-control" id="datasol" name="datasol" readonly="readonly" style="padding-left: 5px">
+                    </div>
+                  	<div class="form-group col-sm-3 col-xs-12">
+                     	<label for="drop_motivo" class="control-label" style="padding-left: 1px">Motivo</label>
+                     	<select class="form-control" id="drop_motivo" name="drop_motivo">
+                     	        <option value="">Selecione...</option>
+                           		<option value="inclusao">Inclusão</option>
+                           		<option value="alteracao">Alteração</option>
+                           		<option value="ampliacao">Ampliação</option>
+                           		<option value="bloqueio">Bloqueio</option>
+                        </select>
+                    </div>
+
+                  	<div class="form-group col-sm-2 col-xs-12" name="divnrmaterial" id="divnrmaterial" style="display: none;">
+                     	<label for="numdomaterial" class="col-sm-12 control-label" id="lblnrmaterial" name="lblnrmaterial" style="padding-left: 1px">Nr. do Material</label>
+                     	<input type="text" class="form-control" id="nrmaterial" name="nrmaterial" mask="0000000">
+                    </div>
+                    <div class="form-group col-sm-1 col-xs-12" name="divCountChat" id="divCountChat" hidden>
+                      <label class="col-sm-12 control-label" style="padding-left: 1px">Count</label>
+                      <input type="text" class="form-control" id="inputCountChat" name="inputCountChat">
+                    </div>
+               	</div>
+            </div>
+        </div>
+        <!-- PANEL - OBS AMPLIAÇÃO MATERIAL -->
+        <div class="panel panel-default form-group" id="panelobsampMaterial" name="panelobsampMaterial" style="display: none;">
+                <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                    <h2 class="panel-title"><strong>Observação</strong></h2>
+                </div>
+
+                    <div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                        <div class="row">
+                            <div class="form-group col-sm-12 col-xs-12" name="divobsampMaterial" id="divobsampMaterial">
+		                        <textarea rows="1" id="obsampMaterial" name="obsampMaterial" class="form-control"></textarea>
+		                    </div>
+                     	</div>
+                  	</div>
+
+            </div>
+
+        <!-- PANEL - DADOS GERAIS -->
+        <div class="panel panel-default form-group" id="paneldivDadosGerais" name="paneldivDadosGerais">
+            <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                <h3 class="panel-title"><strong>Dados Gerais</strong></h3>
+            </div>
+            <div class="panel-body" id="divDadosGerais" name="divDadosGerais" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                <div class="row">
+                    <div class="form-group col-sm-3 col-xs-12">
+                        <label for="tipoMaterial" class="control-label">Tipo Material:</label>
+                        <select class="form-control" id="tipoMaterial" name="tipoMaterial" onchange="grupoVisivel();">
+	                        <option value="vazio"></option>
+	                        <option value="zcon">Consumiveis - ZCON</option>
+	                        <option value="zequ">Equipamentos - ZEQU</option>
+	                        <option value="zloc">Locação - ZLOC</option>
+	                        <option value="zmat">Material de Construção - ZMAT</option>
+	                        <option value="zrep">Peças Reposição - ZREP</option>
+	                        <option value="zser">Serviços - ZSER</option>
+	                        <option value="zter">Terrenos - ZTER</option>
+	                    </select>
+                    </div>
+                    <div class="form-group col-sm-4 col-xs-12">
+                        <label for="grupoMercadoria" class="control-label" name="lblgrupomercadoria" id="lblgrupomercadoria">Grupo Mercadoria (2&deg; Nível):</label>
+                        <select class=" form-control" onchange="pegavalor();" id="grupoMercadoria" name="grupoMercadoria"></select>
+                    </div>
+                    <div class="form-group col-sm-4 col-xs-12">
+                        <label for="itemgrupomercadoria" class="control-label" name="lblitemmercadoria" id="lblitemmercadoria">Grupo Mercadoria (3&deg; Nível):</label>
+                        <select class="form-control" id="itemgrupomercadoria" name="itemgrupomercadoria"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="divNcm" name="divNcm" class="form-group col-sm-3 col-xs-12">
+                        <label for="ncm" class="control-label" for="ncm" style="padding-left: 1px">NCM:</label>
+                        <input type="text" class="form-control" id="ncm" name="ncm" required="required" style="padding-left: 5px">
+                    </div>
+                    <div id="divnrmAntigo" name="divnrmAntigo" class="form-group col-sm-3 col-xs-12">
+                        <label for="materialAntigo" class="control-label" for="materialAntigo" style="padding-left: 1px">N. Material Antigo:</label>
+                        <input type="text" class="form-control" id="materialAntigo" name="materialAntigo" style="padding-left: 5px" onchange="FormValidation();">
+                    </div>
+                    <div class="form-group col-sm-5 col-xs-12">
+                        <label for="unimedida" class="col-sm-12 control-label" style="padding-left: 1px">Unidade de Medida:</label>
+                        <input
+                                  type="zoom"
+                                  id = "unimedida"
+                                  class="form-control"
+                                  name="unimedida"
+                                    data-zoom="{
+                                      'displayKey':'descricao',
+                                      'datasetId':'dsUniMedida',
+                                      'maximumSelectionLength':'2',
+                                      'fields':[
+                                          {
+                                             'field':'unidade',
+                                             'label':'Unidade de Medida'
+                                          },{
+                                            'field':'descricao',
+                                            'label':'Descrição da Medida',
+                                            'standard':'true'
+                                          }
+                                      ]
+                                   }"
+                              />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3 col-xs-12">
+                        <label for="textoBreve" class="control-label">Texto Breve:</label>
+                        <input type="text" class="form-control" id="textoBreve" name="textoBreve" style="padding-left: 5px" >
+                    </div>
+                    <div class="form-group col-sm-8 col-xs-12">
+                        <label for="textoLongo" class="control-label">Texto Longo:</label>
+                        <textarea rows="2" id="textoLongo" name="textoLongo" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+               <!-- PANEL - Ressuprimentos  -->
+               <div class="panel panel-default form-group" id="divRessuprimentos" name="divRessuprimentos">
+                  <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                     <h2 class="panel-title">
+                        <a class="collapse-icon" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><strong>Ressuprimentos</strong></a>
+                     </h2>
+                  </div>
+                  <div id="collapseTwo" class="panel-collapse collapse">
+                     <div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                        <div class="row">
+                           <div class="form-group col-sm-2 col-xs-12">
+                              <label for="mrp" class="control-label">Controla MRP:</label>
+                              <select class=" form-control" id="mrp" name="mrp">
+                                 <option value="mrpvazio"></option>
+                                 <option value="simmrp">SIM</option>
+                                 <option value="naomrp">NÃO</option>
+                              </select>
+                           </div>
+                           <div class="form-group col-sm-4 col-xs-12">
+                              <label for="deposito" class="control-label">Depósito:</label>
+                              <input type="text" class="form-control" id="deposito" name="deposito" style="padding-left: 5px" >
+                           </div>
+                           <div class="form-group col-sm-2 col-xs-12">
+                              <label for="prazo" class="control-label" style="padding-left: 1px">Prazo:</label>
+                              <input type="text" class="form-control" id="prazo" name="prazo" style="padding-left: 5px" >
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="form-group col-sm-3 col-xs-12">
+                              <label for="estoquemin" class="control-label" style="padding-left: 1px">Est. Mínimo:</label>
+                              <input type="text" class="form-control" id="estoquemin" name="estoquemin" style="padding-left: 5px" >
+                           </div>
+                           <div class="form-group col-sm-3 col-xs-12">
+                              <label for="estoquemax" class="control-label" style="padding-left: 1px">Est. Máximo:</label>
+                              <input type="text" class="form-control" id="estoquemax" name="estoquemax" style="padding-left: 5px" >
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- PANEL - Estoque -->
+               <div class="panel panel-default form-group">
+                  <div id="divEstoque" name="divEstoque" class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                     <h2 class="panel-title">
+                        <a class="collapse-icon" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><strong>Estoque</strong></a>
+                     </h2>
+                  </div>
+                  <div id="collapseThree" class="panel-collapse collapse">
+                     <div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                        <div class="row">
+                        	<div class="form-group col-sm-2 col-xs-12">
+                              <label for="ctlestoque" class="control-label">Controla Estoque:</label>
+                              <select class="form-control" id="ctlestoque" name="ctlestoque">
+                                 <option value="ctlvazio"></option>
+                                 <option value="simctl">SIM</option>
+                                 <option value="naoctl">NÃO</option>
+                              </select>
+                           </div>
+                           <div class="form-group col-sm-3 col-xs-12">
+                              <label for="numerodeposito" class="control-label" style="padding-left: 1px">N. Depósito:</label>
+                              <input type="text" class="form-control" id="numerodeposito" name="numerodeposito" style="padding-left: 5px" >
+                           </div>
+                           <div class="form-group col-sm-3 col-xs-12">
+                              <label for="tipodeposito" class="control-label" style="padding-left: 1px">Tipo Depósito:</label>
+                              <input type="text" class="form-control" id="tipodeposito" name="tipodeposito" style="padding-left: 5px" >
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="form-group col-sm-3 col-xs-12">
+                              <label for="centrolucro" class="control-label">Centro de Lucro:</label>
+                              <input type="text" class="form-control" id="centrolucro" name="centrolucro" style="padding-left: 5px" >
+                           </div>
+                           <div class="form-group col-sm-3 col-xs-12">
+                              <label for="posicao" class="control-label" style="padding-left: 1px">Posição Estoque:</label>
+                              <input type="text" class="form-control" id="posicao" name="posicao" style="padding-left: 5px" >
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- PANEL - Contabilidade -->
+               <div class="panel panel-default form-group" name="panelContabilidade" id="panelContabilidade">
+                  <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                     <h2 class="panel-title">
+                        <strong>Contabilidade</strong></a>
+                     </h2>
+                  </div>
+                  <div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                     <div class="row">
+                        <div class="form-group col-sm-4 col-xs-12">
+                           <label for="classeAvaliacao" class="control-label">Classe Avaliação:</label>
+                           <input type="text" class="form-control" id="classeAvaliacao" name="classeAvaliacao"> <!-- Versão 1.0.01 -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Panel Suprimentos CSC -->
+               <div class="panel panel-default form-group" name="divsuprimentosCSC" id="divsuprimentosCSC">
+                  <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                     <h2 class="panel-title"><strong>Suprimentos (CSC)</strong></h2>
+                  </div>
+                  <div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                     <div class="row">
+                        <div class="form-group col-sm-2 col-xs-12">
+                        	<label for="drop_cscsup_status" class="control-label">Validação:</label>
+                        	<select class=" form-control" id="drop_cscsup_status" name="drop_cscsup_status">
+                           		<option value="aprovado" selected>Aprovado</option>
+                           		<option value="recusado">Recusado</option>
+                           		<option value="ajuste">Ajuste</option>
+                       		</select>
+                        </div>
+                        <div class="form-group col-sm-2 col-xs-12" id ="divdrop_csctipoRecusa" name="divdrop_csctipoRecusa" style="display: none;">
+                           	<label for="drop_csctipoRecusa" class="control-label">Tipo Recusa:</label>
+                            <select class="form-control" id="drop_csctipoRecusa" name="drop_csctipoRecusa">
+                            	<option value="duplicidade">Item em Duplicidade</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-7 col-xs-12" name="divObsRecusaCSC" id="divObsRecusaCSC" style="display: none;">
+                           	<label for="ObsRecusaCSC" class="col-sm-2 control-label">Observação:</label>
+                            <textarea rows="1" id="obsRecusaCSC" name="obsRecusaCSC" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group col-sm-7 col-xs-12" name="divreplicaSuprimentosCSC" id="divreplicaSuprimentosCSC" style="display: none;">
+                           	<label for="txtSuprimentosCSC" class="col-sm-2 control-label" name="obsTxtSuprimentosCSC" id="obsTxtSuprimentosCSC">Observação:</label>
+                           	<textarea rows="1" id="txtSuprimentosCSC" name="txtSuprimentosCSC" class="form-control"></textarea>
+                        </div>
+                     </div>
+               		</div>
+               	</div>
+
+                  <!-- Panel Suprimentos SMR -->
+                <div class="panel panel-default form-group" name="divsuprimentosSMR" id="divsuprimentosSMR">
+	                <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+	                    <h2 class="panel-title"><strong>Suprimentos (SAMAR)</strong></h2>
+	                </div>
+                  	<div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                     	<div class="row">
+                        	<div class="form-group col-sm-2 col-xs-12">
+                           		<label for="drop_smrsup_status" class="control-label">Validação:</label>
+                             	<select class=" form-control" id="drop_smrsup_status" name="drop_smrsup_status"  >
+                                 	<option value="aprovado" selected>Aprovado</option>
+		                         	<option value="recusado">Recusado</option>
+		                         	<option value="ajuste">Ajuste</option>
+                              	</select>
+                        	</div>
+                        	<div class="form-group col-sm-2 col-xs-12" id="divdrop_smrtipoRecusa" name="divdrop_smrtipoRecusa" style="display: none;">
+                           		<label for="drop_smrtipoRecusa" class="control-label">Tipo Recusa:</label>
+                             	<select class=" form-control" id="drop_smrtipoRecusa" name="drop_smrtipoRecusa">
+                             		<option value="duplicidade">Item em Duplicidade</option>
+                             	</select>
+                        	</div>
+                        	<div class="form-group col-sm-7 col-xs-12" name="divObsRecusaSMR" id="divObsRecusaSMR" style="display: none;">
+                           		<label for="ObsRecusaSMR" class="col-sm-2 control-label">Observação:</label>
+                              	<textarea rows="1" id="obsRecusaSMR" name="obsRecusaSMR" class="form-control"></textarea>
+                        	</div>
+                        	<div class="form-group col-sm-7 col-xs-12" name="divreplicaSuprimentosSMR" id="divreplicaSuprimentosSMR" style="display: none;">
+                           		<label for="txtSuprimentosSMR" class="col-sm-2 control-label" name="obsTxtSuprimentosSMR" id="obsTxtSuprimentosSMR">Observação:</label>
+                              	<textarea rows="1" id="txtSuprimentosSMR" name="txtSuprimentosSMR" class="form-control"></textarea>
+                        	</div>
+                     	</div>
+                  	</div>
+                </div>
+
+                <div class="panel panel-default form-group" name="divcadastroMaterial" id="divcadastroMaterial" hidden>
+                  	<div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+                     	<h2 class="panel-title"><strong>Cadastro Material</strong></h2>
+                  	</div>
+	                <div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+	                  	<div class="row">
+	                        <div class="form-group col-sm-2 col-xs-12">
+	                        	<label for="nrnovomaterial" class="control-label">Nr. Material:</label>
+	                        	<input type="text" class="form-control" id="nrnovomaterial" name="nrnovomaterial">
+	                     	</div>
+	                  	</div>
+	               </div>
+	            </div>
+
+	            <div class="panel panel-default form-group" name="divaddJustificativas" id="divaddJustificativas">
+	                <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+	                    <h2 class="panel-title"><strong>Adicionar Justificativa</strong></h2>
+	                </div>
+                  	<div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                     	<div class="row">
+                        	<div class="form-group col-sm-12 col-xs-12">
+                        		<input rows="10" id="addjustJustificativas" name="addjustJustificativas" class="form-control">
+                        	</div>
+                     	</div>
+                  	</div>
+                </div>
+
+	            <!--div class="panel panel-default form-group" name="divJustificativas" id="divJustificativas">
+	                <div class="panel-heading" style="background-color: #dce5e8; border: 1px solid #ccc!important;">
+	                    <h2 class="panel-title"><strong>Justificativas</strong></h2>
+	                </div>
+                  	<div class="panel-body" style="background-color: #f7f7f7; border: 1px solid #ccc!important;">
+                     	<div class="row">
+                        	<div class="form-group col-sm-12 col-xs-12">
+                        		<textarea rows="1" id="justJustificativas1" name="justJustificativas1" class="form-control" readonly style="display: none;"></textarea>
+                        		<textarea rows="1" id="justJustificativas2" name="justJustificativas2" class="form-control" readonly style="display: none;"></textarea>
+                        		<textarea rows="1" id="justJustificativas3" name="justJustificativas3" class="form-control" readonly style="display: none;"></textarea>
+                        		<textarea rows="1" id="justJustificativas4" name="justJustificativas4" class="form-control" readonly style="display: none;"></textarea>
+                        		<textarea rows="1" id="justJustificativas5" name="justJustificativas5" class="form-control" readonly style="display: none;"></textarea>
+                        		<textarea rows="1" id="justJustificativas6" name="justJustificativas6" class="form-control" readonly style="display: none;"></textarea>
+                        	</div>
+                     	</div>
+                  	</div>
+                </div-->
+
+               <div hidden class="form-group col-sm-12">
+	               <div>
+	                    <label class="col-sm-2 control-label">LabelTeste:</label>
+	                    <div class="col-sm-2">
+	                        <input type="text" name="txtteste" id="txtteste" class="form-control">
+	                    </div>
+	                    <div class="col-sm-2">
+	                        <input type="text" name="txtCount" id="txtCount" class="form-control">
+	                    </div>
+	               	</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+          <script>
+            $('#drop_motivo').on('change', function () {
+
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+             if(valueSelected == 'inclusao'){
+            	 FLUIGC.toast({
+         			title:'Aviso',
+         			message:'A partir de 23/08/2021 todas as solicitações de Cadastro de Materiais deverão ser realizadas através do Portal de Cadastros da Astrein-SSACAD, através do link: https://ssa.astrein.com.br/ssacad/Account/Login.\n'+
+					'Caso você não tenha autorização para a realização de solicitação de cadastro, procure o seu Gestor ou contate o Analista de Cadastro (Suprimentos Corporativo) - Luiz Fernando Fracola - luiz.fracola@gsinima.com.br',
+         			type:'danger'
+         		});
+
+            }
+          });
+        </script>
+    
+    
+      <script>
+      
+      
+      
+      
+      	$("#drop_motivo").on('change', function() {
+            if(($("#drop_motivo")) == "inclusao"){
+
+            	
+                //$(this).parent('.form-group').addClass('has-error').removeClass('has-success');
+            }else{
+                $("#ncm,#textoBreve").on('change', function(){
+                    if($(this).val() != ""){
+                        $(this).parent('.form-group').removeClass('has-error').addClass('has-success');
+                    }else{
+                        $(this).parent('.form-group').addClass('has-error').removeClass('has-success');
+                    }
+                }
+            )}            
+        });
+      </script>
+
+      <script>
+         $(function() {
+             $(".chosen-select").chosen();
+             $(".chosen-select-deselect").chosen({ allow_single_deselect: true });
+             $(".chosen-select").chosen({no_results_text: "Não Encontrado"});
+         });
+      </script>
+
+      <script>
+            $('#drop_cscsup_status').on('change', function () {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            if(valueSelected == 'ajuste'){
+            	$("#divreplicaSuprimentosCSC").show();
+            } else {
+                $("#divreplicaSuprimentosCSC").hide();
+            }
+            if(valueSelected == 'recusado'){
+            	$("#divdrop_csctipoRecusa").show();
+            	$("#divObsRecusaCSC").show();
+            } else {
+                $("#divdrop_csctipoRecusa").hide();
+                $("#divObsRecusaCSC").hide();
+            }
+
+          });
+        </script>
+        <script>
+            $('#drop_smrsup_status').on('change', function () {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            if(valueSelected == 'ajuste'){
+            	$("#divreplicaSuprimentosSMR").show();
+            } else {
+                $("#divreplicaSuprimentosSMR").hide();
+            }
+            if(valueSelected == 'recusado'){
+            	$("#divdrop_smrtipoRecusa").show();
+            	$("#divObsRecusaSMR").show();
+            } else {
+                $("#divdrop_smrtipoRecusa").hide();
+                $("#divObsRecusaSMR").hide();
+            }
+          });
+        </script>
+        <script>
+        document.getElementById('drop_motivo').onload = function() {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        if(valueSelected == 'inclusao'){
+            document.getElementById("divnrmaterial").style.display = "none"
+        }
+
+}
+
+        </script>
+        <script>
+        document.getElementById('drop_motivo').onchange = function() {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        if(valueSelected == 'inclusao'){
+            document.getElementById("divnrmaterial").style.display = "none"
+        } else {
+            document.getElementById("divnrmaterial").style.display = "block"
+
+        }
+        if(valueSelected == 'ampliacao' || valueSelected == 'bloqueio'){
+
+        	document.getElementById("ncm").readOnly = true;
+        	document.getElementById("tipoMaterial").disabled = true;
+        	document.getElementById("grupoMercadoria").disabled = true;
+        	document.getElementById("itemgrupomercadoria").disabled = true;
+        	document.getElementById("materialAntigo").readOnly = true;
+        	document.getElementById("unimedida").disabled = true;
+        	document.getElementById("textoBreve").readOnly = true;
+        	document.getElementById("textoLongo").readOnly = true;
+	    } else {
+
+	        document.getElementById("ncm").readOnly = false;
+        	document.getElementById("tipoMaterial").disabled = false;
+        	document.getElementById("grupoMercadoria").disabled = false;
+        	document.getElementById("itemgrupomercadoria").disabled = false;
+        	document.getElementById("materialAntigo").readOnly = false;
+        	document.getElementById("unimedida").disabled = false;
+        	document.getElementById("textoBreve").readOnly = false;
+        	document.getElementById("textoLongo").readOnly = false;
+	    }
+	    if(valueSelected == 'alteracao' || valueSelected == 'ampliacao' || valueSelected == 'bloqueio'){
+
+	    	document.getElementById("panelobsampMaterial").style.display = "block";
+	    } else {
+	    	document.getElementById("panelobsampMaterial").style.display = "none";
+	    }
+        }
+
+
+
+        </script>
+        <script>
+        document.getElementById('divCentroLogistico').onchange = function() {
+        var string = document.getElementById("centroLogistica").value;
+        var n = string.search("SAMAR");
+        var txtcount = document.getElementById("txtCount");
+        txtcount.value = n;
+        var count = document.getElementById("txtCount").value;
+
+        if(count == 0){
+        	//alert(count);
+        	var txtteste = document.getElementById("txtteste");
+        	txtteste.value = "B009";
+        }
+}
+
+        </script>
+
+
+      <script type="text/javascript">
+         $(document).on("change","input[type=radio]",function()
+            {
+      // Radio Autorizacao
+      var aprovado=$('[name="optionRadio"]:checked').val();
+      var habilitaJustificativa = aprovado == 'Reprovar' ? "visible" : "hidden";
+      document.getElementById("txtSuprimentos").style.visibility = habilitaJustificativa;
+      document.getElementById("obsTxtSuprimentos").style.visibility = habilitaJustificativa;
+      });
+      </script>
+      <script type="text/javascript">
+
+      var mobile = /Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)
+
+      FLUIGC.calendar('#prazo');
+      </script>
+
+      <script type="text/javascript">
+         function grupoVisivel(){
+            var selecaoGrupo = document.getElementById("tipoMaterial").value;
+            if (selecaoGrupo == "zmat" || selecaoGrupo == "zcon" || selecaoGrupo == "zequ") {
+               document.getElementById("grupoMercadoria").style.visibility = "visible";
+               document.getElementById("lblgrupomercadoria").style.visibility = "visible";
+
+               document.getElementById("itemgrupomercadoria").style.visibility = "visible";
+               document.getElementById("lblitemmercadoria").style.visibility = "visible";
+
+            }else
+               if(selecaoGrupo == "zrep" || selecaoGrupo == "zser"){
+                  document.getElementById("grupoMercadoria").style.visibility = "hidden";
+                  document.getElementById("lblgrupomercadoria").style.visibility = "hidden";
+
+                  document.getElementById("itemgrupomercadoria").style.visibility = "visible";
+                  document.getElementById("lblitemmercadoria").style.visibility = "visible";
+
+               }
+               else {
+                  document.getElementById("grupoMercadoria").style.visibility = "hidden";
+                  document.getElementById("lblgrupomercadoria").style.visibility = "hidden";
+
+                  document.getElementById("itemgrupomercadoria").style.visibility = "hidden";
+                  document.getElementById("lblitemmercadoria").style.visibility = "hidden";
+               }
+
+              var combo = $("#tipoMaterial").val();
+              result = combo.toUpperCase();
+                  reloadZoomFilterValues("classeAvaliacao", "REFERENCE,"+result);
+                  //alert(result);
+
+               }
+
+      </script>
+      <script type="text/javascript">
+      function pegavalor(){
+        var v = document.getElementById("grupoMercadoria").options[document.getElementById("grupoMercadoria").selectedIndex].text;
+        //var v = document.getElementById("grupoMercadoria").value;
+        $('#itemgrupomercadoria').empty();
+
+          if(v == '30001000 - MATERIAIS DE CONSUMO - DIVERSOS'){
+            $('#itemgrupomercadoria').append('<option value="30002000 - PAPELARIA - MATERIAIS E CONSUMÍVEIS">30002000 - PAPELARIA - MATERIAIS E CONSUMÍVEIS</option>');
+            $('#itemgrupomercadoria').append('<option value="30003000 - MATERIAL DE LIMPEZA - CONSUMÍVEIS">30003000 - MATERIAL DE LIMPEZA - CONSUMÍVEIS</option>');
+            $('#itemgrupomercadoria').append('<option value="30004000 - MATERIAL DE COPA E COZINHA - CONSUMÍVEIS">30004000 - MATERIAL DE COPA E COZINHA - CONSUMÍVEIS</option>');
+            $('#itemgrupomercadoria').append('<option value="30005000 - MATERIAL GRÁFICO - IMPRESSOS">30005000 - MATERIAL GRÁFICO - IMPRESSOS</option>');
+            $('#itemgrupomercadoria').append('<option value="30006000 - MATERIAIS DE APOIO A TOPOGRAFIA">30006000 - MATERIAIS DE APOIO A TOPOGRAFIA</option>');
+          }else if(v == '30010000 - MATERIAIS DE CONSUMO - OFICINA MECÂNICA'){
+            $('#itemgrupomercadoria').append('<option value="30011000 - ELEMENTOS DE FIXAÇÃO - PARAFUSOS, CHUMBADORES, REBITES">30011000 - ELEMENTOS DE FIXAÇÃO - PARAFUSOS, CHUMBADORES, REBITES</option>');
+            $('#itemgrupomercadoria').append('<option value="30012000 - MATERIAIS PARA SOLDA - ELETRODOS, ARAMES">30012000 - MATERIAIS PARA SOLDA - ELETRODOS, ARAMES</option>');
+            $('#itemgrupomercadoria').append('<option value="30013000 - MATERIAL CONSUMO OFICINA - ADESIVOS MECÂNICOS, DISCOS">30013000 - MATERIAL CONSUMO OFICINA - ADESIVOS MECÂNICOS, DISCOS</option>');
+          }else if(v == '30015000 - UNIFORMES - EPIS'){
+            $('#itemgrupomercadoria').append('<option value="30015100 - UNIFORMES">30015100 - UNIFORMES</option>');
+            $('#itemgrupomercadoria').append('<option value="30015200 - EPI">30015200 - EPI</option>');
+            $('#itemgrupomercadoria').append('<option value="30015300 - EPC">30015300 - EPC</option>');
+          }else if(v == '30020000 - MATERIAIS DE CONSUMO - MEDICAMENTOS'){
+            $('#itemgrupomercadoria').append('<option value="30021000 - MEDICAMENTOS EM GERAL">30021000 - MEDICAMENTOS EM GERAL</option>');
+          }else if(v == '30030000 - MATERIAIS DE CONSUMO - LABORATÓRIO'){
+            $('#itemgrupomercadoria').append('<option value="30031000 - REAGENTES E MATERIAIS DE CONSUMO - ANÁLISES EM LABORATÓRIO">30031000 - REAGENTES E MATERIAIS DE CONSUMO - ANÁLISES EM LABORATÓRIO</option>');
+          }else if(v == '30040000 - PRODUTOS QUÍMICOS PARA OPERAÇÃO - SISTEMAS DE ÁGUA E ESGOTO'){
+            $('#itemgrupomercadoria').append('<option value="30040100 - ÁCIDO">30040100 - ÁCIDOS</option>');
+            $('#itemgrupomercadoria').append('<option value="30040200 - ANTI ENCRUSTANTE">30040200 - ANTI ENCRUSTANTE</option>');
+            $('#itemgrupomercadoria').append('<option value="30040300 - BISULFITO SÓDICO">30040300 - BISULFITO SÓDICO</option>');
+            $('#itemgrupomercadoria').append('<option value="30040400 - CLORETO FÉRRICO">30040400 - CLORETO FÉRRICO</option>');
+            $('#itemgrupomercadoria').append('<option value="30040500 - GEL SILICA">30040500 - GEL SILICA</option>');
+            $('#itemgrupomercadoria').append('<option value="30040600 - HEXAMETABISULFATO SODICO">30040600 - HEXAMETABISULFATO SODICO</option>');
+            $('#itemgrupomercadoria').append('<option value="30040700 - HIDRÓXIDO DE CÁLCIO">30040700 - HIDRÓXIDO DE CÁLCIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30040800 - HIDRÓXIDO DE SÓDIO">30040800 - HIDRÓXIDO DE SÓDIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30040900 - HIPOCLORITO DE SÓDIO">30040900 - HIPOCLORITO DE SÓDIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30041000 - ÓXIDO DE SÓDIO">30041000 - ÓXIDO DE SÓDIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30041100 - PERMANGANATO DE POTÁSSIO">30041100 - PERMANGANATO DE POTÁSSIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30041200 - POLICLORETO DE ALUMÍNIO">30041200 - POLICLORETO DE ALUMÍNIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30041300 - POLIELETRÓLITO - POLÍMERO">30041300 - POLIELETRÓLITO - POLÍMERO</option>');
+            $('#itemgrupomercadoria').append('<option value="30041400 - POLIFOSFATO">30041400 - POLIFOSFATO</option>');
+            $('#itemgrupomercadoria').append('<option value="30041500 - RESINA DE INTERCÂMBIO IÔNICO">30041500 - RESINA DE INTERCÂMBIO IÔNICO</option>');
+            $('#itemgrupomercadoria').append('<option value="30041600 - GASES">30041600 - GASES</option>');
+            $('#itemgrupomercadoria').append('<option value="30041700 - OUTROS PRODUTOS QUÍMICOS">30041700 - OUTROS PRODUTOS QUÍMICOS</option>');
+          }else if(v == '30050000 - MEIOS FILTRANTES'){
+            $('#itemgrupomercadoria').append('<option value="30051000 - ANTRACITA">30051000 - ANTRACITA</option>');
+            $('#itemgrupomercadoria').append('<option value="30052000 - CARVÃO ATIVO">30052000 - CARVÃO ATIVO</option>');
+            $('#itemgrupomercadoria').append('<option value="30053000 - DOLOMIT">30053000 - DOLOMITA</option>');
+            $('#itemgrupomercadoria').append('<option value="30054000 - ÓXIDO DE CÁLCIO">30054000 - ÓXIDO DE CÁLCIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30055000 - OUTROS MEIOS FILTRANTES">30055000 - OUTROS MEIOS FILTRANTES</option>');
+          }else if(v == '30060000 - TRANSPORTE'){
+            $('#itemgrupomercadoria').append('<option value="30061000 - TRANSPORTE (EXCETO DE NATUREZA MUNICIPAL)">30061000 - TRANSPORTE (EXCETO DE NATUREZA MUNICIPAL)</option>');
+            $('#itemgrupomercadoria').append('<option value="30071000 - GASOLINA">30071000 - GASOLINA</option>');
+            $('#itemgrupomercadoria').append('<option value="30072000 - ALCÓOL">30072000 - ALCÓOL</option>');
+            $('#itemgrupomercadoria').append('<option value="30073000 - ÓLEO DIESEL">30073000 - ÓLEO DIESEL</option>');
+            $('#itemgrupomercadoria').append('<option value="30074000 - OUTROS TIPOS DE COMBUSTÍVEL">30074000 - OUTROS TIPOS DE COMBUSTÍVEL</option>');
+            $('#itemgrupomercadoria').append('<option value="30081000 - LOCAÇÃO DE IMÓVEIS">30081000 - LOCAÇÃO DE IMÓVEIS</option>');
+            $('#itemgrupomercadoria').append('<option value="30082000 - TAXA DE CONDOMÍNIO">30082000 - TAXA DE CONDOMÍNIO</option>');
+            $('#itemgrupomercadoria').append('<option value="30083000 - CAUÇÃO GARANTIA NA LOCAÇÃO DE IMÓVEL">30083000 - CAUÇÃO GARANTIA NA LOCAÇÃO DE IMÓVEL</option>');
+            $('#itemgrupomercadoria').append('<option value="30084000 - OUTRAS DESPESAS NA LOCAÇÃO DE IMÓVEIS">30084000 - OUTRAS DESPESAS NA LOCAÇÃO DE IMÓVEIS</option>');
+          }else if(v == '30090000 - BRINDES'){
+            $('#itemgrupomercadoria').append('<option value="30090100 - BRINDES E CORTESIAS">30090100 - BRINDES E CORTESIAS </option>');
+            $('#itemgrupomercadoria').append('<option value="30100000 - DESPESAS SVA">30100000 - DESPESAS SVA</option>');
+            $('#itemgrupomercadoria').append('<option value="30100100 - MATERIAIS CONSUMÍVEIS EM GERAL">30100100 - MATERIAIS CONSUMÍVEIS EM GERAL</option>');
+            $('#itemgrupomercadoria').append('<option value="31000000 - SEGUROS">31000000 - SEGUROS (PREMIOS)</option>');
+            $('#itemgrupomercadoria').append('<option value="33000000 - SERVIÇOS PÚBLICOS E/OU CONCESSIONADOS">33000000 - SERVIÇOS PÚBLICOS E/OU CONCESSIONADOS</option>');
+            $('#itemgrupomercadoria').append('<option value="35000000 - TRIBUTOS">35000000 - TRIBUTOS</option>');
+          }else if(v == '50001000 - ACIONAMENTO'){
+   $('#itemgrupomercadoria').append('<option value="50001100 - MOTORES ELÉTRICOS E DE OUTROS ACIONAMENTOS">50001100 - MOTORES ELÉTRICOS E DE OUTROS ACIONAMENTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50001200 - ATUADORES ELÉTRICOS E MECÂNICOS">50001200 - ATUADORES ELÉTRICOS E MECÂNICOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50001300 - REDUTORES ELÉTRICOS E MECÂNICOS">50001300 - REDUTORES ELÉTRICOS E MECÂNICOS</option>');
+
+}else if(v == '50002000 - AGITADORES'){
+   $('#itemgrupomercadoria').append('<option value="50002100 - AGITADOR / MISTURADOR SUBMERSÍVE">50002100 - AGITADOR / MISTURADOR SUBMERSÍVEL</option>');
+   $('#itemgrupomercadoria').append('<option value="50002300 - OUTROS TIPOS DE AGITADORES / MISTURADORES">50002300 - OUTROS TIPOS DE AGITADORES / MISTURADORES</option>');
+}else if(v == '50003000 - AERAÇÃO - SISTEMAS E EQUIPAMENTOS'){
+   $('#itemgrupomercadoria').append('<option value="50003100 - AERADORES / SISTEMA DE AERAÇÃO (TODOS OS TIPOS)">50003100 - AERADORES / SISTEMA DE AERAÇÃO (TODOS OS TIPOS)</option>');
+   $('#itemgrupomercadoria').append('<option value="50003300 - PRODUÇÃO DE AR - SOPRADOR, TURBOCOMPRESSOR, COMPRESSOR">50003300 - PRODUÇÃO DE AR - SOPRADOR, TURBOCOMPRESSOR, COMPRESSOR</option>');
+   $('#itemgrupomercadoria').append('<option value="50005000 - BIOGÁS - SISTEMAS E EQUIPAMENTOS">50005000 - BIOGÁS - SISTEMAS E EQUIPAMENTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50005100 - QUEIMADOR - FLARE">50005100 - QUEIMADOR - FLARE</option>');
+   $('#itemgrupomercadoria').append('<option value="50005200 - EQUIPAMENTOS LINHA BIOGÁS (VÁLVULA, DRENO, CORTA CHAMA, ETC)">50005200 - EQUIPAMENTOS LINHA BIOGÁS (VÁLVULA, DRENO, CORTA CHAMA, ETC)</option>');
+   $('#itemgrupomercadoria').append('<option value="50005400 - GASÔMETRO">50005400 - GASÔMETRO</option>');
+   $('#itemgrupomercadoria').append('<option value="50005800 - OUTROS EQUIPAMENTOS PARA BIOGÁS">50005800 - OUTROS EQUIPAMENTOS PARA BIOGÁS</option>');
+
+}else if(v == '50006000 - BOMBAS EM GERAL'){
+   $('#itemgrupomercadoria').append('<option value="50006100 - BOMBAS CENTRÍFUGA">50006100 - BOMBAS CENTRÍFUGA</option>');
+   $('#itemgrupomercadoria').append('<option value="50006200 - BOMBA DESLOCAMENTO POSITIVO">50006200 - BOMBA DESLOCAMENTO POSITIVO</option>');
+   $('#itemgrupomercadoria').append('<option value="50006300 - BOMBA DOSADORA">50006300 - BOMBA DOSADORA</option>');
+   $('#itemgrupomercadoria').append('<option value="50006400 - BOMBA TRITURADORA">50006400 - BOMBA TRITURADORA</option>');
+   $('#itemgrupomercadoria').append('<option value="50006500 - BOMBA DE PRESSÃO (GRUPO DE PRESSÃO)">50006500 - BOMBA DE PRESSÃO (GRUPO DE PRESSÃO)</option>');
+   $('#itemgrupomercadoria').append('<option value="50006600 - BOMBA DE INCÊNDIO">50006600 - BOMBA DE INCÊNDIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50006700 - BOMBA SUBMERSÍVEL">50006700 - BOMBA SUBMERSÍVEL</option>');
+   $('#itemgrupomercadoria').append('<option value="50006800 - BOMBA DE LÓBULO">50006800 - BOMBA DE LÓBULO</option>');
+   $('#itemgrupomercadoria').append('<option value="50006900 - OUTROS TIPOS DE BOMBAS">50006900 - OUTROS TIPOS DE BOMBAS</option>');
+
+}else if(v == '50007000 - AQUECIMENTO DE LODO - SISTEMAS E EQUIPAMENTOS'){
+   $('#itemgrupomercadoria').append('<option value="50007100 - CALDEIRA">50007100 - CALDEIRA</option>');
+   $('#itemgrupomercadoria').append('<option value="50007200 - TROCADOR DE CALOR">50007200 - TROCADOR DE CALOR</option>');
+   $('#itemgrupomercadoria').append('<option value="50007500 - OUTROS EQUIPAMENTOS DE AQUECIMENTO DE LODO">50007500 - OUTROS EQUIPAMENTOS DE AQUECIMENTO DE LODO</option>');
+
+}else if(v == '50008000 - COMPORTAS (FERRO FUNDIDO, AÇO INOX, AÇO CARBONO, PRFV)'){
+   $('#itemgrupomercadoria').append('<option value="50008100 - COMPORTA ENSECADEIRA">50008100 - COMPORTA ENSECADEIRA</option>');
+   $('#itemgrupomercadoria').append('<option value="50008200 - COMPORTA CANAL">50008200 - COMPORTA CANAL</option>');
+   $('#itemgrupomercadoria').append('<option value="50008300 - COMPORTA MURAL">50008300 - COMPORTA MURAL</option>');
+   $('#itemgrupomercadoria').append('<option value="50008400 - COMPORTA VERTEDOURA">50008400 - COMPORTA VERTEDOURA</option>');
+   $('#itemgrupomercadoria').append('<option value="50008600 - OUTROS TIPOS DE COMPORTAS">50008600 - OUTROS TIPOS DE COMPORTAS</option>');
+
+}else if(v == '50010000 - TANQUES DE ARMAZENAGEM'){
+   $('#itemgrupomercadoria').append('<option value="50010100 - TANQUE DE ARMAZENAGEM - PRFV OU PLÁSTICOS">50010100 - TANQUE DE ARMAZENAGEM - PRFV OU PLÁSTICOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50010200 - TANQUE DE ARMAZENAGEM (SILO) - AÇO">50010200 - TANQUE DE ARMAZENAGEM (SILO) - AÇO</option>');
+   $('#itemgrupomercadoria').append('<option value="50010500 - OUTROS TIPOS DE TANQUES DE ARMAZENAGEM">50010500 - OUTROS TIPOS DE TANQUES DE ARMAZENAGEM</option>');
+
+}else if(v == '50011000 - TANQUE DE PRESSÃO'){
+   $('#itemgrupomercadoria').append('<option value="50011100 - TANQUE ANTI GOLPE DE ARIETE">50011100 - TANQUE ANTI GOLPE DE ARIETE</option>');
+   $('#itemgrupomercadoria').append('<option value="50011600 - OUTROS TANQUE PRESSÃO">50011600 - OUTROS TANQUE PRESSÃO</option>');
+
+}else if(v == '50012000 - DESINFECÇAO - SISTEMAS E EQUIPAMENTOS'){
+   $('#itemgrupomercadoria').append('<option value="50012100 - DESCALCIFICADOR">50012100 - DESCALCIFICADOR</option>');
+   $('#itemgrupomercadoria').append('<option value="50012200 - CLORADOR">50012200 - CLORADOR</option>');
+   $('#itemgrupomercadoria').append('<option value="50012300 - OZONIZADOR">50012300 - OZONIZADOR</option>');
+   $('#itemgrupomercadoria').append('<option value="50012400 - ULTRAVIOLETA">50012400 - ULTRAVIOLETA</option>');
+   $('#itemgrupomercadoria').append('<option value="50012500 - OUTROS DESINFECTANTES">50012500 - OUTROS DESINFECTANTES</option>');
+   $('#itemgrupomercadoria').append('<option value="50013100 - DESODORIZAÇÃO - SISTEMAS E EQUIPAMENTOS">50013100 - DESODORIZAÇÃO - SISTEMAS E EQUIPAMENTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50013300 - CARVÃO ATIVO">50013300 - CARVÃO ATIVO</option>');
+   $('#itemgrupomercadoria').append('<option value="50013400 - DOSAGEM QUIMICA">50013400 - DOSAGEM QUIMICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50013500 - COBERTURA E ACESSÓRIOS PARA SISTEMAS DE DESODORIZAÇÃO">50013500 - COBERTURA E ACESSÓRIOS PARA SISTEMAS DE DESODORIZAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50013600 - OUTROS SISTEMAS DE DESODORIZAÇÃO DESODORIZADES">50013600 - OUTROS SISTEMAS DE DESODORIZAÇÃO DESODORIZADES</option>');
+
+}else if(v == '50014000 - ELETRICIDADE'){
+   $('#itemgrupomercadoria').append('<option value="50014100 - ILUMINAÇÃO">50014100 - ILUMINAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50014200 - MATERIAIS M.T.">50014200 - MATERIAIS M.T.</option>');
+   $('#itemgrupomercadoria').append('<option value="50014300 - MATERIAIS B.T.">50014300 - MATERIAIS B.T.</option>');
+   $('#itemgrupomercadoria').append('<option value="50014400 - CABOS ELÉTRICOS">50014400 - CABOS ELÉTRICOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50014500 - QUADROS ELÉTRICOS, CCM E SEUS COMPONENTES">50014500 - QUADROS ELÉTRICOS, CCM E SEUS COMPONENTES</option>');
+   $('#itemgrupomercadoria').append('<option value="50014600 - EQUIPAMENTOS EMERGÊNCIA (GERADORES, LUMINÁRIAS, ETC)">50014600 - EQUIPAMENTOS EMERGÊNCIA (GERADORES, LUMINÁRIAS, ETC)</option>');
+   $('#itemgrupomercadoria').append('<option value="50014700 - TRANSFORMADORES EM GERAL">50014700 - TRANSFORMADORES EM GERAL</option>');
+   $('#itemgrupomercadoria').append('<option value="50014800 - MEDIDORES DE ENERGIA (ENTRADA DE ENERGIA)">50014800 - MEDIDORES DE ENERGIA (ENTRADA DE ENERGIA)</option>');
+   $('#itemgrupomercadoria').append('<option value="50014810 - MEDIDORES / INSTRUMENTOS PORTÁTEIS ENERGIA">50014810 - MEDIDORES / INSTRUMENTOS PORTÁTEIS ENERGIA</option>');
+   $('#itemgrupomercadoria').append('<option value="50014820 - PARA RAIOS - SISTEMAS E MATERIAI">50014820 - PARA RAIOS - SISTEMAS E MATERIAIS</option>');
+   $('#itemgrupomercadoria').append('<option value="50014830 - OUTROS MATERIAIS ELÉTRICOS">50014830 - OUTROS MATERIAIS ELÉTRICOS</option>');
+
+}else if(v == '50015000 - EQUIPAMENTOS MECÂNICOS PARA ETE - ETA'){
+   $('#itemgrupomercadoria').append('<option value="50015100 - BIOFILTRAÇÃO">50015100 - BIOFILTRAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50015300 - ORBAL">50015300 - ORBAL</option>');
+   $('#itemgrupomercadoria').append('<option value="50015500 - BIODISCOS">50015500 - BIODISCOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50015700 - EQUIPAMENTO MECÂNICO">50015700 - EQUIPAMENTO MECÂNICO</option>');
+   $('#itemgrupomercadoria').append('<option value="50015800 - DECANTADOR LAMELAR">50015800 - DECANTADOR LAMELAR</option>');
+   $('#itemgrupomercadoria').append('<option value="50015920 - PREPARADOR POLIMERO">50015920 - PREPARADOR POLIMERO</option>');
+   $('#itemgrupomercadoria').append('<option value="50015930 - ETE COMPACTA">50015930 - ETE COMPACTA</option>');
+   $('#itemgrupomercadoria').append('<option value="50015940 - FOSSA SÉPTICA">50015940 - FOSSA SÉPTICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50015960 - OUTROS EQUIPAMENTOS PARA TRATAMENTO DE ESGOTO">50015960 - OUTROS EQUIPAMENTOS PARA TRATAMENTO DE ESGOTO</option>');
+
+}else if(v == '50016000 - EQUIPAMENTOS DE LABORATORIO'){
+   $('#itemgrupomercadoria').append('<option value="50016100 - ACESSÓRIOS PARA LABORATÓRIO">50016100 - ACESSÓRIOS PARA LABORATÓRIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016200 - CENTRIFUGA PARA LABORATÓRIO">50016200 - CENTRIFUGA PARA LABORATÓRIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016300 - DETERMINAÇÃO DBO">50016300 - DETERMINAÇÃO DBO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016400 - DETERMINAÇÃO DQO">50016400 - DETERMINAÇÃO DQO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016500 - EQUIPAMENTOS LABORATÓRIO">50016500 - EQUIPAMENTOS LABORATÓRIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016600 - ESPECTROFOTÔMETRO">50016600 - ESPECTROFOTÔMETRO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016610 - FORNOS E AUTOCLAVES">50016610 - FORNOS E AUTOCLAVES</option>');
+   $('#itemgrupomercadoria').append('<option value="50016620 - MATERIAL DE PLASTICO LABORATÓRIO">50016620 - MATERIAL DE PLASTICO LABORATÓRIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016630 - MATERIAL DE VIDRO LABORATORIO">50016630 - MATERIAL DE VIDRO LABORATORIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016640 - MEDIDORES ANALÍTICA DE AGUA EM LABORATORIO">50016640 - MEDIDORES ANALÍTICA DE AGUA EM LABORATORIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016650 - MEDIDORES ANALÍTICA DE GASES EM LABORATORIO">50016650 - MEDIDORES ANALÍTICA DE GASES EM LABORATORIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016660 - MOBILIÁRIO PARA LABORATORIO">50016660 - MOBILIÁRIO PARA LABORATORIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50016680 - OUTROS EQUIPAMENTOS PARA LABORATORI">50016680 - OUTROS EQUIPAMENTOS PARA LABORATORIO</option>');
+
+}else if(v == '50017000 - ESTRUTURAS E SUPORTES'){
+   $('#itemgrupomercadoria').append('<option value="50017100 - SUPORTES ESTRUTURAIS EM AÇO PARA MONTAGEM MECÂNICA">50017100 - SUPORTES ESTRUTURAIS EM AÇO PARA MONTAGEM MECÂNICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50017400 - PLATAFORMAS, CORRIMÃOS E ESCADAS - EM PRFV">50017400 - PLATAFORMAS, CORRIMÃOS E ESCADAS - EM PRFV</option>');
+   $('#itemgrupomercadoria').append('<option value="50017500 - PLATAFORMAS, CORRIMÃOS E ESCADAS - EM AÇO CARBONO">50017500 - PLATAFORMAS, CORRIMÃOS E ESCADAS - EM AÇO CARBONO</option>');
+   $('#itemgrupomercadoria').append('<option value="50017700 - OUTRAS ESTRUTURAS E SUPORTES">50017700 - OUTRAS ESTRUTURAS E SUPORTES</option>');
+
+}else if(v == '50018000 - GERADORES QUIMICOS - PROCESSOS TRATAMENTO'){
+   $('#itemgrupomercadoria').append('<option value="50018100 - GERADOR HIDROGÊNIO">50018100 - GERADOR HIDROGÊNIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50018200 - GERADOR HIPOCLORITO">50018200 - GERADOR HIPOCLORITO</option>');
+   $('#itemgrupomercadoria').append('<option value="50018300 - GERADOR DIÓXIDO DE CLORO">50018300 - GERADOR DIÓXIDO DE CLORO</option>');
+   $('#itemgrupomercadoria').append('<option value="50018400 - GERADOR CLOROGÁS">50018400 - GERADOR CLOROGÁS</option>');
+   $('#itemgrupomercadoria').append('<option value="50018500 - OUTROS GERADORES">50018500 - OUTROS GERADORES</option>');
+
+}else if(v == '50019000 - FERRAMENTAS'){
+   $('#itemgrupomercadoria').append('<option value="50019100 - FERRAMENTA PORTÁTIL ELÉTRICA">50019100 - FERRAMENTA PORTÁTIL ELÉTRICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50019200 - FERRAMENTA PORTÁTIL PNEUMÁTICA">50019200 - FERRAMENTA PORTÁTIL PNEUMÁTICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50019300 - FERRAMENTA PORTÁTIL HIDRÁULICA">50019300 - FERRAMENTA PORTÁTIL HIDRÁULICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50019400 - FERRAMENTAS PARA OFICINA">50019400 - FERRAMENTAS PARA OFICINA</option>');
+   $('#itemgrupomercadoria').append('<option value="50019500 - MALA / PORTA FERRAMENTAS">50019500 - MALA / PORTA FERRAMENTAS</option>');
+   $('#itemgrupomercadoria').append('<option value="50019600 - EXTRATOR DE ROLAMENTOS">50019600 - EXTRATOR DE ROLAMENTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50019700 - FERRAMENTAS DE MEDIÇÃO">50019700 - FERRAMENTAS DE MEDIÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50019800 - MOBILIÁRIO PARA OFICINA MECÂNICA">50019800 - MOBILIÁRIO PARA OFICINA MECÂNICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50019900 - FERRAMENTAS MANUAIS CONSTRUÇÃO">50019900 - FERRAMENTAS MANUAIS CONSTRUÇÃO</option>');
+
+
+
+}else if(v == '50020000 - INSTRUMENTAÇÃO DE PROCESSO'){
+   $('#itemgrupomercadoria').append('<option value="50020100 - ANALÍTICA DE AGUAS (MEDIDORES, ANALIZADORES)">50020100 - ANALÍTICA DE AGUAS (MEDIDORES, ANALIZADORES)</option>');
+   $('#itemgrupomercadoria').append('<option value="50020200 - DETECÇÃO E ANÁLISE DE GASES">50020200 - DETECÇÃO E ANÁLISE DE GASES</option>');
+   $('#itemgrupomercadoria').append('<option value="50020300 - DETECÇÃO E ANÁLISE DE HIDROCARBUNETOS">50020300 - DETECÇÃO E ANÁLISE DE HIDROCARBUNETOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50020400 - INDICADOR/MEDIDOR/DETECTOR DE NÍVE">50020400 - INDICADOR/MEDIDOR/DETECTOR DE NÍVEL</option>');
+   $('#itemgrupomercadoria').append('<option value="50020500 - INTERFACE LÍQUIDO-SÓLIDO">50020500 - INTERFACE LÍQUIDO-SÓLIDO</option>');
+   $('#itemgrupomercadoria').append('<option value="50020600 - MEDIDOR DE VAZÃO">50020600 - MEDIDOR DE VAZÃO (ÁGUA, ESGOTO, GÁS)</option>');
+   $('#itemgrupomercadoria').append('<option value="50020700 - TEMPERATURA">50020700 - TEMPERATURA</option>');
+   $('#itemgrupomercadoria').append('<option value="50020800 - TRANSMISSOR DE PRESSÃO">50020800 - TRANSMISSOR DE PRESSÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50020900 - ACESSÓRIOS PARA MONTAGEM DE INSTRUMENTOS">50020900 - ACESSÓRIOS PARA MONTAGEM DE INSTRUMENTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50020910 - INSTRUMENTAÇÃO PORTÁTIL">50020910 - INSTRUMENTAÇÃO PORTÁTIL</option>');
+   $('#itemgrupomercadoria').append('<option value="50020920 - FERRAMENTAS DE INSTRUMENTAÇÃO">50020920 - FERRAMENTAS DE INSTRUMENTAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50020930 - OUTRAS INSTRUMENTAÇÕES">50020930 - OUTRAS INSTRUMENTAÇÕES</option>');
+
+}else if(v == '50022000 - ULTRAFILTRAÇÃO - SISTEMAS E EQUIPAMENTOS'){
+   $('#itemgrupomercadoria').append('<option value="50022100 - MEMBRANAS MBR">50022100 - MEMBRANAS MBR</option>');
+   $('#itemgrupomercadoria').append('<option value="50022400 - NANOFILTRAÇÃO">50022400 - NANOFILTRAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50022600 - OUTRAS MEMBRANAS">50022600 - OUTRAS MEMBRANAS</option>');
+
+}else if(v == '50023000 - RECUPERAÇÃO ENERGIA'){
+   $('#itemgrupomercadoria').append('<option value="50023300 - MOTO GERADOR A GÁS">50023300 - MOTO GERADOR A GÁS</option>');
+   $('#itemgrupomercadoria').append('<option value="50023700 - OUTROS EQUIPAMENTOS DE RECUPERAÇÃO DE ENERGIA">50023700 - OUTROS EQUIPAMENTOS DE RECUPERAÇÃO DE ENERGIA</option>');
+
+}else if(v == '50024000 - INSTALAÇÕES DE SEGURANÇA'){
+   $('#itemgrupomercadoria').append('<option value="50024300 - EPC - EQUIPAMENTOS - SISTEMAS">50024300 - EPC - EQUIPAMENTOS - SISTEMAS</option>');
+   $('#itemgrupomercadoria').append('<option value="50024400 - SINALIZAÇÃO">50024400 - SINALIZAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50024500 - EQUIPAMENTOS CONTRA INCÊNDIO (EXTINTOR, BOTOEIRA, OUTROS)">50024500 - EQUIPAMENTOS CONTRA INCÊNDIO (EXTINTOR, BOTOEIRA, OUTROS)</option>');
+   $('#itemgrupomercadoria').append('<option value="50024600 - OUTRAS INSTALAÇÕES DE SEGURANÇA">50024600 - OUTRAS INSTALAÇÕES DE SEGURANÇA</option>');
+   $('#itemgrupomercadoria').append('<option value="50024700 - EQUIPAMENTOS PARA ALARME E MONITORAMENTO">50024700 - EQUIPAMENTOS PARA ALARME E MONITORAMENTO</option>');
+
+}else if(v == '50025000 - SEPARAÇÃO DE SÓLIDOS'){
+   $('#itemgrupomercadoria').append('<option value="50025100 - GRADES DE DESBASTE - AUTOMÁTICAS, MANUAIS, CESTOS">50025100 - GRADES DE DESBASTE - AUTOMÁTICAS, MANUAIS, CESTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50025200 - PENEIRAS (TAMIZ)">50025200 - PENEIRAS (TAMIZ)</option>');
+   $('#itemgrupomercadoria').append('<option value="50025300 - FILTRAGEM - SISTEMAS E EQUIPAMENTOS (DISCOS, AREIA, OUTROS)">50025300 - FILTRAGEM - SISTEMAS E EQUIPAMENTOS (DISCOS, AREIA, OUTROS)</option>');
+   $('#itemgrupomercadoria').append('<option value="50025500 - OUTROS SEPARADORES DE SÓLIDOS">50025500 - OUTROS SEPARADORES DE SÓLIDOS</option>');
+
+}else if(v == '50026000 - SISTEMA DE ELEVAÇÃO'){
+   $('#itemgrupomercadoria').append('<option value="50026100 - TALHA MANUAL">50026100 - TALHA MANUAL</option>');
+   $('#itemgrupomercadoria').append('<option value="50026200 - TALHA ELÉTRICA">50026200 - TALHA ELÉTRICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50026300 - PONTE ROLANTE">50026300 - PONTE ROLANTE</option>');
+   $('#itemgrupomercadoria').append('<option value="50026400 - GUINDASTE DE PÓRTICO">50026400 - GUINDASTE DE PÓRTICO</option>');
+   $('#itemgrupomercadoria').append('<option value="50026500 - GUINDASTE GIRATÓRIO">50026500 - GUINDASTE GIRATÓRIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50026600 - OUTROS SISTEMAS DE ELEVAÇÃO">50026600 - OUTROS SISTEMAS DE ELEVAÇÃO</option>');
+
+}else if(v == '50027000 - TRANSPORTE E MANUSEIO DE SÓLIDOS'){
+   $('#itemgrupomercadoria').append('<option value="50027100 - COLHER BIVALVA - CLANSHELL">50027100 - COLHER BIVALVA - CLANSHELL</option>');
+   $('#itemgrupomercadoria').append('<option value="50027200 - CAÇAMBAS EM GERAL">50027200 - CAÇAMBAS EM GERAL</option>');
+   $('#itemgrupomercadoria').append('<option value="50027300 - POLIGUINDASTE">50027300 - POLIGUINDASTE</option>');
+   $('#itemgrupomercadoria').append('<option value="50027400 - ACESSÓRIOS PARA DESCARGA (MANGOTES, ETC)">50027400 - ACESSÓRIOS PARA DESCARGA (MANGOTES, ETC)</option>');
+   $('#itemgrupomercadoria').append('<option value="50027600 - OUTROS EQUIPAMENTOS PARA MANUSEIO E TRANSPORTE DE RESIDUOS">50027600 - OUTROS EQUIPAMENTOS PARA MANUSEIO E TRANSPORTE DE RESIDUOS</option>');
+
+
+}else if(v == '50028000 - TRATAMENTO DE SÓLIDOS'){
+   $('#itemgrupomercadoria').append('<option value="50028100 - PRENSA">50028100 - PRENSA</option>');
+   $('#itemgrupomercadoria').append('<option value="50028200 - ADENSADOR DE LODO">50028200 - ADENSADOR DE LODO</option>');
+   $('#itemgrupomercadoria').append('<option value="50028300 - DESIDRATAÇÃO DE LODO - CENTRÍFUGA">50028300 - DESIDRATAÇÃO DE LODO - CENTRÍFUGA</option>');
+   $('#itemgrupomercadoria').append('<option value="50028500 - SECADOR TÉRMICO">50028500 - SECADOR TÉRMICO</option>');
+   $('#itemgrupomercadoria').append('<option value="50028700 - OUTROS EQUIPAMENTOS PARA TRATAMENTO DE SÓLIDOS">50028700 - OUTROS EQUIPAMENTOS PARA TRATAMENTO DE SÓLIDOS</option>');
+
+
+}else if(v == '50029000 - TUBOS E CONEXÕES'){
+   $('#itemgrupomercadoria').append('<option value="50029100 - TUBOS E CONEXÕES EM AÇO CARBONO">50029100 - TUBOS E CONEXÕES EM AÇO CARBONO</option>');
+   $('#itemgrupomercadoria').append('<option value="50029200 - TUBOS E CONEXÕES EM PVC, PEAD, PP, CPVC">50029200 - TUBOS E CONEXÕES EM PVC, PEAD, PP, CPVC</option>');
+   $('#itemgrupomercadoria').append('<option value="50029300 - TUBOS E CONEXÕES EM PRFV">50029300 - TUBOS E CONEXÕES EM PRFV</option>');
+   $('#itemgrupomercadoria').append('<option value="50029400 - JUNTAS DE ESTANQUEIDADE">50029400 - JUNTAS DE ESTANQUEIDADE</option>');
+   $('#itemgrupomercadoria').append('<option value="50029500 - JUNTA DE DESMONTAGEM - CARRETEIS">50029500 - JUNTA DE DESMONTAGEM - CARRETEIS</option>');
+   $('#itemgrupomercadoria').append('<option value="50029600 - JUNTA DE EXPANSÃO PARA TUBOS">50029600 - JUNTA DE EXPANSÃO PARA TUBOS</option>');
+   $('#itemgrupomercadoria').append('<option value="50029700 - TUBOS E CONEXÕES EM AÇO INOX E ALUMÍNIO">50029700 - TUBOS E CONEXÕES EM AÇO INOX E ALUMÍNIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50029800 - TUBOS E CONEXÕES EM FERRO FUNDIDO">50029800 - TUBOS E CONEXÕES EM FERRO FUNDIDO</option>');
+
+}else if(v == '50031000 - VÁLVULAS EM GERAL'){
+   $('#itemgrupomercadoria').append('<option value="50031100 - VÁLVULA COMPORTA">50031100 - VÁLVULA COMPORTA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031110 - VÁLVULA RETENÇÃO">50031110 - VÁLVULA RETENÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50031120 - VÁLVULA BORBOLETA">50031120 - VÁLVULA BORBOLETA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031130 - VÁLVULA GUILHOTINA">50031130 - VÁLVULA GUILHOTINA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031150 - VÁLVULA MANGOTE">50031150 - VÁLVULA MANGOTE</option>');
+   $('#itemgrupomercadoria').append('<option value="50031160 - VÁLVULA ESFERA">50031160 - VÁLVULA ESFERA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031170 - VÁLVULA TERMOSTÁTICA">50031170 - VÁLVULA TERMOSTÁTICA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031180 - VÁLVULA MISTURADORA">50031180 - VÁLVULA MISTURADORA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031190 - VÁLVULA DE CONTROLE">50031190 - VÁLVULA DE CONTROLE</option>');
+   $('#itemgrupomercadoria').append('<option value="50031200 - VÁLVULA DE SEGURANÇA">50031200 - VÁLVULA DE SEGURANÇA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031210 - VÁLVULA DE ALÍVIO">50031210 - VÁLVULA DE ALÍVIO</option>');
+   $('#itemgrupomercadoria').append('<option value="50031220 - VÁLVULA GAVETA E GLOBO">50031220 - VÁLVULA GAVETA E GLOBO</option>');
+   $('#itemgrupomercadoria').append('<option value="50031250 - VENTOSA">50031250 - VENTOSA</option>');
+   $('#itemgrupomercadoria').append('<option value="50031260 - HIDRANTE">50031260 - HIDRANTE</option>');
+   $('#itemgrupomercadoria').append('<option value="50031270 - OUTROS TIPOS DE VÁLVULAS">50031270 - OUTROS TIPOS DE VÁLVULAS</option>');
+
+
+}else if(v == '50033000 - MÓVEIS EM GERAL'){
+   $('#itemgrupomercadoria').append('<option value="50033100 - MÓVEIS E EQUIPAMENTOS EM GERAL (CORPORATIVO E RESIDENCIAL)">50033100 - MÓVEIS E EQUIPAMENTOS EM GERAL (CORPORATIVO E RESIDENCIAL)</option>');
+   $('#itemgrupomercadoria').append('<option value="50033200 - EQUIPAMENTOS CORPORATIVOS PEQUENO PORTE">50033200 - EQUIPAMENTOS CORPORATIVOS PEQUENO PORTE</option>');
+
+}else if(v == '50034000 - TI E TELEFONIA - EQU - IPAMENTOS E ACESSÓRIOS'){
+   $('#itemgrupomercadoria').append('<option value="50034100 - INFORMÁTICA - HARDWARE">50034100 - INFORMÁTICA - HARDWARE</option>');
+   $('#itemgrupomercadoria').append('<option value="50034200 - INFORMÁTICA - SOFTWARE">50034200 - INFORMÁTICA - SOFTWARE</option>');
+   $('#itemgrupomercadoria').append('<option value="50034300 - INFORMÁTICA - MATERIAIS E ACESSÓRIOS PARA INSTALAÇÃO">50034300 - INFORMÁTICA - MATERIAIS E ACESSÓRIOS PARA INSTALAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="50034400 - TELEFONIA, RADIO E SISTEMA TELECOMUNICAÇÃO">50034400 - TELEFONIA, RADIO E SISTEMA TELECOMUNICAÇÃO </option>');
+
+}else if(v == '50035000 - VEÍCULOS'){
+   $('#itemgrupomercadoria').append('<option value="50035100 - VEÍCULOS LEVES">50035100 - VEÍCULOS LEVES</option>');
+   $('#itemgrupomercadoria').append('<option value="50035200 - VEÍCULOS PESADOS">50035200 - VEÍCULOS PESADOS</option>');
+
+}else if(v == '50040000 - TOPOGRAFIA'){
+   $('#itemgrupomercadoria').append('<option value="50041000 - EQUIPAMENTOS PARA TOPOGRAFIA">50041000 - EQUIPAMENTOS PARA TOPOGRAFIA</option>');
+
+}else if (v == '20001000 - AÇO ESTRUTURAL') {
+   $('#itemgrupomercadoria').append('<option value="20001100 - AÇO PARA CONSTRUÇÃO">20001100 - AÇO PARA CONSTRUÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="20001200 - CABOS DE AÇO, CORDOALHA, CABOS DE TENSÃO, ETC">20001200 - CABOS DE AÇO, CORDOALHA, CABOS DE TENSÃO, ETC</option>');
+   $('#itemgrupomercadoria').append('<option value="20001300 - CHAPAS EM AÇO">20001300 - CHAPAS EM AÇO</option>');
+   $('#itemgrupomercadoria').append('<option value="20001400 - TELAS E GRADES SOLDADAS">20001400 - TELAS E GRADES SOLDADAS</option>');
+   $('#itemgrupomercadoria').append('<option value="20001500 - PERFIS ESTRUTURAIS (TUBOS, VIGAS, CANTONEIRAS E OUTROS)">20001500 - PERFIS ESTRUTURAIS (TUBOS, VIGAS, CANTONEIRAS E OUTROS)</option>');
+   $('#itemgrupomercadoria').append('<option value="20001600 - OUTROS AÇOS ESTRUTURAIS">20001600 - OUTROS AÇOS ESTRUTURAIS</option>');
+
+}else if (v == '20002000 - AÇO NÃO ESTRUTURAL') {
+   $('#itemgrupomercadoria').append('<option value="20002100 - AÇO INOX (CHAPAS E PERFÍS)">20002100 - AÇO INOX (CHAPAS E PERFÍS)</option>');
+   $('#itemgrupomercadoria').append('<option value="20002500 - OUTROS AÇOS NÃO ESTRUT.">20002500 - OUTROS AÇOS NÃO ESTRUT.</option>');
+
+}else if (v == '20003000 - ADESIVOS E ADITIVOS PARA CIMENTO E CONCRETO') {
+   $('#itemgrupomercadoria').append('<option value="20003100 - ADESIVOS PARA CONCRETO">20003100 - ADESIVOS PARA CONCRETO</option>');
+   $('#itemgrupomercadoria').append('<option value="20003200 - ADITIVOS PARA CIMENTO">20003200 - ADITIVOS PARA CIMENTO</option>');
+   $('#itemgrupomercadoria').append('<option value="20003300 - ADITIVOS PARA CONCRETO">20003300 - ADITIVOS PARA CONCRETO</option>');
+   $('#itemgrupomercadoria').append('<option value="20003600 - DESMOLDANTES">20003600 - DESMOLDANTES</option>');
+   $('#itemgrupomercadoria').append('<option value="20003900 - OUTROS ADESIVOS, ADITIVOS E RESINAS">20003900 - OUTROS ADESIVOS, ADITIVOS E RESINAS</option>');
+
+}else if (v == '20005000 - AR CONDICIONADO E AQUECIMENTO (SISTEMAS PREDIAIS)') {
+   $('#itemgrupomercadoria').append('<option value="20005100 - AR CONDICIONADO, CLIMATIZADORES E EQUIPAMENTOS CORRELATOS">20005100 - AR CONDICIONADO, CLIMATIZADORES E EQUIPAMENTOS CORRELATOS</option>');
+   $('#itemgrupomercadoria').append('<option value="20005400 - DUTOS, DIFUSORES E GRELHAS">20005400 - DUTOS, DIFUSORES E GRELHAS</option>');
+
+}else if (v == '20005600 - UMIDIFICAÇÃO, PURIFICAÇÃO, ESTERILIZAÇÃO DE AMBIENTE') {
+   $('#itemgrupomercadoria').append('<option value="20005700 - EXAUSTORES INDUSTRIAIS">20005700 - EXAUSTORES INDUSTRIAIS</option>');
+   $('#itemgrupomercadoria').append('<option value="20005900 - OUTROS EQUIPAMENTOS PARA TRATAMENTO DE AR">20005900 - OUTROS EQUIPAMENTOS PARA TRATAMENTO DE AR</option>');
+
+}else if (v == '20006000 - ISOLAMENTO') {
+   $('#itemgrupomercadoria').append('<option value="20006100 - ISOLAMENTO TERMO ACÚSTICO">20006100 - ISOLAMENTO TERMO ACÚSTICO</option>');
+   $('#itemgrupomercadoria').append('<option value="20006200 - OUTROS TIPOS DE ISOLAMENTOS">20006200 - OUTROS TIPOS DE ISOLAMENTOS</option>');
+
+}else if (v == '20007000 - METAIS / LIGAS NÃO FERROSOS (PERFIS, CHAPAS E OUTROS)') {
+   $('#itemgrupomercadoria').append('<option value="20007200 - ALUMÍNIO">20007200 - ALUMÍNIO</option>');
+   $('#itemgrupomercadoria').append('<option value="20007300 - COBRE">20007300 - COBRE</option>');
+   $('#itemgrupomercadoria').append('<option value="20007500 - OUTROS METAIS E LIGAS NÃO FERROSOS">20007500 - OUTROS METAIS E LIGAS NÃO FERROSOS</option>');
+
+}else if (v == '20010000 - SERRALHERIA E ESQUADRIA (PORTAS, JANELAS, VENEZIANAS)') {
+   $('#itemgrupomercadoria').append('<option value="20010100 - AÇO INOX">20010100 - AÇO INOX</option>');
+   $('#itemgrupomercadoria').append('<option value="20010200 - ALUMÍNIO">20010200 - ALUMÍNIO</option>');
+   $('#itemgrupomercadoria').append('<option value="20010300 - MADEIRA">20010300 - MADEIRA</option>');
+   $('#itemgrupomercadoria').append('<option value="20010400 - METÁLICA  - AÇO">20010400 - METÁLICA  - AÇO</option>');
+   $('#itemgrupomercadoria').append('<option value="20010500 - POLIURETANO">20010500 - POLIURETANO</option>');
+   $('#itemgrupomercadoria').append('<option value="20010600 - PVC">20010600 - PVC</option>');
+   $('#itemgrupomercadoria').append('<option value="0010700 - CLARABÓIA">20010700 - CLARABÓIA</option>');
+   $('#itemgrupomercadoria').append('<option value="20010800 - PERSIANAS, TOLDOS E COBERTURAS">20010800 - PERSIANAS, TOLDOS E COBERTURAS</option>');
+   $('#itemgrupomercadoria').append('<option value="20010900 - ESQUADRIAS ESPECIAIS (PORTAS E OUTRAS EM VIDROS)">20010900 - ESQUADRIAS ESPECIAIS (PORTAS E OUTRAS EM VIDROS)</option>');
+   $('#itemgrupomercadoria').append('<option value="20010950 - FERRAGENS (FECHADURA, DOBRADIÇAS, MOLAS, ETC)">20010950 - FERRAGENS (FECHADURA, DOBRADIÇAS, MOLAS, ETC)</option>');
+
+}else if (v == '20011000 - CIMENTOS') {
+   $('#itemgrupomercadoria').append('<option value="20011100 - CIMENTOS EM GERAL">20011100 - CIMENTOS EM GERAL</option>');
+   $('#itemgrupomercadoria').append('<option value="20011400 - CIMENTO BRANCO">20011400 - CIMENTO BRANCO</option>');
+   $('#itemgrupomercadoria').append('<option value="20011650 - FILLER">20011650 - FILLER</option>');
+   $('#itemgrupomercadoria').append('<option value="20011700 - OUTROS TIPOS DE CIMENTO">20011700 - OUTROS TIPOS DE CIMENTO</option>');
+
+}else if (v == '20012000 - CERÂMICOS') {
+   $('#itemgrupomercadoria').append('<option value="20012100 - BLOCO E TIJOLO CERÂMICO">20012100 - BLOCO E TIJOLO CERÂMICO</option>');
+   $('#itemgrupomercadoria').append('<option value="20012200 - PISOS E REVESTIMENTOS">20012200 - PISOS E REVESTIMENTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="20012400 - TELHA CERÂMICA">20012400 - TELHA CERÂMICA</option>');
+   $('#itemgrupomercadoria').append('<option value="20012500 - OUTROS MATERIAIS CERÂMICOS">20012500 - OUTROS MATERIAIS CERÂMICOS</option>');
+
+}else if (v == '20013000 - MUROS E CERCAS') {
+   $('#itemgrupomercadoria').append('<option value="20013100 - MUROS E CERCAS - MOURÕES E PRÉ FABRICADOS EM GERAL">20013100 - MUROS E CERCAS - MOURÕES E PRÉ FABRICADOS EM GERAL</option>');
+   $('#itemgrupomercadoria').append('<option value="20013200 - TELAS, ARAMES, CONCERTINAS, GRAMPOS, ETC">20013200 - TELAS, ARAMES, CONCERTINAS, GRAMPOS, ETC</option>');
+   $('#itemgrupomercadoria').append('<option value="20013400 - OUTROS MATERIAIS PARA FABRICAÇÃO DE MUROS E CERCAS">20013400 - OUTROS MATERIAIS PARA FABRICAÇÃO DE MUROS E CERCAS</option>');
+
+}else if (v == '20015000 - CONTENÇÃO DE TERRENO') {
+   $('#itemgrupomercadoria').append('<option value="2001510 - CONTENÇÃO DE TERRENOS (GABIÃO E OUTROS MATERIAIS)">2001510 - CONTENÇÃO DE TERRENOS (GABIÃO E OUTROS MATERIAIS)</option>');
+   $('#itemgrupomercadoria').append('<option value="20015400 - MATERIAIS DE APOIO PARA CONTENÇÃO DE TERRENO (TELAS, LONAS,ETC)">20015400 - MATERIAIS DE APOIO PARA CONTENÇÃO DE TERRENO (TELAS, LONAS,ETC)</option>');
+
+}else if (v == '20018000 - ESTRUTURAS EM OBRA CIVIL') {
+   $('#itemgrupomercadoria').append('<option value="20018300 - ESTRUTURAS DE CONCRETO EM OBRA CIVIL">20018300 - ESTRUTURAS DE CONCRETO EM OBRA CIVIL</option>');
+   $('#itemgrupomercadoria').append('<option value="20018400 - ESTRUTURAS DE MADEIRA EM OBRA CIVIL">20018400 - ESTRUTURAS DE MADEIRA EM OBRA CIVIL</option>');
+   $('#itemgrupomercadoria').append('<option value="20018500 - ESTRUTURAS METÁLICAS EM OBRA CIVIL">20018500 - ESTRUTURAS METÁLICAS EM OBRA CIVIL</option>');
+   $('#itemgrupomercadoria').append('<option value="20018700 - OUTRAS ESTRUTURAS EM OBRA CIVIL">20018700 - OUTRAS ESTRUTURAS EM OBRA CIVIL</option>');
+
+}else if (v == '20020000 - FORROS, PISOS E DIVISÓRIAS') {
+   $('#itemgrupomercadoria').append('<option value="20020100 - FORRO E DIVISÓRIAS EM GERAL (GESSO, PLACAS E OUTROS)">20020100 - FORRO E DIVISÓRIAS EM GERAL (GESSO, PLACAS E OUTROS)</option>');
+   $('#itemgrupomercadoria').append('<option value="20020200 - PISO ELEVADO">20020200 - PISO ELEVADO</option>');
+   $('#itemgrupomercadoria').append('<option value="20020300 - REVESTIMENTOS PARA PISOS - CARPETES, TAPETES, BORRACHA, VINÍLICO">20020300 - REVESTIMENTOS PARA PISOS - CARPETES, TAPETES, BORRACHA, VINÍLICO</option>');
+   $('#itemgrupomercadoria').append('<option value="20020400 - OUTROS TIPOS E MATERIAIS PARA PISOS, PISOS ELEVADOS E FORROS">20020400 - OUTROS TIPOS E MATERIAIS PARA PISOS, PISOS ELEVADOS E FORROS</option>');
+   $('#itemgrupomercadoria').append('<option value="20020500 - MATERIAIS PARA ASSENTAMENTO DE PISOS">20020500 - MATERIAIS PARA ASSENTAMENTO DE PISOS</option>');
+
+}else if (v == '20021000 - GEOSINTÉTICOS') {
+   $('#itemgrupomercadoria').append('<option value="20021100 - GEOCOMPOSTOS">20021100 - GEOCOMPOSTOS</option>');
+   $('#itemgrupomercadoria').append('<option value="20021200 - GEOGRELHAS E GEOMEMBRANAS">20021200 - GEOGRELHAS E GEOMEMBRANAS</option>');
+   $('#itemgrupomercadoria').append('<option value="20021300 - GEOTEXTEIS">20021300 - GEOTEXTEIS</option>');
+   $('#itemgrupomercadoria').append('<option value="20021400 - OUTROS GEOTEXTEIS E GEOCOMPOSTOS">20021400 - OUTROS GEOTEXTEIS E GEOCOMPOSTOS</option>');
+
+}else if (v == '20022000 - CONCRETO E ARGAMASSA USINADOS') {
+   $('#itemgrupomercadoria').append('<option value="20022200 - ARGAMASSA USINADA">20022200 - ARGAMASSA USINADA</option>');
+   $('#itemgrupomercadoria').append('<option value="20022300 - OUTRAS ARGAMASSAS PRONTAS">20022300 - OUTRAS ARGAMASSAS PRONTAS</option>');
+
+}else if (v == '20023000 - IMPERMEABILIZAÇÃO') {
+   $('#itemgrupomercadoria').append('<option value="20023100 - IMPERMEABILIZAÇÃO EM CONCRETO - PAREDE, LAJES, ETC (MATERIAIS)">20023100 - IMPERMEABILIZAÇÃO EM CONCRETO - PAREDE, LAJES, ETC (MATERIAIS)</option>');
+   $('#itemgrupomercadoria').append('<option value="20023200 - MASTIQUES EM PU - SILICONE E OUTROS">20023200 - MASTIQUES EM PU - SILICONE E OUTROS</option>');
+   $('#itemgrupomercadoria').append('<option value="0023300 - IMPERMEABILIZAÇÃO DE LAGOAS - MATERIAIS">20023300 - IMPERMEABILIZAÇÃO DE LAGOAS - MATERIAIS</option>');
+   $('#itemgrupomercadoria').append('<option value="20023400 - IMPERMEABILIZAÇÃO ESTRUTURAL - MATERIAIS">20023400 - IMPERMEABILIZAÇÃO ESTRUTURAL - MATERIAIS</option>');
+   $('#itemgrupomercadoria').append('<option value="20023700 - OUTROS MATERIAIS DE IMPERMEABILIZAÇÃO">20023700 - OUTROS MATERIAIS DE IMPERMEABILIZAÇÃO</option>');
+
+}else if (v == '20025000 - JARDINAGEM, PAISAGISMO E IRRIGAÇÃO') {
+   $('#itemgrupomercadoria').append('<option value="20025100 - JARDINAGEM E PAISAGISMO (GRAMAS, MUDAS, ETC)">20025100 - JARDINAGEM E PAISAGISMO (GRAMAS, MUDAS, ETC)</option>');
+   $('#itemgrupomercadoria').append('<option value="20025200 - IRRIGAÇÃO">20025200 - IRRIGAÇÃO</option>');
+   $('#itemgrupomercadoria').append('<option value="20025300 - OUTROS PRODUTOS PARA JARDINAGEM E IRRIGAÇÃO">20025300 - OUTROS PRODUTOS PARA JARDINAGEM E IRRIGAÇÃO</option>');
+
+}else if (v == '20026000 - JUNTAS, SELAGEM E MATERIAL DE APOIO PARA CONCRETO') {
+   $('#itemgrupomercadoria').append('<option value="20026100 - PERFIS PARA JUNTAS EM CONCRETO">20026100 - PERFIS PARA JUNTAS EM CONCRETO</option>');
+   $('#itemgrupomercadoria').append('<option value="20026200 - APOIO PARA CONCRETO (NEOPRENE, BORRACHAS, ETC)">20026200 - APOIO PARA CONCRETO (NEOPRENE, BORRACHAS, ETC)</option>');
+   $('#itemgrupomercadoria').append('<option value="20026300 - SELANTES PARA JUNTAS">20026300 - SELANTES PARA JUNTAS</option>');
+   $('#itemgrupomercadoria').append('<option value="20026400 - OUTROS MATERIAIS PARA JUNTAS E APOIO">20026400 - OUTROS MATERIAIS PARA JUNTAS E APOIO</option>');
+
+}else if (v == '20027000 - MADEIRAS') {
+   $('#itemgrupomercadoria').append('<option value="20027300 - MADEIRAS EM GERAL">20027300 - MADEIRAS EM GERAL</option>');
+   $('#itemgrupomercadoria').append('<option value="20027400 - CHAPAS E COMPENSADOS EM GERAL">20027400 - CHAPAS E COMPENSADOS EM GERAL</option>');
+   $('#itemgrupomercadoria').append('<option value="20027500 - OUTRAS MADEIRAS E CHAPAS">20027500 - OUTRAS MADEIRAS E CHAPAS</option>');
+
+}else if (v == '20029000 - PAINÉIS PRÉ FABRICADOS') {
+   $('#itemgrupomercadoria').append('<option value="20029100 - PAINÉIS PRÉ FABRICADOS PARA COBERTURA E FACHADA">20029100 - PAINÉIS PRÉ FABRICADOS PARA COBERTURA E FACHADA</option>');
+   $('#itemgrupomercadoria').append('<option value="20029300 - OUTROS PAINEIS PRÉ FABRICADOS">20029300 - OUTROS PAINEIS PRÉ FABRICADOS</option>');
+
+}else if (v == '20030000 - PAVIMENTAÇÃO') {
+   $('#itemgrupomercadoria').append('<option value="20030100 - PAVIMENTAÇÃO EM CONCRETO">20030100 - PAVIMENTAÇÃO EM CONCRETO</option>');
+   $('#itemgrupomercadoria').append('<option value="20030800 - PAVIMENTAÇÃO ASFÁLTICA - EMULSÕES, BETUMES E OUTROS MAT">20030800 - PAVIMENTAÇÃO ASFÁLTICA - EMULSÕES, BETUMES E OUTROS MAT</option>');
+   $('#itemgrupomercadoria').append('<option value="20030900 - MATERIAIS PARA PREPARO DO SOLO RECEBIMENTO ASFALTO">20030900 - MATERIAIS PARA PREPARO DO SOLO RECEBIMENTO ASFALTO</option>');
+
+}else if (v == '20031000 - PEDRAS NATURAIS PARA PISO E REVESTIMENTO') {
+   $('#itemgrupomercadoria').append('<option value="20031300 - GRANITOS">20031300 - GRANITOS</option>');
+   $('#itemgrupomercadoria').append('<option value="20031400 - MARMORES">20031400 - MARMORES</option>');
+   $('#itemgrupomercadoria').append('<option value="20031500 - ARDÓSIA">20031500 - ARDÓSIA</option>');
+   $('#itemgrupomercadoria').append('<option value="20031600 - OUTRAS PEDRAS NATURAIS">20031600 - OUTRAS PEDRAS NATURAIS</option>');
+
+}else if (v == '20032000 - TINTAS - MATERIAL PARA PINTURA') {
+   $('#itemgrupomercadoria').append('<option value="20032100 - VERNIZ PARA MADEIRA">20032100 - VERNIZ PARA MADEIRA</option>');
+   $('#itemgrupomercadoria').append('<option value="20032200 - ESMALTES - SINTÉTICO, EPOXI, PU E OUTROS">20032200 - ESMALTES - SINTÉTICO, EPOXI, PU E OUTROS</option>');
+   $('#itemgrupomercadoria').append('<option value="20032300 - LÁTEX, MASSA CORRIDA, SELADOR E TINTAS PARA PAREDES EM GERAL">20032300 - LÁTEX, MASSA CORRIDA, SELADOR E TINTAS PARA PAREDES EM GERAL </option>');
+   $('#itemgrupomercadoria').append('<option value="20032400 - PRIMERS, BASES, DILUENTES">20032400 - PRIMERS, BASES, DILUENTES</option>');
+   $('#itemgrupomercadoria').append('<option value="20032500 - PRODUTOS PARA REVESTIMENTO DE REBOCO - CONCRETO - CIMENTO">20032500 - PRODUTOS PARA REVESTIMENTO DE REBOCO - CONCRETO - CIMENTO</option>');
+   $('#itemgrupomercadoria').append('<option value="20032600 - ACESSÓRIOS PARA PINTURA (ROLO, LIXA, PINCÉL, AIR LESS)">20032600 - ACESSÓRIOS PARA PINTURA (ROLO, LIXA, PINCÉL, AIR LESS)</option>');
+
+}else if (v == '20033000 - PRÉ FABRICADO CONCRETO - ESTRUTURA') {
+   $('#itemgrupomercadoria').append('<option value="20033100 - LAJES">20033100 - LAJES</option>');
+   $('#itemgrupomercadoria').append('<option value="20033400 - PILARES E VIGAS PRÉ FABRICADAS">20033400 - PILARES E VIGAS PRÉ FABRICADAS</option>');
+   $('#itemgrupomercadoria').append('<option value="20033700 - OUTROS PRÉ FABRICADOS DE CONCRETO">20033700 - OUTROS PRÉ FABRICADOS DE CONCRETO</option>');
+
+}else if (v == '20036000 - TUBOS CONCRETO E AMIANTO -  SANEAMENTO') {
+   $('#itemgrupomercadoria').append('<option value="20036100 - FIBROCIMENTO">20036100 - FIBROCIMENTO</option>');
+   $('#itemgrupomercadoria').append('<option value="20036300 - CONCRETO (TUBOS, CANALETAS, ADUELAS)">20036300 - CONCRETO (TUBOS, CANALETAS, ADUELAS)</option>');
+   $('#itemgrupomercadoria').append('<option value="20036400 - TAMPÕES, GRELHAS E OUTROS MATERIAIS PARA OBRAS LINEARES">20036400 - TAMPÕES, GRELHAS E OUTROS MATERIAIS PARA OBRAS LINEARES</option>');
+
+}else if (v == '20037000 - VIDROS') {
+   $('#itemgrupomercadoria').append('<option value="20037100 - VIDROS EM GERAL">20037100 - VIDROS EM GERAL</option>');
+   $('#itemgrupomercadoria').append('<option value="20037700 - OUTROS MATERIAIS DE VIDROS">20037700 - OUTROS MATERIAIS DE VIDROS</option>');
+
+}else if (v == '20038000 - GESSO E CAL') {
+   $('#itemgrupomercadoria').append('<option value="20038100 - GESSO E CAL">20038100 - GESSO E CAL</option>');
+
+}else if (v == '20040000 - LOUÇAS E METAIS') {
+   $('#itemgrupomercadoria').append('<option value="20041000 - METAIS, LOUÇAS E ACABAMENTOS - HIDRAULICA">20041000 - METAIS, LOUÇAS E ACABAMENTOS - HIDRAULICA</option>');
+   $('#itemgrupomercadoria').append('<option value="20042000 - PIAS E GABINETES">20042000 - PIAS E GABINETES</option>');
+   $('#itemgrupomercadoria').append('<option value="20043000 - MATERIAIS DE APOIO A INSTALAÇÕES HIDRAULICAS">20043000 - MATERIAIS DE APOIO A INSTALAÇÕES HIDRAULICAS</option>');
+
+}else if (v == '20050000 - MANGUEIRAS') {
+   $('#itemgrupomercadoria').append('<option value="20051000 - MANGUEIRAS E MANGOTES EM GERAL">20051000 - MANGUEIRAS E MANGOTES EM GERAL</option>');
+
+}else if (v == '20060000 - MATERIAIS BÁSICOS CONSTRUÇÃO CIVIL') {
+   $('#itemgrupomercadoria').append('<option value="20061000 - AGREGADOS PARA CONSTRUÇÃO CIVIL (AREIA, BRITA, POZOLANA, ETC)">20061000 - AGREGADOS PARA CONSTRUÇÃO CIVIL (AREIA, BRITA, POZOLANA, ETC)</option>');
+   $('#itemgrupomercadoria').append('<option value="20062000 - BLOCOS DE CONCRETO">20062000 - BLOCOS DE CONCRETO</option>');
+   $('#itemgrupomercadoria').append('<option value="20063000 - CAIXA DÁGUA (TODOS MATERIAIS)">20063000 - CAIXA DÁGUA (TODOS MATERIAIS)</option>');
+
+}else if (v == '20070000 - FORMAS E ESCORAS PARA OBRA CIVIL') {
+   $('#itemgrupomercadoria').append('<option value="20071000 - FORMAS E ESCORAS PARA OBRA CIVIL">20071000 - FORMAS E ESCORAS PARA OBRA CIVIL</option>');
+   $('#itemgrupomercadoria').append('<option value="20072000 - ACESSÓRIOS PARA FORMAS E ESCORAS">20072000 - ACESSÓRIOS PARA FORMAS E ESCORAS</option>');
+
+}else if (v == '20080000 - MATERIAIS PARA TRAVESSIA') {
+   $('#itemgrupomercadoria').append('<option value="20081000 - MATERIAIS PARA TRAVESSIA - MND">20081000 - MATERIAIS PARA TRAVESSIA - MND</option>');
+
+}else if (v == '20090000 - TELHAS E COBERTURAS - MAT DIVERSOS') {
+   $('#itemgrupomercadoria').append('<option value="20091000 - TELHAS EM AMIANTO">20091000 - TELHAS EM AMIANTO</option>');
+   $('#itemgrupomercadoria').append('<option value="20092000 - TELHAS EM CHAPA - AÇO GALVANIZADO OU ALUMÍNIO">20092000 - TELHAS EM CHAPA - AÇO GALVANIZADO OU ALUMÍNIO</option>');
+   $('#itemgrupomercadoria').append('<option value="20093000 - TELHAS E COBERTURA EM MATERIAIS DIVERSOS (EXCETO CERÂMICA)">20093000 - TELHAS E COBERTURA EM MATERIAIS DIVERSOS (EXCETO CERÂMICA)</option>');
+
+}
+
+      }
+
+
+      </script>
+
+      <script type="text/javascript">
+      function validaClasseAvaliacao() {
+         var droptipoMaterial = document.getElementById("tipoMaterial").value;
+         $('#classeAvaliacao').empty();
+         if(droptipoMaterial == "zcon"){
+         	   $('#classeAvaliacao').append('<option value="" selected></option>');
+               $('#classeAvaliacao').append('<option value="B300 - Fornecimento de Alimentação | Materiais de Consumo">B300 - Fornecimento de Alimentação | Materiais de Consumo</option>');
+               $('#classeAvaliacao').append('<option value="B301 - Materiais de Consumo">B301 - Materiais de Consumo</option>');
+               $('#classeAvaliacao').append('<option value="B302 - Materiais de Escritório">B302 - Materiais de Escritório</option>');
+               $('#classeAvaliacao').append('<option value="B303 - Materiais de Laboratório | Materiais Diversos">B303 - Materiais de Laboratório | Materiais Diversos</option>');
+               $('#classeAvaliacao').append('<option value="B304 - Material de Segurança/EPI">B304 - Material de Segurança/EPI</option>');
+               $('#classeAvaliacao').append('<option value="B305 - Material de Segurança/EPC">B305 - Material de Segurança/EPC</option>');
+               $('#classeAvaliacao').append('<option value="B306 - Materiais Diversos">B306 - Materiais Diversos</option>');
+               $('#classeAvaliacao').append('<option value="B307 - Produtos Químicos / Materiais Diversos">B307 - Produtos Químicos / Materiais Diversos</option>');
+               $('#classeAvaliacao').append('<option value="B308 - Energia Elétrica">B308 - Energia Elétrica</option>');
+               $('#classeAvaliacao').append('<option value="B309 - Água e Esgoto">B309 - Água e Esgoto</option>');
+               $('#classeAvaliacao').append('<option value="B310 - Telefone/Internet">B310 - Telefone/Internet</option>');
+               $('#classeAvaliacao').append('<option value="B311 - Uniformes">B311 - Uniformes</option>');
+               $('#classeAvaliacao').append('<option value="B312 - Gastos com Refeições">B312 - Gastos com Refeições</option>');
+               $('#classeAvaliacao').append('<option value="B313 - Custos Diversos | Despesas Diversas">B313 - Custos Diversos | Despesas Diversas</option>');
+               $('#classeAvaliacao').append('<option value="B314 - Despesas Internas/Eventos">B314 - Despesas Internas/Eventos</option>');
+               $('#classeAvaliacao').append('<option value="B315 - Brindes e Cortesia">B315 - Brindes e Cortesias</option>');
+               $('#classeAvaliacao').append('<option value="B316 - Outros Imp.e Taxa">B316 - Outros Imp.e Taxas</option>');
+               $('#classeAvaliacao').append('<option value="B317 - Seguros de Veículos">B317 - Seguros de Veículos</option>');
+               $('#classeAvaliacao').append('<option value="B318 - Seguro Garantia">B318 - Seguro Garantia</option>');
+               $('#classeAvaliacao').append('<option value="B319 - Seguro Diversos | Seguros de Imóveis">B319 - Seguro Diversos | Seguros de Imóveis</option>');
+               $('#classeAvaliacao').append('<option value="B321 - Alugueis/Condomínio">B321 - Alugueis/Condomínio</option>');
+               $('#classeAvaliacao').append('<option value="B322 - Insumos p/Máq.e Equip.">B322 - Insumos p/Máq.e Equip.</option>');
+               $('#classeAvaliacao').append('<option value="B323 - Fretes e Carretos">B323 - Fretes e Carretos</option>');
+               $('#classeAvaliacao').append('<option value="B324 - Despesas c/ Veículos">B324 - Despesas c/ Veículos</option>');
+               $('#classeAvaliacao').append('<option value="B325 - Bens não Ativados">B325 - Bens não Ativados</option>');
+               $('#classeAvaliacao').append('<option value="B326 - Materiais de Construção">B326 - Materiais de Construção</option>');
+               $('#classeAvaliacao').append('<option value="B327 - Vale Refeição/Vale Alimentação">B327 - Vale Refeição/Vale Alimentação</option>');
+               $('#classeAvaliacao').append('<option value="B328 - Doações">B328 - Doações</option>');
+               $('#classeAvaliacao').append('<option value="B329 - Seguro de Vida">B329 - Seguro de Vida</option>');
+               $('#classeAvaliacao').append('<option value="B330 - Ferramentas de Consumo">B330 - Ferramentas de Consumo</option>');
+               $('#classeAvaliacao').append('<option value="B331 - Comunicação e Propaganda">B331 - Comunicação e Propaganda</option>');
+               $('#classeAvaliacao').append('<option value="B332 - Serviços Prestados Pessoa Jurídica">B332 - Serviços Prestados Pessoa Jurídica</option>');
+         }else if(droptipoMaterial == "zequ"){
+         	   $('#classeAvaliacao').append('<option value="" selected></option>');
+               $('#classeAvaliacao').append('<option value="B500 - Insumos para Máquinas/Equipamentos">B500 - Insumos para Máquinas/Equipamentos</option>');
+               $('#classeAvaliacao').append('<option value="B501 - Bens não Ativados">B501 - Bens não Ativados</option>');
+               $('#classeAvaliacao').append('<option value="B502 - Mat.de Construção">B502 - Mat.de Construção</option>');
+               $('#classeAvaliacao').append('<option value="B503 - Mat.de Laboratório">B503 - Mat.de Laboratório</option>');
+               $('#classeAvaliacao').append('<option value="B504 - Mat.Segurança/EPC">B504 - Mat.Segurança/EPC</option>');
+         }else if(droptipoMaterial == "zloc"){
+         	$('#classeAvaliacao').append('<option value="" selected></option>');
+            $('#classeAvaliacao').append('<option value="B700 - Materiais Diversos">B700 - Materiais Diversos</option>');
+         }else if(droptipoMaterial == "zmat"){
+         	$('#classeAvaliacao').append('<option value="" selected></option>');
+            $('#classeAvaliacao').append('<option value="B200 - Material Construção">B200 - Material Construção</option>');
+            $('#classeAvaliacao').append('<option value="B201 - Material Diversos">B201 - Material Diversos</option>');
+         }else if(droptipoMaterial == "zrep"){
+         	$('#classeAvaliacao').append('<option value="" selected></option>');
+            $('#classeAvaliacao').append('<option value="B400 - Despesas com Veículos">B400 - Despesas com Veículos</option>');
+            $('#classeAvaliacao').append('<option value="B401 - Insumos para Máquinas/Equipamentos">B401 - Insumos para Máquinas/Equipamentos</option>');
+            $('#classeAvaliacao').append('<option value="B402 - Materiais Escritório">B402 - Materiais Escritório</option>');
+            $('#classeAvaliacao').append('<option value="B403 - Material Diversos">B403 - Material Diversos</option>');
+            $('#classeAvaliacao').append('<option value="B404 - Ferramentas de Consumo">B404 - Ferramentas de Consumo</option>');
+         }else if(droptipoMaterial == "zser"){
+         	   $('#classeAvaliacao').append('<option value="" selected></option>');
+               $('#classeAvaliacao').append('<option value="B600 - Assistência Médica/Odontológica">B600 - Assistência Médica/Odontológica</option>');
+               $('#classeAvaliacao').append('<option value="B601 - Vale Refeição/Vale Alimentação">B601 - Vale Refeição/Vale Alimentação</option>');
+               $('#classeAvaliacao').append('<option value="B602 - Vale Transporte">B602 - Vale Transporte</option>');
+               $('#classeAvaliacao').append('<option value="B603 - Cursos Técnicos">B603 - Cursos Técnicos</option>');
+               $('#classeAvaliacao').append('<option value="B604 - Assistência Médica/Odontológica - Cooperativas">B604 - Assistência Médica/Odontológica - Cooperativas</option>');
+               $('#classeAvaliacao').append('<option value="B605 - Serviços Prestados Pessoa Jurídica">B605 - Serviços Prestados Pessoa Jurídica</option>');
+               $('#classeAvaliacao').append('<option value="B606 - Serviços Prestados Pessoa Física">B606 - Serviços Prestados Pessoa Física</option>');
+               $('#classeAvaliacao').append('<option value="B607 - Serviços Prestados por Cooperativas">B607 - Serviços Prestados por Cooperativas</option>');
+               $('#classeAvaliacao').append('<option value="B608 - Locação de Mão de Obra">B608 - Locação de Mão de Obra</option>');
+               $('#classeAvaliacao').append('<option value="B609 - Retirada de Resíduos">B609 - Retirada de Resíduos</option>');
+               $('#classeAvaliacao').append('<option value="B610 - Transporte de Pessoal">B610 - Transporte de Pessoal</option>');
+               $('#classeAvaliacao').append('<option value="B611 - Assessoria Administrativa/Financeira - CSC | Assessoria Administrativa/Financeira">B611 - Assessoria Administrativa/Financeira - CSC | Assessoria Administrativa/Financeira</option>');
+               $('#classeAvaliacao').append('<option value="B612 - Outras Assessorias/Consultorias | Consultorias em Geral">B612 - Outras Assessorias/Consultorias | Consultorias em Geral</option>');
+               $('#classeAvaliacao').append('<option value="B613 - Outras Assessorias/Consultorias | Auditorias Externas">B613 - Outras Assessorias/Consultorias | Auditorias Externas</option>');
+               $('#classeAvaliacao').append('<option value="B614 - Outras Assessorias/Consultorias | Assessoria Jurídica">B614 - Outras Assessorias/Consultorias | Assessoria Jurídica</option>');
+               $('#classeAvaliacao').append('<option value="B615 - Assessoria para Novos Negócios">B615 - Assessoria para Novos Negócios</option>');
+               $('#classeAvaliacao').append('<option value="B616 - Correios e Malotes">B616 - Correios e Malotes</option>');
+               $('#classeAvaliacao').append('<option value="B617 - Alugueis de Equipamentos | Aluguel Bens Móveis">B617 - Alugueis de Equipamentos | Aluguel Bens Móveis</option>');
+               $('#classeAvaliacao').append('<option value="B618 - Alugueis de Veiculos">B618 - Alugueis de Veiculos</option>');
+               $('#classeAvaliacao').append('<option value="B619 - Alugueis/Condominio">B619 - Alugueis/Condominio</option>');
+               $('#classeAvaliacao').append('<option value="B620 - Gastos de Viagens/Hospedagens">B620 - Gastos de Viagens/Hospedagens</option>');
+               $('#classeAvaliacao').append('<option value="B621 - Assinaturas/Anuidades e Publicações">B621 - Assinaturas/Anuidades e Publicações</option>');
+               $('#classeAvaliacao').append('<option value="B622 - Fretes e Carretos">B622 - Fretes e Carretos</option>');
+               $('#classeAvaliacao').append('<option value="B623 - Fotocópias/Plotagens/Impressões">B623 - Fotocópias/Plotagens/Impressões</option>');
+               $('#classeAvaliacao').append('<option value="B624 - Programa de Visitas">B624 - Programa de Visitas</option>');
+               $('#classeAvaliacao').append('<option value="B625 - Custos Diversos | Despesas com Cartórios">B625 - Custos Diversos | Despesas com Cartórios</option>');
+               $('#classeAvaliacao').append('<option value="B626 - Comunicação e Propaganda">B626 - Comunicação e Propaganda</option>');
+               $('#classeAvaliacao').append('<option value="B627 - Despesas com Veículos">B627 - Despesas com Veículos</option>');
+               $('#classeAvaliacao').append('<option value="B628 - Desp.Intern./Eventos">B628 - Desp.Intern./Eventos</option>');
+               $('#classeAvaliacao').append('<option value="B629 - Brindes e Cortesias">B629 - Brindes e Cortesias</option>');
+               $('#classeAvaliacao').append('<option value="B630 - Patrocínios">B630 - Patrocínios</option>');
+               $('#classeAvaliacao').append('<option value="B631 - Telefone/Internet">B631 - Telefone/Internet</option>');
+               $('#classeAvaliacao').append('<option value="B632 - Materiais Escritório">B632 - Materiais Escritório</option>');
+         }
+
+        AlteraEmpresa();
+        DisplayJust();
+
+        function DisplayJust() {
+        var Just1 = document.getElementById("justJustificativas1").value;
+        var Just2 = document.getElementById("justJustificativas2").value;
+        var Just3 = document.getElementById("justJustificativas3").value;
+        var Just4 = document.getElementById("justJustificativas4").value;
+        var Just5 = document.getElementById("justJustificativas5").value;
+        var Just6 = document.getElementById("justJustificativas6").value;
+
+        if(Just1 == ""){
+            document.getElementById("justJustificativas1").style.display = "none";
+        }else{
+        	document.getElementById("justJustificativas1").style.display = "block";
+        }
+		if(Just2 == ""){
+            document.getElementById("justJustificativas2").style.display = "none";
+        }else{
+        	document.getElementById("justJustificativas2").style.display = "block";
+        }
+        if(Just3 == ""){
+            document.getElementById("justJustificativas3").style.display = "none";
+        }else{
+        	document.getElementById("justJustificativas3").style.display = "block";
+        }
+        if(Just4 == ""){
+            document.getElementById("justJustificativas4").style.display = "none";
+        }else{
+        	document.getElementById("justJustificativas4").style.display = "block";
+        }
+        if(Just5 == ""){
+            document.getElementById("justJustificativas5").style.display = "none";
+        }else{
+        	document.getElementById("justJustificativas5").style.display = "block";
+        }
+        if(Just6 == ""){
+            document.getElementById("justJustificativas6").style.display = "none";
+        }else{
+        	document.getElementById("justJustificativas6").style.display = "block";
+        }
+}
+
+
+
+        function AlteraEmpresa() {
+		    var count = document.getElementById('txtcount').value;
+		    if(count == 0){
+		        //alert(count);
+		        var txtteste = document.getElementById("txtteste");
+		        txtteste.value = "B009";
+		    }
+		}
+
+
+
+      }
+
+      </script>
+
+       <script type="text/javascript">
+       $('#tipoMaterial').on('change',function() {
+         $('#classeAvaliacao').empty();
+         $('#grupoMercadoria').empty();
+         $('#itemgrupomercadoria').empty();
+       var v = $(this).find(":selected").val();
+
+       if (v == "zcon"){
+         //PRENCHE GRUPO MERCADORIA
+         $('#grupoMercadoria').append('<option value="vaziozcon"> </option>');
+         $('#grupoMercadoria').append('<option value="30001000 - MATERIAIS DE CONSUMO - DIVERSOS">30001000 - MATERIAIS DE CONSUMO - DIVERSOS</option>');
+         $('#grupoMercadoria').append('<option value="30010000 - MATERIAIS DE CONSUMO - OFICINA MECÂNICA">30010000 - MATERIAIS DE CONSUMO - OFICINA MECÂNICA</option>');
+         $('#grupoMercadoria').append('<option value="30015000 - UNIFORMES - EPIS">30015000 - UNIFORMES - EPIS</option>');
+         $('#grupoMercadoria').append('<option value="30020000 - MATERIAIS DE CONSUMO - MEDICAMENTOS">30020000 - MATERIAIS DE CONSUMO - MEDICAMENTOS</option>');
+         $('#grupoMercadoria').append('<option value="30030000 - MATERIAIS DE CONSUMO - LABORATÓRIO">30030000 - MATERIAIS DE CONSUMO - LABORATÓRIO</option>');
+         $('#grupoMercadoria').append('<option value="30040000 - PRODUTOS QUÍMICOS PARA OPERAÇÃO - SISTEMAS DE ÁGUA E ESGOTO">30040000 - PRODUTOS QUÍMICOS PARA OPERAÇÃO - SISTEMAS DE ÁGUA E ESGOTO</option>');
+         $('#grupoMercadoria').append('<option value="30050000 - MEIOS FILTRANTES">30050000 - MEIOS FILTRANTES</option>');
+         $('#grupoMercadoria').append('<option value="30060000 - TRANSPORTE">30060000 - TRANSPORTE</option>');
+         $('#grupoMercadoria').append('<option value="30090000 - BRINDES">30090000 - BRINDES</option>');
+
+      }else if(v == "zequ") {
+         //PREENCHE GRUPO MERCADORIA
+         $('#grupoMercadoria').append('<option value="vaziozequ"> </option>');
+         $('#grupoMercadoria').append('<option value="50001000 - ACIONAMENTO">50001000 - ACIONAMENTO</option>');
+         $('#grupoMercadoria').append('<option value="50002000 - AGITADORES">50002000 - AGITADORES</option>');
+         $('#grupoMercadoria').append('<option value="50003000 - AERAÇÃO - SISTEMAS E EQUIPAMENTOS">50003000 - AERAÇÃO - SISTEMAS E EQUIPAMENTOS</option>');
+         $('#grupoMercadoria').append('<option value="50006000 - BOMBAS EM GERAL">50006000 - BOMBAS EM GERAL</option>');
+         $('#grupoMercadoria').append('<option value="50007000 - AQUECIMENTO DE LODO - SISTEMAS E EQUIPAMENTOS">50007000 - AQUECIMENTO DE LODO - SISTEMAS E EQUIPAMENTOS</option>');
+         $('#grupoMercadoria').append('<option value="50008000 - COMPORTAS (FERRO FUNDIDO, AÇO INOX, AÇO CARBONO, PRFV)">50008000 - COMPORTAS (FERRO FUNDIDO, AÇO INOX, AÇO CARBONO, PRFV)</option>');
+         $('#grupoMercadoria').append('<option value="50010000 - TANQUES DE ARMAZENAGEM">50010000 - TANQUES DE ARMAZENAGEM</option>');
+         $('#grupoMercadoria').append('<option value="50011000 - TANQUE DE PRESSÃO">50011000 - TANQUE DE PRESSÃO</option>');
+         $('#grupoMercadoria').append('<option value="50012000 - DESINFECÇAO - SISTEMAS E EQUIPAMENTOS">50012000 - DESINFECÇAO - SISTEMAS E EQUIPAMENTOS</option>');
+         $('#grupoMercadoria').append('<option value="50014000 - ELETRICIDADE">50014000 - ELETRICIDADE</option>');
+         $('#grupoMercadoria').append('<option value="50015000 - EQUIPAMENTOS MECÂNICOS PARA ETE - ETA">50015000 - EQUIPAMENTOS MECÂNICOS PARA ETE - ETA</option>');
+         $('#grupoMercadoria').append('<option value="50016000 - EQUIPAMENTOS DE LABORATORIO">50016000 - EQUIPAMENTOS DE LABORATORIO</option>');
+         $('#grupoMercadoria').append('<option value="50017000 - ESTRUTURAS E SUPORTES">50017000 - ESTRUTURAS E SUPORTES</option>');
+         $('#grupoMercadoria').append('<option value="50018000 - GERADORES QUIMICOS - PROCESSOS TRATAMENTO">50018000 - GERADORES QUIMICOS - PROCESSOS TRATAMENTO</option>');
+         $('#grupoMercadoria').append('<option value="50019000 - FERRAMENTAS">50019000 - FERRAMENTAS</option>');
+         $('#grupoMercadoria').append('<option value="50020000 - INSTRUMENTAÇÃO DE PROCESSO">50020000 - INSTRUMENTAÇÃO DE PROCESSO</option>');
+         $('#grupoMercadoria').append('<option value="50022000 - ULTRAFILTRAÇÃO - SISTEMAS E EQUIPAMENTOS">50022000 - ULTRAFILTRAÇÃO - SISTEMAS E EQUIPAMENTOS</option>');
+         $('#grupoMercadoria').append('<option value="50023000 - RECUPERAÇÃO ENERGIA">50023000 - RECUPERAÇÃO ENERGIA</option>');
+         $('#grupoMercadoria').append('<option value="50024000 - INSTALAÇÕES DE SEGURANÇA">50024000 - INSTALAÇÕES DE SEGURANÇA</option>');
+         $('#grupoMercadoria').append('<option value="50025000 - SEPARAÇÃO DE SÓLIDOS">50025000 - SEPARAÇÃO DE SÓLIDOS</option>');
+         $('#grupoMercadoria').append('<option value="50026000 - SISTEMA DE ELEVAÇÃO">50026000 - SISTEMA DE ELEVAÇÃO</option>');
+         $('#grupoMercadoria').append('<option value="50027000 - TRANSPORTE E MANUSEIO DE SÓLIDOS">50027000 - TRANSPORTE E MANUSEIO DE SÓLIDOS</option>');
+         $('#grupoMercadoria').append('<option value="50028000 - TRATAMENTO DE SÓLIDOS">50028000 - TRATAMENTO DE SÓLIDOS</option>');
+         $('#grupoMercadoria').append('<option value="50029000 - TUBOS E CONEXÕES">50029000 - TUBOS E CONEXÕES</option>');
+         $('#grupoMercadoria').append('<option value="50031000 - VÁLVULAS EM GERAL">50031000 - VÁLVULAS EM GERAL</option>');
+         $('#grupoMercadoria').append('<option value="50033000 - MÓVEIS EM GERAL">50033000 - MÓVEIS EM GERAL</option>');
+         $('#grupoMercadoria').append('<option value="50034000 - TI E TELEFONIA - EQU - IPAMENTOS E ACESSÓRIOS">50034000 - TI E TELEFONIA - EQU - IPAMENTOS E ACESSÓRIOS</option>');
+         $('#grupoMercadoria').append('<option value="50035000 - VEÍCULOS">50035000 - VEÍCULOS</option>');
+         $('#grupoMercadoria').append('<option value="50040000 - TOPOGRAFIA">50040000 - TOPOGRAFIA</option>');
+
+      }else if(v == "zmat"){
+
+         //PREENCHE GRUPO MERCADORIA
+         $('#grupoMercadoria').append('<option value="vaziozmat"> </option>');
+         $('#grupoMercadoria').append('<option value="20001000 - AÇO ESTRUTURAL">20001000 - AÇO ESTRUTURAL</option>');
+         $('#grupoMercadoria').append('<option value="20002000 - AÇO NÃO ESTRUTURAL">20002000 - AÇO NÃO ESTRUTURAL</option>');
+         $('#grupoMercadoria').append('<option value="20003000 - ADESIVOS E ADITIVOS PARA CIMENTO E CONCRETO">20003000 - ADESIVOS E ADITIVOS PARA CIMENTO E CONCRETO</option>');
+         $('#grupoMercadoria').append('<option value="20005000 - AR CONDICIONADO E AQUECIMENTO (SISTEMAS PREDIAIS)">20005000 - AR CONDICIONADO E AQUECIMENTO (SISTEMAS PREDIAIS)</option>');
+         $('#grupoMercadoria').append('<option value="20005600 - UMIDIFICAÇÃO, PURIFICAÇÃO, ESTERILIZAÇÃO DE AMBIENTE">20005600 - UMIDIFICAÇÃO, PURIFICAÇÃO, ESTERILIZAÇÃO DE AMBIENTE</option>');
+         $('#grupoMercadoria').append('<option value="20006000 - ISOLAMENTO">20006000 - ISOLAMENTO</option>');
+         $('#grupoMercadoria').append('<option value="20007000 - METAIS / LIGAS NÃO FERROSOS (PERFIS, CHAPAS E OUTROS)">20007000 - METAIS / LIGAS NÃO FERROSOS (PERFIS, CHAPAS E OUTROS)</option>');
+         $('#grupoMercadoria').append('<option value="20010000 - SERRALHERIA E ESQUADRIA (PORTAS, JANELAS, VENEZIANAS)">20010000 - SERRALHERIA E ESQUADRIA (PORTAS, JANELAS, VENEZIANAS)</option>');
+         $('#grupoMercadoria').append('<option value="20011000 - CIMENTOS">20011000 - CIMENTOS</option>');
+         $('#grupoMercadoria').append('<option value="20012000 - CERÂMICOS">20012000 - CERÂMICOS</option>');
+         $('#grupoMercadoria').append('<option value="20013000 - MUROS E CERCAS">20013000 - MUROS E CERCAS</option>');
+         $('#grupoMercadoria').append('<option value="20015000 - CONTENÇÃO DE TERRENO">20015000 - CONTENÇÃO DE TERRENO</option>');
+         $('#grupoMercadoria').append('<option value="20018000 - ESTRUTURAS EM OBRA CIVIL">20018000 - ESTRUTURAS EM OBRA CIVIL</option>');
+         $('#grupoMercadoria').append('<option value="20020000 - FORROS, PISOS E DIVISÓRIAS">20020000 - FORROS, PISOS E DIVISÓRIAS</option>');
+         $('#grupoMercadoria').append('<option value="20021000 - GEOSINTÉTICOS">20021000 - GEOSINTÉTICOS</option>');
+         $('#grupoMercadoria').append('<option value="20022000 - CONCRETO E ARGAMASSA USINADOS">20022000 - CONCRETO E ARGAMASSA USINADOS</option>');
+         $('#grupoMercadoria').append('<option value="20023000 - IMPERMEABILIZAÇÃO">20023000 - IMPERMEABILIZAÇÃO</option>');
+         $('#grupoMercadoria').append('<option value="20025000 - JARDINAGEM, PAISAGISMO E IRRIGAÇÃO">20025000 - JARDINAGEM, PAISAGISMO E IRRIGAÇÃO</option>');
+         $('#grupoMercadoria').append('<option value="20026000 - JUNTAS, SELAGEM E MATERIAL DE APOIO PARA CONCRETO">20026000 - JUNTAS, SELAGEM E MATERIAL DE APOIO PARA CONCRETO</option>');
+         $('#grupoMercadoria').append('<option value="20027000 - MADEIRAS">20027000 - MADEIRAS</option>');
+         $('#grupoMercadoria').append('<option value="20029000 - PAINÉIS PRÉ FABRICADOS">20029000 - PAINÉIS PRÉ FABRICADOS</option>');
+         $('#grupoMercadoria').append('<option value="20030000 - PAVIMENTAÇÃO">20030000 - PAVIMENTAÇÃO</option>');
+         $('#grupoMercadoria').append('<option value="20031000 - PEDRAS NATURAIS PARA PISO E REVESTIMENTO">20031000 - PEDRAS NATURAIS PARA PISO E REVESTIMENTO</option>');
+         $('#grupoMercadoria').append('<option value="20032000 - TINTAS - MATERIAL PARA PINTURA">20032000 - TINTAS - MATERIAL PARA PINTURA</option>');
+         $('#grupoMercadoria').append('<option value="20033000 - PRÉ FABRICADO CONCRETO - ESTRUTURA">20033000 - PRÉ FABRICADO CONCRETO - ESTRUTURA</option>');
+         $('#grupoMercadoria').append('<option value="20036000 - TUBOS CONCRETO E AMIANTO -  SANEAMENTO">20036000 - TUBOS CONCRETO E AMIANTO -  SANEAMENTO</option>');
+         $('#grupoMercadoria').append('<option value="20037000 - VIDROS">20037000 - VIDROS</option>');
+         $('#grupoMercadoria').append('<option value="20038000 - GESSO E CAL">20038000 - GESSO E CAL</option>');
+         $('#grupoMercadoria').append('<option value="20040000 - LOUÇAS E METAIS">20040000 - LOUÇAS E METAIS</option>');
+         $('#grupoMercadoria').append('<option value="20050000 - MANGUEIRAS">20050000 - MANGUEIRAS</option>');
+         $('#grupoMercadoria').append('<option value="20060000 - MATERIAIS BÁSICOS CONSTRUÇÃO CIVIL">20060000 - MATERIAIS BÁSICOS CONSTRUÇÃO CIVIL</option>');
+         $('#grupoMercadoria').append('<option value="20070000 - FORMAS E ESCORAS PARA OBRA CIVIL">20070000 - FORMAS E ESCORAS PARA OBRA CIVIL</option>');
+         $('#grupoMercadoria').append('<option value="20080000 - MATERIAIS PARA TRAVESSIA">20080000 - MATERIAIS PARA TRAVESSIA</option>');
+         $('#grupoMercadoria').append('<option value="20090000 - TELHAS E COBERTURAS - MAT DIVERSOS">20090000 - TELHAS E COBERTURAS - MAT DIVERSOS</option>');
+
+      }else if(v == "zrep"){
+
+         //PREENCHE GRUPO MERCADORIA
+         //só possui itens selecionáveis... ir direto para itemGrupoMercadoria
+      $('#itemgrupomercadoria').append('<option value="40001100 - REP ACIONAMENTO - MOTORES, ATUADORES, REDUTORES">40001100 - REP ACIONAMENTO - MOTORES, ATUADORES, REDUTORES</option>');
+      $('#itemgrupomercadoria').append('<option value="40001200 - REP AGITADORES">40001200 - REP AGITADORES</option>');
+      $('#itemgrupomercadoria').append('<option value="40001300 - REP AERAÇÃO">40001300 - REP AERAÇÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40001400 - REP INSTRUMENTOS (SOLENOIDES, TERMOSTATOS, PRESSOSTATOS, ETC)">40001400 - REP INSTRUMENTOS (SOLENOIDES, TERMOSTATOS, PRESSOSTATOS, ETC)</option>');
+      $('#itemgrupomercadoria').append('<option value="40001500 - REP BIOGÁS">40001500 - REP BIOGÁS</option>');
+      $('#itemgrupomercadoria').append('<option value="40001600 - REP BOMBAS">40001600 - REP BOMBAS</option>');
+      $('#itemgrupomercadoria').append('<option value="40001700 - REP AQUECIMENTO DE LODOS">40001700 - REP AQUECIMENTO DE LODOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40001800 - REP COMPORTAS">40001800 - REP COMPORTAS</option>');
+      $('#itemgrupomercadoria').append('<option value="40002000 - REP TANQUES DE ARMAZENAGEM">40002000 - REP TANQUES DE ARMAZENAGEM</option>');
+      $('#itemgrupomercadoria').append('<option value="40002100 - REP TANQUES DE PRESSÃO">40002100 - REP TANQUES DE PRESSÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40002200 - REP DESINFECÇÃO">40002200 - REP DESINFECÇÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40002300 - REP DESODORIZAÇÃO">40002300 - REP DESODORIZAÇÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40002400 - REP ELETRICIDADE">40002400 - REP ELETRICIDADE</option>');
+      $('#itemgrupomercadoria').append('<option value="40002450 - REP AUTOMAÇÃO">40002450 - REP AUTOMAÇÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40002500 - REP EQUIPAMENTOS MECÂNICOS">40002500 - REP EQUIPAMENTOS MECÂNICOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40002600 - REP GERADORES QUÍMICOS">40002600 - REP GERADORES QUÍMICOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40002700 - REP INSTRUMENTAÇÃO DE PROCESS">40002700 - REP INSTRUMENTAÇÃO DE PROCESSO</option>');
+      $('#itemgrupomercadoria').append('<option value="40002800 - REP ULTRAFILTRAÇÃO">40002800 - REP ULTRAFILTRAÇÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40002900 - REP RECUPERAÇÃO DE ENERGIA">40002900 - REP RECUPERAÇÃO DE ENERGIA</option>');
+      $('#itemgrupomercadoria').append('<option value="40003000 - REP EQUIPAMENTOS INCENDIOS">40003000 - REP EQUIPAMENTOS INCENDIOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40003100 - REP GRADES EM GERAL">40003100 - REP GRADES EM GERAL</option>');
+      $('#itemgrupomercadoria').append('<option value="40003200 - REP PENEIRAS (TAMIZ)">40003200 - REP PENEIRAS (TAMIZ)</option>');
+      $('#itemgrupomercadoria').append('<option value="40003300 - REP FILTROS">40003300 - REP FILTROS</option>');
+      $('#itemgrupomercadoria').append('<option value="40003400 - REP SEPARAÇÃO DE SÓLIDOS">40003400 - REP SEPARAÇÃO DE SÓLIDOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40003500 - REP SISTEMAS DE ELEVAÇÃO">40003500 - REP SISTEMAS DE ELEVAÇÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40003600 - REP TRANSPORTE E MANUSEIO DE SÓLIDOS">40003600 - REP TRANSPORTE E MANUSEIO DE SÓLIDOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40003700 - REP TRATAMENTO DE SÓLIDOS">40003700 - REP TRATAMENTO DE SÓLIDOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40003800 - REP VÁLVULAS">40003800 - REP VÁLVULAS</option>');
+      $('#itemgrupomercadoria').append('<option value="40003900 - REP ROLAMENTOS">40003900 - REP ROLAMENTOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40004000 - REP CORREIAS">40004000 - REP CORREIAS</option>');
+      $('#itemgrupomercadoria').append('<option value="40004100 - REP SELOS MECÂNICOS">40004100 - REP SELOS MECÂNICOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40004200 - REP ANEIS DE VEDAÇÃ">40004200 - REP ANEIS DE VEDAÇÃO</option>');
+      $('#itemgrupomercadoria').append('<option value="40004300 - REP LUBRIFICANTES E GRAXAS EM GERAL">40004300 - REP LUBRIFICANTES E GRAXAS EM GERAL</option>');
+      $('#itemgrupomercadoria').append('<option value="40004400 - REP PEÇAS VEÍCULOS LEVES">40004400 - REP PEÇAS VEÍCULOS LEVES</option>');
+      $('#itemgrupomercadoria').append('<option value="40004500 - REP PEÇAS VEÍCULOS PESADOS">40004500 - REP PEÇAS VEÍCULOS PESADOS</option>');
+      $('#itemgrupomercadoria').append('<option value="40004600 - REP MÓVEIS">40004600 - REP MÓVEIS</option>');
+      $('#itemgrupomercadoria').append('<option value="40004700 - REP SISTEMAS MONITORAMENTO">40004700 - REP SISTEMAS MONITORAMENTO</option>');
+      $('#itemgrupomercadoria').append('<option value="40004800 - REP EQUIPAMENTOS JARDINAGEM">40004800 - REP EQUIPAMENTOS JARDINAGEM</option>');
+      $('#itemgrupomercadoria').append('<option value="40004900 - REP TI, TELEFONIA E TELECOMUNICAÇÃO">40004900 - REP TI, TELEFONIA E TELECOMUNICAÇÃO</option>');
+
+      }else if (v == "zser") {
+         //PRRENCHE GRUPO ITEM MERCADORIA
+            $('#itemgrupomercadoria').append('<option value="60001000 - SERVIÇOS TERCEIRIZADOS EM GERAL  - BRASIL">60001000 - SERVIÇOS TERCEIRIZADOS EM GERAL  - BRASIL</option>');
+            $('#itemgrupomercadoria').append('<option value="60001010 - SERV INFORMÁTICA E CONGÊNERES">60001010 - SERV INFORMÁTICA E CONGÊNERES</option>');
+            $('#itemgrupomercadoria').append('<option value="60001020 - SERV PESQUISA E DESENVOLVIMENTO QQ NAT">60001020 - SERV PESQUISA E DESENVOLVIMENTO QQ NAT</option>');
+            $('#itemgrupomercadoria').append('<option value="60001030 - SERV PRESTADOS MEDIANTE LOCAÇÃO CESSÃO">60001030 - SERV PRESTADOS MEDIANTE LOCAÇÃO CESSÃO</option>');
+            $('#itemgrupomercadoria').append('<option value="60001040 - SERV SAÚDE ASSISTÊNCIA MÉDICA E CONGÊNER">60001040 - SERV SAÚDE ASSISTÊNCIA MÉDICA E CONGÊNER</option>');
+            $('#itemgrupomercadoria').append('<option value="60001050 - SERV ASSISTÊNCIA VETERINÁRIA">60001050 - SERV ASSISTÊNCIA VETERINÁRIA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001060 - SERV CUIDADOS PESSOAIS ESTÉTICA">60001060 - SERV CUIDADOS PESSOAIS ESTÉTICA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001070 - SERV ENGENHARIA ARQUITETURA GEOLOGIA">60001070 - SERV ENGENHARIA ARQUITETURA GEOLOGIA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001080 - SERV EDUCAÇÃO ENSINO TREINAMENTO">60001080 - SERV EDUCAÇÃO ENSINO TREINAMENTO</option>');
+            $('#itemgrupomercadoria').append('<option value="60001090 - SERV RELATIVOS A HOSPEDAGEM TURISMO">60001090 - SERV RELATIVOS A HOSPEDAGEM TURISMO</option>');
+            $('#itemgrupomercadoria').append('<option value="60001100 - SERV INTERMEDIAÇÃO E CONGÊNERES">60001100 - SERV INTERMEDIAÇÃO E CONGÊNERES</option>');
+            $('#itemgrupomercadoria').append('<option value="60001110 - SERV GUARDA ESTACION ARMAZENAMENTO">60001110 - SERV GUARDA ESTACION ARMAZENAMENTO</option>');
+            $('#itemgrupomercadoria').append('<option value="60001120 - SERV DIVERSÕES LAZER ENTRETENIMENTO">60001120 - SERV DIVERSÕES LAZER ENTRETENIMENTO</option>');
+            $('#itemgrupomercadoria').append('<option value="60001130 - SERV RELATIVOS A FONOGRAFIA FOTOGRAFI">60001130 - SERV RELATIVOS A FONOGRAFIA FOTOGRAFIA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001140 - SERV RELATIVOS A BENS TERCEIROS">60001140 - SERV RELATIVOS A BENS TERCEIROS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001150 - SERV RELACIONADOS AO SETOR BANCÁRIO">60001150 - SERV RELACIONADOS AO SETOR BANCÁRIO</option>');
+            $('#itemgrupomercadoria').append('<option value="60001160 - SERV TRANSP NATUREZA MUNICIPAL">60001160 - SERV TRANSP NATUREZA MUNICIPAL</option>');
+            $('#itemgrupomercadoria').append('<option value="60001170 - SERV APOIO TÉCNICO ADMINISTRATIVO JUR">60001170 - SERV APOIO TÉCNICO ADMINISTRATIVO JUR</option>');
+            $('#itemgrupomercadoria').append('<option value="60001180 - SERV REGULAÇÃO SINISTROS">60001180 - SERV REGULAÇÃO SINISTROS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001190 - SERV DISTRIBUIÇÃO E VENDA BILHETES">60001190 - SERV DISTRIBUIÇÃO E VENDA BILHETES</option>');
+            $('#itemgrupomercadoria').append('<option value="60001200 - SERV PORTUÁRIOS E FERROPORTUÁRIOS">60001200 - SERV PORTUÁRIOS E FERROPORTUÁRIOS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001210 - SERV REGISTROS PÚBLICOS CARTORÁRIOS">60001210 - SERV REGISTROS PÚBLICOS CARTORÁRIOS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001220 - SERV EXPLORAÇÃO RODOVIA">60001220 - SERV EXPLORAÇÃO RODOVIA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001230 - SERV PROGRAMAÇÃO E COMUNICAÇÃO VISUAL">60001230 - SERV PROGRAMAÇÃO E COMUNICAÇÃO VISUAL</option>');
+            $('#itemgrupomercadoria').append('<option value="60001240 - SERV CHAVEIROS CONFECÇÃO CARIMBOS PLACAS">60001240 - SERV CHAVEIROS CONFECÇÃO CARIMBOS PLACAS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001250 - SERV FUNERÁRIOS">60001250 - SERV FUNERÁRIOS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001270 - SERV ASSISTÊNCIA SOCIAL">60001270 - SERV ASSISTÊNCIA SOCIAL</option>');
+            $('#itemgrupomercadoria').append('<option value="60001280 - SERV AVALIAÇÃO BENS E  - SERV QQ NATUREZA">60001280 - SERV AVALIAÇÃO BENS E  - SERV QQ NATUREZA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001290 - SERV BIBLIOTECONOMIA">60001290 - SERV BIBLIOTECONOMIA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001300 - SERV BIOLOGIA BIOTECNOLOGIA E QUÍMICA">60001300 - SERV BIOLOGIA BIOTECNOLOGIA E QUÍMICA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001310 - SERV TÉCNICOS EDIFICAÇÕES ELETRÔNICA">60001310 - SERV TÉCNICOS EDIFICAÇÕES ELETRÔNICA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001320 - SERV TÉCNICOS">60001320 - SERV TÉCNICOS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001330 - SERV DESEMBARAÇO ADUANEIRO COMISSÁRIOS">60001330 - SERV DESEMBARAÇO ADUANEIRO COMISSÁRIOS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001340 - SERV INVESTIGAÇÕES PARTICULARES DETETIVE">60001340 - SERV INVESTIGAÇÕES PARTICULARES DETETIVE</option>');
+            $('#itemgrupomercadoria').append('<option value="60001350 - SERV REPORTAGEM ASSESSORIA IMPRENSA">60001350 - SERV REPORTAGEM ASSESSORIA IMPRENSA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001360 - SERV METEOROLOGIA">60001360 - SERV METEOROLOGIA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001370 - SERV ARTISTAS ATLETAS MODS E MANEQUIN">60001370 - SERV ARTISTAS ATLETAS MODS E MANEQUINS</option>');
+            $('#itemgrupomercadoria').append('<option value="60001380 - SERV MUSEOLOGIA">60001380 - SERV MUSEOLOGIA</option>');
+            $('#itemgrupomercadoria').append('<option value="60001390 - SERV OURIVESARIA E LAPIDAÇÃO">60001390 - SERV OURIVESARIA E LAPIDAÇÃO</option>');
+            $('#itemgrupomercadoria').append('<option value="60001400 - SERV RELATIVOS A OBRAS ARTE ENCOMENDA">60001400 - SERV RELATIVOS A OBRAS ARTE ENCOMENDA</option>');
+
+      }
+
+
+       });
+
+
+      </script>
+   </body>
+</html>

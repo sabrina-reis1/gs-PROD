@@ -1,0 +1,1272 @@
+<html>
+   <head>
+      <script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+      <link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+      <script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+      <script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+      <script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+<!--      
+      
+      <script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+      <link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+      <script type="text/javascript" src="/portal/resources/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+      <script src="/resources/js/jquery/jquery.js"></script>
+      <script src="/resources/js/jquery/jquery-ui.min.js"></script>
+      <script src="/resources/js/mustache/mustache-min.js"></script>
+      <script src="/resources/style-guide/js/fluig-style-guide.min.js"></script>-->
+      <!-- CUSTOM -->
+      <link href="/portal/resources/style-guide/css/fluig-style-guide-filter.min.css" rel="stylesheet" type="text/css">
+      <link href="/portal/resources/style-guide/css/fluig-style-guide-ratingstars.min.css" rel="stylesheet" type="text/css">
+      <script src="/portal/resources/style-guide/js/fluig-style-guide-filter.min.js"></script>
+      <script src="/portal/resources/style-guide/js/fluig-style-guide-ratingstars.min.js"></script>
+<!--      <link rel="stylesheet" href="bootstrap-chosen.css" />
+      <script src="jquery.min.js"></script>
+      <script src="chosen.jquery.js"></script>-->
+
+      <!--
+      ===================================================================================================
+         05/06/2023 - Inicio inclusão
+         GDSI-18500
+         Matheus Nóbrega Rodrigues
+         Alteração do campo elemento de custo para centro de custo através de integração
+      -->
+         <script type="text/javascript" src="script.js"></script>
+      <!--
+         05/06/2023 - Fim inclusão
+      ===================================================================================================
+      -->
+
+   </head>
+   <body>
+      <div class="fluig-style-guide">
+         <form name="form" role="form">
+            <div id="painel-info-processo" class="panel panel-default">
+               <div class="panel-heading">
+                  <h3 class="panel-title"><strong>Solicitação de Viagens</strong></h3>
+               </div>
+            </div>
+            <!-- INFORMACOES GERAIS -->
+               <div class="panel panel-default">
+                  <div class="panel-heading">
+ 					<h3 class="panel-title"> Dados Gerais </h3>
+                  </div>
+                     <div class="panel-body">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <label for="inputEmail3" class="control-label">Empresa do Solicitante:</label>
+                                <select class="form-control" id="nmempresa" name="nmempresa"></select> <!-- dataset="dsConsultaEmpCpf" datasetkey="EMP" datasetvalue="EMP" -->
+                           </div>
+                           <div class="form-group col-md-2">
+                              <input type="text" class="form-control" name="idempresa" id="idempresa">
+                           </div>
+                        </div>
+                        <div class="row form-group">
+                           <div class="col-md-6">
+                              <label for="inputEmail3" class="control-label">Solicitante:</label>
+                              <input type="text" class="form-control" name="nmSolicitante" id="nmSolicitante" placeholder="Solicitante">
+                              <input type="hidden" name="idSolicitante" id="idSolicitante">
+                           </div>
+                           <div class="col-md-6">
+                              <label for="inputEmail3" class="control-label">Data da Solicitação:</label>
+                              <input type="text" name="data_sol" class="form-control" id="data_sol">
+                           </div>
+                        </div>
+                        <div class="row form-group">
+                           <div class="col-md-6">
+                              <label class="control-label">Superior Responsável:</label>
+							  <input
+								  type="zoom"
+								  id = "nmSuperior"
+								  name="nmSuperior"
+								  data-zoom="{
+								            'displayKey':'colleagueName',
+								            'datasetId':'colleague',
+								            'maximumSelectionLength':'1',
+								            'filterValues':'active,true',
+								            'placeholder':'Selecione o supervisor',
+								            'fields':[
+								                {
+								                    'field':'colleagueId',
+								                    'label':'Usuário',
+								                    'visible':'false'                                                             
+								                },
+								                {
+								                    'field':'colleagueName',
+								                    'label':'Nome',
+								                    'search':'true'                                                              
+								                }
+								                ]
+								        }" 
+								/>
+                               <input type="hidden" name="idSupervisor" id="idSupervisor"> 
+                           </div>
+                           <div class="col-md-6">
+                              <label for="inputEmail3" class="control-label">Viajante:</label>
+                                 <input type="text" class="form-control" name="nmv" id="nmv">
+                           </div>
+                        </div>
+                        <div class="row"></div>
+                     </div>
+               </div>
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <h4 class="panel-title">
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> Apontamento de Custo </a>
+                  </h4>
+               </div>
+               <div class="panel-body">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label for="inputEmail3" class="control-label">Empresa:</label>
+                        <select class="form-control" id="selectEmpresaSolicitante" name="selectEmpresaSolicitante" dataset="Empresas" datasetkey="CODEXTERNO" datasetvalue="EMP" addBlankLine="true" placeholder="Selecione uma opção" obrigatorio onchange="pegavalor();"></select>
+                     </div>
+                     <!-- 
+                      <select class="form-control" name="drop_empresa" id="drop_empresa" onchange="pegavalor();">
+                           <option value="dropempresavazio"></option>
+                           <option value="AMBIENT">AMBIENT</option>
+                           <option value="SANAMA">SANAMA</option>
+                           <option value="SESAMM">SESAMM</option>
+                           <option value="CONSORCIO ALMA">CONSORCIO ALMA</option>
+                           <option value="SAMAR">SAMAR</option>
+                           <option value="GSINIMA">GS INIMA BRASIL</option>
+                           <option value="GSINIMAIND">GS INIMA INDUSTRIAL</option>
+                           <option value="GSINIMASVC">GS INIMA SERVIÇOS</option>
+                           <option value="SANEOURO">SANEOURO</option>
+                           <option value="COMASA">COMASA</option>
+                           <option value="CAEPA">CAEPA</option>
+                           <option value="AQUAPOLO">AQUAPOLO</option>
+                           <option value="JECEABA">JECEABA</option>
+                           <option value="TRIUNFO">TRIUNFO</option>
+                        </select>!-->
+                     <!--
+                     ===================================================================================================
+                        05/06/2023 - Inicio da inclusão
+                        GDSI-18500
+                        Matheus Nóbrega Rodrigues
+                        Alteração do campo elemento de custo para centro de custo através de integração
+                     ===================================================================================================
+                     -->
+                     <div class="form-group col-md-2">
+                        <label id="labelApontamento" for="drop_apontamento" class="control-label">Tp. Apontamento:</label>                    
+                        <select class="form-control" name="drop_apontamento" id="drop_apontamento" onchange="change()">
+                           <option value="selecione">Selecione</option>
+                           <option value="centroCusto">Centro de Custo</option>
+                           <option value="projeto">PEP</option>
+                           <option value="ordem">Ordem</option>
+                        </select>
+                     </div>
+
+                     <div class="form-group col-md-4 opcoes-apontamento">
+                        <label id="labelCentroCusto" for="inputCentroCusto" class="control-label" style="display: none">Centro de Custo:</label>
+                           <div class="input-group">
+                              <input type="text" name="inputCentroCusto" id="inputCentroCusto" class="form-control" placeholder="Clique na lupa para buscar" style="display: none">
+                              <!--<span class="input-group-addon" id="btnCentroCusto" style="cursor: pointer;" style="display: none"><i class="fluigicon fluigicon-search icon-sm"></i></span>-->
+                              <span class="input-group-addon" id="btnCentroCusto" style="display: none"><i class="fluigicon fluigicon-search icon-sm"></i></span>
+                           </div>
+                        <label for="inputEmail3" id="labelPEP" class="control-label" style="display: none">PEP:</label>                           
+                        <input type="text" name="inputPEP" id="inputPEP" class="form-control" mask="AAAAAAAAAAA.AA.AA.AA.AA" placeholder="Ex: HOLB001D001.01.01.01.01" style="display: none">
+                        <label for="inputEmail3" id="labelOrdem" class="control-label" style="display: none">Ordem Interna:</label>                           
+                        <input type="text" name="inputOrdem" id="inputOrdem" class="form-control" mask="000000" placeholder="Ex: 600001" style="display: none">
+                     </div>
+                     <!--
+                     ===================================================================================================
+                        05/06/2023 - Fim da inclusão
+                     ===================================================================================================
+                     -->
+                     <!--
+                     ===================================================================================================
+                        05/06/2023 - Inicio inclusão
+                        GDSI-18500
+                        Matheus Nóbrega Rodrigues
+                        Alteração do campo elemento de custo para centro de custo através de integração
+                     ===================================================================================================
+
+                        <div class="col-md-6">
+                           <label for="inputEmail3" class="control-label">Elemento de Custo:</label>
+                              <select class="form-control" name="drop_filial" id="drop_filial">
+                                 <option value="filialvazio"></option>
+                              </select>
+                        </div>
+                     
+                     ===================================================================================================
+                        05/06/2023 - Fim inclusão
+                     ===================================================================================================
+                     -->
+                  </div>
+               </div>
+            </div>
+            <!-- AVALIACAO DA QUALIDADE -->
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <h4 class="panel-title">
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> Dados da Viagem </a>
+                  </h4>
+               </div>
+               <div id="collapseThree" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <label for="inputEmail3" class="control-label">Cidade Origem:</label>
+                              <input type="text" class="form-control" name="nmCidade1" id="nmCidade" placeholder="Cidade de Origem">
+                        </div>
+                        <div class="col-md-6">
+                           <label class="control-label">Cidade Destino:</label>
+                              <input type="text" class="form-control" name="nmcidadedest1" id="nmcidadedest" placeholder="Cidade de Destino">
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <label class="control-label"> Data Saída:</label>
+                              <input type="text" name="datasaida" class="form-control" id="datasaida" placeholder="Data" onchange="validaData()" onblur="myFunction()">
+                             <!--  <input type="time" name="horasaida" class="form-control" id="horasaida" placeholder="Hora" mask="00:00" placeholder="00:00"> -->
+                        </div>
+                        <div class="col-md-6">
+                           <label class="control-label"> Data Retorno:</label>
+                              <input type="text" name="dataret" class="form-control" id="dataret" placeholder="Data">
+                             <!--  <input type="Time" name="horaret" class="form-control" id="horaret" placeholder="Hora" mask="00:00" placeholder="00:00"> -->
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                           <label class="control-label"> Motivo da Viagem:</label>
+                           <input type="text" name="motivoViagem" id="motivoViagem" class="form-control">
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-3">
+                           <label for="inputEmail3" class="control-label">Hotel:</label>
+                              <select class=" form-control" name="drop_hotel" id="drop_hotel">
+                                 <option value="NAO">Não</option>
+                                 <option value="SIM">Sim</option>
+                              </select>
+                        </div>
+                        <div class="col-md-3">
+                           <label for="inputEmail3" class="control-label">Passagem Aérea:</label>
+                              <select class=" form-control" name="drop_passagem" id="drop_passagem">
+                                 <option value="NAO">Não</option>
+                                 <option value="SIM">Sim</option>
+                              </select>
+                        </div>
+                        <div class="col-md-3">
+                           <label for="inputEmail3" class="control-label">Locação Veículo:</label>
+                              <select class=" form-control" name="drop_veic" id="drop_veic">
+                                 <option value="NAO">Não</option>
+                                 <option value="SIM">Sim</option>
+                              </select>
+                        </div>
+                     </div>
+                        <div class="row">
+                        	<div class="col-md-12">
+                           		<label for="inputEmail3" class="control-label">Observação:</label>
+                              		<textarea id="obs" name="obs" class="form-control" rows="2" onchange="limite(form)" onsubmit="return limite(this)"></textarea >
+                            </div>
+                        </div>
+                     </div>
+                     <div hidden class="form-group col-sm-12">
+                        <div>
+                           <label class="col-sm-2 control-label">data:</label>
+                           <div class="col-sm-2">
+                              <input type="text" name="dt_sol" id="dt_sol" class="form-control">
+                           </div>
+                        </div>
+                        <div>
+                           <label class="col-sm-2 control-label">somadata:</label>
+                           <div class="col-sm-2">
+                              <input type="text" name="somadata" id="somadata" class="form-control">
+                           </div>
+                        </div>
+                        <div>
+                           <label class="col-sm-2 control-label">codpapelempresa:</label>
+                           <div class="col-sm-2">
+                              <input type="text" name="codpapelempresa" id="codpapelempresa" class="form-control">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            <!--TESTE NOVO PAINEL FINANCEIRO -->
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <h4 class="panel-title">
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Financeiro</a>
+                  </h4>
+               </div>
+               <div id="collapseFour" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                     <div class="row">
+                        <div class="col-md-2">
+                           <label class="control-label">Moeda Adc:</label>
+                              <select class="form-control" name="tipomoeda" id="tipomoeda">
+                                 <option value="real">R$</option>
+                                 <option value="dolar">$</option>
+                                 <option value="euro">&euro;</option>
+                              </select>
+                              
+                        </div>
+                        <div class="col-md-2">
+                        	<label class="control-label">Valor adiantamento:</label>
+                        	<input type="text" class="form-control" name="valoradiantamento" id="valoradiantamento" mask="#00.000.000.000.000,00" placeholder="0,00">
+                        </div>
+                        <div class="col-md-2">
+                           <label class="control-label">Data para Recebimento:</label>
+                           <input type="text" class="form-control" name="datarec" id="datarec">
+                        </div>
+                        <div class="col-md-2" id="datafin" name="datafin">
+                           <label class="control-label" id="lbl_dtpro">Data Programada:</label>
+                           <input type="text" class="form-control" name="dataprog" id="dataprog">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- NOVO PAINEL CONTROLE LOGISTICO-->
+            <div class="panel panel-default" id="ctr_log" name="ctr_log">
+               <div class="panel-heading">
+                  <h4 class="panel-title">
+                     <a data-toggle="collapse" data-parent="#accordion"
+                        href="#collapseFive">Controle Logístico</a>
+                  </h4>
+               </div>
+               <div id="collapseFive" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                     <div class="row">
+                     	<div class="col-md-12">
+                     		<div class="alert alert-warning" role="alert">
+                     			Para unidades que possuem veículos para viagens e motoristas corporativos, deve-se fazer a solicitação pelos Serviços de Facilities. <a href="https://integra.gsinima.com.br/portal/p/1/pageworkflowview?processID=108%20-%20Solicita%C3%A7%C3%A3oServi%C3%A7osFacilities" target="_blank">Clique aqui para abrir o processo.</a>
+                     		</div>
+                     	</div>
+                       <!-- <div class="col-md-3">
+                           <label for="inputEmail3" class="control-label">Veículo:</label>
+                              <select class=" form-control" name="veic_crtl" id="veic_crtl">
+                                 <option value="nao">NÃO</option>
+                                 <option value="sim">SIM</option>
+                              </select>
+                         </div>
+                         <div class="col-md-3">
+                           <label for="inputEmail3" class="control-label" name="lblmotorista" id="lblmotorista">Motorista:</label>
+                              <select class="col-sm-12 form-control" name="drop_mot" id="drop_mot">
+                                 <option value="NAO">NÃO</option>
+                                 <option value="SIM">SIM</option>
+                                 
+                              </select>
+                          </div>
+                          <div class="col-md-3">
+                           	 <label for="inputEmail3" class="control-label" name="lblmarcamodelo" id="lblmarcamodelo">Marca / Modelo:</label>
+                              <input type="text" class="form-control" name="nmveiculo" id="nmveiculo">
+                           </div>
+                           <div class="col-md-3">
+                           	  <label for="inputEmail3" class="control-label" name="lblplaca" id="lblplaca">Placa:</label>
+                              <input type="text" class="form-control" name="nmplaca" id="nmplaca">
+                           </div> -->
+                     </div>
+                    <!-- <div class="row">
+                        <div class="col-md-3">
+                           <label for="inputEmail3" class="control-label" name="lbldtEntrega" id="lbldtEntrega">Data Entrega:</label>
+                           <input type="text" class="form-control" name="dtent" id="dtent">
+                        </div>
+                        <div class="col-md-3">
+                           <label for="inputEmail3" class="col-sm-1 control-label" name="lbldtDevolucao" id="lbldtDevolucao" text-align: left;>Data Devolução:</label>
+                           <input type="text" class="form-control" name="dtdev" id="dtdev">
+                        </div>
+                        <div class="col-md-3">
+                           <label for="inputEmail3" class="control-label" name="lblnomemoto" id="lblnomemoto">Nome do Motorista:</label>
+                           <input type="text" class="form-control" name="nmmotorista" id="nmmotorista" placeholder="Digite o nome do motorista">
+                        </div>
+                     </div> -->
+                  </div>
+               </div>
+            </div>
+
+            <div id="painel-aprovacao" class="panel panel-default hide">
+               <div class="panel-heading">
+                  <h4 class="panel-title">
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">Aprovação</a>
+                  </h4>
+               </div>
+               <div id="collapseSix" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                     <div class="row">
+                     	<div class="form-group col-md-4 col-md-offset-4">
+                           <label for="slc_aprovacao" class="control-label">Aprovado?</label>  
+                           <select class="form-control" id="slc_aprovacao" name="slc_aprovacao">
+                              <option value="">Selecione...</option>
+                              <option value="aprovado">Aprovado</option><option value="reprovado">Reprovado</option>
+                           </select>                     		
+                        </div>
+                        <div class="form-group col-md-12 hide">
+                           <label for="txta_justificativa" class="control-label">Justificativa</label> 
+                           <textarea class="form-control" id="txta_justificativa" name="txta_justificativa"></textarea>
+                        </div>
+                     </div>
+
+                     <div id="painel-historico-justificativas" class="row" style="display: none;">
+                        <div class="panel panel-default" style="box-shadow: none;">
+                           <div class="panel-heading" style="padding: 0;">
+                              <h4 class="panel-title">
+                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseHistoricoJust" class="up" aria-expanded="true" style="width: 100%;display: block;padding: 16px;text-align: center;">Histórico de observações</a>
+                              </h4>
+                           </div>
+                           <div id="collapseHistoricoJust" class="panel-collapse collapse in" aria-expanded="true">
+                              <div class="panel-body">
+                                 <table class="table" tablename="tblHistoricoJust" id="tblHistoricoJust" noaddbutton="true" nodeletebutton="true">
+                                    <thead><tr></tr></thead>
+                                    <tbody>
+                                       <tr>
+                                          <td style="border: none;">
+                                             <div style="overflow: auto;background-color: #edf5fb;padding: 10px;border-radius: 10px;">
+                                                <div class="form-group col-md-2" style="display: flex;justify-content: center;font-weight: 600;font-size: 12pt;flex-direction: column;align-items: center;height: 100%;padding-top: 15px;">
+                                                   <p class="lbl-horario"></p>
+                                                   <p class="lbl-nomeUsuario" style="font-size: 10pt;text-align: center;"></p>
+                                                   <input type="hidden" id="hd_justificativa_horario"   name="hd_justificativa_horario">
+                                                   <input type="hidden" id="hd_justificativa_nomeUsu"   name="hd_justificativa_nomeUsu">
+                                                   <input type="hidden" id="hd_justificativa_codigoUsu" name="hd_justificativa_codigoUsu">
+                                                   <input type="hidden" id="hd_justificativa_statusMsg" name="hd_justificativa_statusMsg">
+                                             </div>
+                                             <div class="form-group col-md-10" style="margin: 0;">
+                                                <textarea class="form-control" id="txta_justificativa_descricao" name="txta_justificativa_descricao" rows="4" readonly></textarea>
+                                             </div>
+                                             </div>
+                                          </td>
+                                       </tr>    
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          
+            <div id=ap>
+               <input type="text" class="form-control" name="aprov" id="aprov"
+                  style="display: none">
+            </div>
+            
+                  
+      <script type="text/javascript">
+         $(function() {
+            /*$(".chosen-select").chosen();
+            $(".chosen-select-deselect").chosen({
+               allow_single_deselect : true
+            });
+            $(".chosen-select").chosen({
+               no_results_text : "Não Encontrado"
+            });*/
+         });
+      </script>
+            
+            
+      <script type="text/javascript">
+         $("#nmempresa").on('change', function(){
+            var optSelected = $("option:selected", this);
+            var valSelected = this.value;
+            if(valSelected == "GS INIMA BRASIL LTDA."){
+               $("#codpapelempresa").val("B001");
+               $("idempresa").val("10");
+            }
+            if(valSelected == "AMBIENT SERVICOS AMBIENTAIS DE RIBEIRAO PRETO S/A"){
+               $("#codpapelempresa").val("B002");
+               $("idempresa").val("1");
+            }
+            if(valSelected == "SESAMM - SERVIÇOS DE SANEAMENTO DE MOGI MIRIM S.A."){
+               $("#codpapelempresa").val("B003");
+               $("idempresa").val("7");
+            }
+            if(valSelected == "ARAUCÁRIA SANEAMENTO S.A."){
+               $("#codpapelempresa").val("B004");
+               $("idempresa").val("3");
+            }
+            if(valSelected == "SANEVAP - SANEAMENTO DO VALE DO PARAIBA S.A."){
+               $("#codpapelempresa").val("B005");
+               $("idempresa").val("5");
+            }
+            if(valSelected == "SANAMA - SANEAMENTO ALTA MACEIO S.A."){
+               $("#codpapelempresa").val("B006");
+               $("idempresa").val("8");
+            }
+            if(valSelected == "CAEPA - COMPANHIA DE AGUA E ESGOTO DE PARAIBUNA S/A"){
+               $("#codpapelempresa").val("B007");
+               $("idempresa").val("11");
+            }
+            if(valSelected == "COMPANHIA AGUAS DE SANTA RITA S.A."){
+               $("#codpapelempresa").val("B008");
+               $("idempresa").val("12");
+            }
+            if(valSelected == "SAMAR - SOLUÇÕES AMBIENTAIS DE ARAÇATUBA SA"){
+               $("#codpapelempresa").val("B009");
+               $("idempresa").val("13");
+            }
+            if(valSelected == "CONSORCIO CONSTRUTOR ALTA MACEIO"){
+               $("#codpapelempresa").val("BJ01");
+               $("idempresa").val("9");
+            }
+            if(valSelected == "CONSORCIO CONSTRUTOR VALE DO PARAIBA"){
+               $("#codpapelempresa").val("BJ02");
+               $("idempresa").val("6");
+            }
+            if(valSelected == "OURO PRETO SERVIÇOS DE SANEAMENTO S.A."){
+               $("#codpapelempresa").val("B013");
+               $("idempresa").val("16");
+            }
+            if(valSelected == "AQUAPOLO AMBIENTAL S.A."){
+               $("#codpapelempresa").val("B015");
+               $("idempresa").val("18");
+            }
+            if(valSelected == "GS INDUSTRIAL JECEABA S.A."){
+               $("#codpapelempresa").val("B014");
+               $("idempresa").val("19");
+            }
+            if(valSelected == "GS INDUSTRIAL TRIUNFO S.A."){
+               $("#codpapelempresa").val("B016");
+               $("idempresa").val("20");
+            }
+         });
+               
+         function setSelectedZoomItem(selectedItem) {
+            
+            if (selectedItem.inputId == "nmSuperior") {
+               $('#idSupervisor').val(selectedItem["colleagueId"]);
+
+            }
+         }        
+             
+               
+      </script>
+      <script>
+         $('#drop_apontamento').on('change', function () {
+            var optionSelected = $('option:selected', this);
+            var valueSelected = this.value;
+            if(valueSelected == 'selecione'){
+               $('#labelPEP').hide();
+               $('#inputPEP').hide();
+               $('#labelCentroCusto').hide();
+               $('#inputCentroCusto').hide();
+               $('#btnCentroCusto').hide();
+               $('#labelOrdem').hide();
+               $('#inputOrdem').hide();
+            }else if(valueSelected == 'centroCusto'){
+               $('#labelPEP').hide();
+               $('#inputPEP').hide();
+               $('#labelCentroCusto').show();
+               $('#inputCentroCusto').show();
+               $('#btnCentroCusto').show();
+               $('#labelOrdem').hide();
+               $('#inputOrdem').hide();
+            }else if(valueSelected == 'projeto'){
+               $('#labelPEP').show();
+               $('#inputPEP').show();
+               $('#labelCentroCusto').hide();
+               $('#inputCentroCusto').hide();
+               $('#btnCentroCusto').hide();
+               $('#labelOrdem').hide();
+               $('#inputOrdem').hide();
+            }else{
+               $('#labelPEP').hide();
+               $('#inputPEP').hide();
+               $('#labelCentroCusto').hide();
+               $('#inputCentroCusto').hide();
+               $('#btnCentroCusto').hide();
+               $('#labelOrdem').show();
+               $('#inputOrdem').show();
+            }
+         });
+      </script>
+            <script type="text/javascript">
+            
+            var dateTime = FLUIGC.calendar('#datasaida', {
+                pickDate: true,
+                pickTime: true,
+                sideBySide: true
+            });
+            
+            var dateTime = FLUIGC.calendar('#dataret', {
+                pickDate: true,
+                pickTime: true,
+                sideBySide: true
+            });
+            
+            var onlyDate = FLUIGC.calendar('#datarec', {
+                pickDate: true,
+                pickTime: false
+            });
+
+            
+            function pegavalor(){
+               var centroCusto = $("#inputCentroCusto");
+               console.log(centroCusto.val());
+               centroCusto.val("");
+            }
+
+               //var empresa = document.getElementById("selectEmpresaSolicitante").value;
+               //var centroCusto = document.getElementById("inputCentroCusto").value;
+               //centroCusto.value = '';
+               //var v = document.getElementById("inputCentroCusto").value;
+               //var v = document.getElementById("selectEmpresaSolicitante").options[document.getElementById("selectEmpresaSolicitante").selectedIndex].text;
+               //console.log(v);
+               //$('#drop_filial').empty();
+               //$('#inputCentroCusto'
+               /*function pegavalor(){
+                  //var v = document.getElementById("drop_filial").value;
+                  var v = document.getElementById("drop_empresa").options[document.getElementById("drop_empresa").selectedIndex].text;
+                  console.log(v);
+                  //$('#drop_filial').empty();
+                  $('#inputCentroCusto').empty();
+                  if (v == 'AMBIENT SERVICOS AMBIENTAIS DE RIBEIRAO PRETO S/A') {
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //PEPs Antigos
+                     //$('#drop_filial').append('<option value="CWB300100.03.18.00.0 - Administração">CWB300100.03.18.00.0 - Administração</option>');
+                     //$('#drop_filial').append('<option value="OWB300100.03.18.00.0 - E.T.E Ribeirão Preto">OWB300100.03.18.00.0 - E.T.E Ribeirão Preto</option>');
+                     //$('#drop_filial').append('<option value="OWB300200.03.18.00.0 - E.T.E Caiçara">OWB300200.03.18.00.0 - E.T.E Caiçara</option>');
+                     //$('#drop_filial').append('<option value="BLB300100.03.18.00.0 - Novos Interceptores">BLB300100.03.18.00.0 - Novos Interceptores</option>');
+                     //Centro de Custos Novos
+                     $('#drop_filial').append('<option value="CWB300101 - Administração">CWB300101 - Administração</option>');
+                     $('#drop_filial').append('<option value="OWB300101 - ETE Ribeirão Preto">OWB300101 - ETE Ribeirão Preto</option>');
+                     $('#drop_filial').append('<option value="OWB300102 - ETE Caiçara">OWB300102 - ETE Caiçara</option>');
+                     $('#drop_filial').append('<option value="BLB300200 - Novos Interceptores">BLB300200 - Novos Interceptores</option>');
+                     $('#drop_filial').append('<option value="BMB300100 - Predio Anexo Ampliação">BMB300100 - Predio Anexo Ampliação</option>');
+                     //Fim Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if(v == 'SANAMA - SANEAMENTO ALTA MACEIO S.A.'){
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //PEPs Antigos
+                     //$('#drop_filial').append('<option value="CWB300100.03.18.00.0 - Administração">CWB300100.03.18.00.0 - Administração</option>');
+                     //$('#drop_filial').append('<option value="OWB300100.03.18.00.0 - E.T.E Ribeirão Preto">OWB300100.03.18.00.0 - E.T.E Ribeirão Preto</option>');
+                     //$('#drop_filial').append('<option value="OWB300200.03.18.00.0 - E.T.E Caiçara">OWB300200.03.18.00.0 - E.T.E Caiçara</option>');
+                     //$('#drop_filial').append('<option value="BLB300100.03.18.00.0 - Novos Interceptores">BLB300100.03.18.00.0 - Novos Interceptores</option>');
+                     //$('#drop_filial').append('<option value="OWB300400.03.18.00.0 - E.T.E Operação">OWB300400.03.18.00.0 - E.T.E Operação</option>');
+                     //Centro de Custos Novos
+                     $('#drop_filial').append('<option value="CWB300301 - Administração">CWB300301 - Administração</option>');
+                     $('#drop_filial').append('<option value="CWB300302 - Comunicação">CWB300302 - Comunicação</option>');
+                     $('#drop_filial').append('<option value="CWB300303 - QSMS">CWB300303 - QSMS</option>');
+                     $('#drop_filial').append('<option value="CGB300101 - Gestão Comercial">CGB300101 - Gestão Comercial</option>');
+                     $('#drop_filial').append('<option value="OWB300401 - Tratamento de Esgoto">OWB300401 - Tratamento de Esgoto</option>');
+                     $('#drop_filial').append('<option value="OWB300402 - Coleta de Esgoto">OWB300402 - Coleta de Esgoto</option>');
+                     $('#drop_filial').append('<option value="OWB300403 - Engenharia">OWB300403 - Engenharia</option>');
+                     $('#drop_filial').append('<option value="BWBB00600 - Engenharia">BWBB00600 - Engenharia</option>');
+                     $('#drop_filial').append('<option value="CPBB00600 - Obras da Gestão Coml.">CPBB00600 - Obras da Gestão Coml.</option>');
+                     //Fim Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if(v == 'SESAMM - SERVIÇOS DE SANEAMENTO DE MOGI MIRIM S.A.'){
+                     //PEPs Antigos
+                     //$('#drop_filial').append('<option value="CWB300200.03.18.00.0 - Administração">CWB300200.03.18.00.0 - Administração</option>');
+                     //$('#drop_filial').append('<option value="OWB300300.03.18.00.0 - E.T.E Mogi Morim">OWB300300.03.18.00.0 - E.T.E Mogi Morim</option>');
+                     //$('#drop_filial').append('<option value="OWB300300.03.18.00.0 - E.T.E Mogi Morim">CWB3004200.03.18.00.0 - E.T.E Campos do Jordão</option>');
+                     //$('#drop_filial').append('<option value="CWB3005200.03.18.00.0 - E.T.E São José dos Campos">CWB3005200.03.18.00.0 - E.T.E São José dos Campos</option>');
+                     //Centros de Custos Novos
+                     $('#drop_filial').append('<option value="CWB300201 - Administração">CWB300201 - Administração</option>');
+                     $('#drop_filial').append('<option value="0WB300301 - ETE Mogi Mirim">0WB300301 - ETE Mogi Mirim</option>');
+                     $('#drop_filial').append('<option value="BWB300800 - Ampliação ETE Mogi Mirim">BWB300800 - Ampliação ETE Mogi Mirim</option>');
+                     $('#drop_filial').append('<option value="BLB300400 - Redes Coletoras">BLB300400 - Redes Coletoras</option>');
+                  }else if(v == 'CONSORCIO CONSTRUTOR ALTA MACEIO'){
+                   /*$('#drop_filial').append('<option value="BWBBJ0100.01.04.1.02 - Mão de Obra Indireta">BWBBJ0100.01.04.1.02 - Mão de Obra Indireta</option>');
+                     $('#drop_filial').append('<option value="BWBBJ0100.01.04.1.03 - Func. Produção">BWBBJ0100.01.04.1.03 - Func. Produção</option>');
+                     $('#drop_filial').append('<option value="BWBBJ0100.01.04.1.01  Diretoria / Consultoria / Sede">BWBBJ0100.01.04.1.01  Diretoria / Consultoria / Sede</option>');
+                     $('#drop_filial').append('<option value="BWBBJ0100 - ETE Construção">BWBBJ0100 - ETE Construção</option>');
+                  }
+                  else if (v == 'SAMAR - SOLUÇÕES AMBIENTAIS DE ARAÇATUBA SA'){
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //Centros de Custos Antigos
+                     $('#drop_filial').append('<option value="CPB300301 - Diretoria">CPB300301 - Diretoria</option>');
+                     $('#drop_filial').append('<option value="CPB300302 - Ger. Adm. Financeira">CPB300302 - Ger. Adm. Financeira</option>');
+                     $('#drop_filial').append('<option value="CPB300303 - Ger. Gest. Coml. TI.">CPB300303 - Ger. Gest. Coml. TI.</option>');
+                     $('#drop_filial').append('<option value="CPB300304 - Ger. Comum. Ouvidoria">CPB300304 - Ger. Comum. Ouvidoria</option>');
+                     $('#drop_filial').append('<option value="CPB300305 - Gerência Jurídica">CPB300305 - Gerência Jurídica</option>');
+                     $('#drop_filial').append('<option value="CPB300306 - Administração">CPB300306 - Administração</option>');
+                     $('#drop_filial').append('<option value="CPB300307 - Contabilidade/ Fiscal">CPB300307 - Contabilidade/ Fiscal</option>');
+                     $('#drop_filial').append('<option value="CPB300308 - Depto. Pessoal">CPB300308 - Depto. Pessoal</option>');
+                     $('#drop_filial').append('<option value="CPB300314 - Tecnologia e Inovação">CPB300314 - Tecnologia e Inovação</option>');
+                     $('#drop_filial').append('<option value="OPB300323 - Planj/ Proj/ Top/ Obra">OPB300323 - Planj/ Proj/ Top/ Obra</option>');
+                     $('#drop_filial').append('<option value="OWB300802 - ETE Baguaçu">OWB300802 - ETE Baguaçu</option>');
+                     $('#drop_filial').append('<option value="OPB300319 - QSMS Esgoto">OPB300319 - QSMS Esgoto</option>');
+                     $('#drop_filial').append('<option value="OWB300811 - Gerência Operacional">OWB300811 - Gerência Operacional</option>');
+                     $('#drop_filial').append('<option value="OWB300812 - QSMS Água">OWB300812 - QSMS Água</option>');
+                     $('#drop_filial').append('<option value="OWB300815 - Manut. Rede de Esgoto">OWB300815 - Manut. Rede de Esgoto</option>');
+                     //Centros de Custos Novos
+                     $('#drop_filial').append('<option value="CGB300401 - Gestão de Clientes">CGB300401 - Gestão de Clientes</option>');
+                     $('#drop_filial').append('<option value="CGB300402 - Gest. Receit. Arrecad.">CGB300402 - Gest. Receit. Arrecad.</option>');
+                     $('#drop_filial').append('<option value="CGB300403 - Gestão de Serviços">CGB300403 - Gestão de Serviços</option>');
+                     $('#drop_filial').append('<option value="CPB300309 - Financeiro">CPB300309 - Financeiro</option>');
+                     $('#drop_filial').append('<option value="CPB300310 - Logistica">CPB300310 - Logistica</option>');
+                     $('#drop_filial').append('<option value="CPB300311 - Seguran. Patrimonial">CPB300311 - Seguran. Patrimonial</option>');
+                     $('#drop_filial').append('<option value="CPB300312 - Serviços Gerais">CPB300312 - Serviços Gerais</option>');
+                     $('#drop_filial').append('<option value="CPB300313 - Suprimentos">CPB300313 - Suprimentos</option>');
+                     $('#drop_filial').append('<option value="CPB300315 - QSMS">CPB300315 - QSMS</option>');
+                     $('#drop_filial').append('<option value="OPB300301 - ETA Baguaçu I">OPB300301 - ETA Baguaçu I</option>');
+                     $('#drop_filial').append('<option value="OPB300302 - ETA Baguaçu II">OPB300302 - ETA Baguaçu II</option>');
+                     $('#drop_filial').append('<option value="OPB300303 - ETA Tiete">OPB300303 - ETA Tiete</option>');
+                     $('#drop_filial').append('<option value="OPB300304 - Poço Boiadeiro">OPB300304 - Poço Boiadeiro</option>');
+                     $('#drop_filial').append('<option value="OPB300305 - Poço Ipanema">OPB300305 - Poço Ipanema</option>');
+                     $('#drop_filial').append('<option value="OPB300306 - Poço Jussara">OPB300306 - Poço Jussara</option>');
+                     $('#drop_filial').append('<option value="OPB300307 - Poço Taveira">OPB300307 - Poço Taveira</option>');
+                     $('#drop_filial').append('<option value="OPB300308 - Reservat. Bom Tempo">OPB300308 - Reservat. Bom Tempo</option>');
+                     $('#drop_filial').append('<option value="OPB300309 - Reservat. Copacabana">OPB300309 - Reservat. Copacabana</option>');
+                     $('#drop_filial').append('<option value="OPB300310 - Reservat. Hilda Mandarino">OPB300310 - Reservat. Hilda Mandarino</option>');
+                     $('#drop_filial').append('<option value="OPB300311 - Reservat. Ibirapuera">OPB300311 - Reservat. Ibirapuera</option>');
+                     $('#drop_filial').append('<option value="OPB300312 - Reservat. João Pessoa">OPB300312 - Reservat. João Pessoa</option>');
+                     $('#drop_filial').append('<option value="OPB300313 - Reservat. Nova Yorque">OPB300313 - Reservat. Nova Yorque</option>');
+                     $('#drop_filial').append('<option value="OPB300314 - Reservat. Panorama">OPB300314 - Reservat. Panorama</option>');
+                     $('#drop_filial').append('<option value="OPB300315 - Reservat. Planalto">OPB300315 - Reservat. Planalto</option>');
+                     $('#drop_filial').append('<option value="OPB300316 - Reservat. Taveira">OPB300316 - Reservat. Taveira</option>');
+                     $('#drop_filial').append('<option value="OPB300317 - Reservat. Tiradentes">OPB300317 - Reservat. Tiradentes</option>');
+                     $('#drop_filial').append('<option value="OPB300318 - Gerência Operacional">OPB300318 - Gerência Operacional</option>');
+                     $('#drop_filial').append('<option value="OPB300320 - Ligação Nova de Água">OPB300320 - Ligação Nova de Água</option>');
+                     $('#drop_filial').append('<option value="OPB300321 - Extensão Rede Água">OPB300321 - Extensão Rede Água</option>');
+                     $('#drop_filial').append('<option value="OPB300322 - Manut. Rede Água">OPB300322 - Manut. Rede Água</option>');
+                     $('#drop_filial').append('<option value="OPB300325 - Eletromecânica">OPB300325 - Eletromecânica</option>');
+                     $('#drop_filial').append('<option value="OWB300801 - ETE Maria Isabel">OWB300801 - ETE Maria Isabel</option>');
+                     $('#drop_filial').append('<option value="OWB300803 - Elev. Esgot. Ág. Branca">OWB300803 - Elev. Esgot. Ág. Branca</option>');
+                     $('#drop_filial').append('<option value="OWB300804 - Elev. Esgot. Alphaville">OWB300804 - Elev. Esgot. Alphaville</option>');
+                     $('#drop_filial').append('<option value="OWB300805 - Elev. Esgot. Baguaçu">OWB300805 - Elev. Esgot. Baguaçu</option>');
+                     $('#drop_filial').append('<option value="OWB300806 - Elev. Esgot. Mach. Melo">OWB300806 - Elev. Esgot. Mach. Melo</option>');
+                     $('#drop_filial').append('<option value="OWB300807 - Elev. Esgot. Maria Isabe">OWB300807 - Elev. Esgot. Maria Isabe</option>');
+                     $('#drop_filial').append('<option value="OWB300808 - Elev. Esgot. Sta Isabel">OWB300808 - Elev. Esgot. Sta Isabel</option>');
+                     $('#drop_filial').append('<option value="OWB300809 - Elev. Esgot. Santana">OWB300809 - Elev. Esgot. Santana</option>');
+                     $('#drop_filial').append('<option value="OWB300810 - Elev. Esgot. Vilela">OWB300810 - Elev. Esgot. Vilela</option>');
+                     $('#drop_filial').append('<option value="OWB300813 - Ligaç. Nova de Esgoto">OWB300813 - Ligaç. Nova de Esgoto</option>');
+                     $('#drop_filial').append('<option value="OWB300814 - Extensão Rede Esgoto">OWB300814 - Extensão Rede Esgoto</option>');
+                     $('#drop_filial').append('<option value="OWB300816 - Planj/Proj/Top/Obra">OWB300816 - Planj/Proj/Top/Obra</option>');
+                     //Fim Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if (v == 'GS INIMA BRASIL LTDA.'){
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //Centro de Custos Antigos
+                     $('#drop_filial').append('<option value="EDB0101 - Administração">EDB0101 - Administração</option>');
+                     $('#drop_filial').append('<option value="EDB0102 - Project Finance e RI">EDB0102 - Project Finance e RI</option>');
+                     $('#drop_filial').append('<option value="EDB0103 - Jurídico">EDB0103  - Jurídico</option>');
+                     $('#drop_filial').append('<option value="EDB0105 - Comunicação Institucional">EDB0105 - Comunicação Institucional</option>');
+                     $('#drop_filial').append('<option value="EDB010401 - Suprimentos">EDB010401 - Suprimentos</option>');
+                     $('#drop_filial').append('<option value="EDB010402 - Contratos">EDB010402 - Contratos</option>');
+                     $('#drop_filial').append('<option value="EDB010403 - Contabilidade/Plan. Integrado">EDB010403 - Contabilidade/Plan. Integrado</option>');
+                     $('#drop_filial').append('<option value="EDB010404 - Fiscal">EDB010404 - Fiscal</option>');
+                     $('#drop_filial').append('<option value="EDB010405 - Controladoria">EDB010405 - Controladoria</option>');
+                     $('#drop_filial').append('<option value="EDB010406 - GEP - Gestão Estrat. de Pessoas">EDB010406 - GEP - Gestão Estrat. de Pessoas</option>');
+                     $('#drop_filial').append('<option value="EDB010407 - QSMS">EDB010407 - QSMS</option>');
+                     $('#drop_filial').append('<option value="EDB010408 - Tecnologia da Informação">EDB010408 - Tecnologia da Informação</option>');
+                     $('#drop_filial').append('<option value="EDB010409 - Tesouraria">EDB010409 - Tesouraria</option>');
+                     $('#drop_filial').append('<option value="EDB010410 - Adm. de Viagens">EDB010410 - Adm. de Viagens</option>');
+                     $('#drop_filial').append('<option value="EDB0201 - Novos Négócios">EDB0201  - Novos Négócios</option>');
+                     $('#drop_filial').append('<option value="EDB0701 - Gestão Técnica">EDB0701  - Gestão Técnica</option>');
+                     $('#drop_filial').append('<option value="EDB0702 - Gerenciamento de Obras - Samar">EDB0702  - Gerenciamento de Obras - Samar</option>');
+                     $('#drop_filial').append('<option value="EDB0703 - Gerenciamento de Obras">EDB0703 - Gerenciamento de Obras</option>');
+                     $('#drop_filial').append('<option value="EDB0704 - Serviços de Construção">EDB0704 - Serviços de Construção</option>');
+                     $('#drop_filial').append('<option value="EDB0901 - O&M Corporativo">EDB0901 - O&M Corporativo</option>');
+                     $('#drop_filial').append('<option value="EDB010601 - Compliance">EDB010601 - Compliance</option>');
+                     $('#drop_filial').append('<option value="EDB010602 - Gestão Riscos / Auditoria Interna">EDB010602 - Gestão Riscos / Auditoria Interna</option>');
+                     $('#drop_filial').append('<option value="EDB0201014 - Pmi Cagece">EDB0201014 - Pmi Cagece</option>');
+                     $('#drop_filial').append('<option value="EDB0201015 - Brk">EDB0201015 - Brk</option>');
+                     $('#drop_filial').append('<option value="EDB0201016 - Caern">EDB0201016 - Caern</option>');
+                     $('#drop_filial').append('<option value="EDB0201017 - Artur Nogueira">EDB0201017 - Artur Nogueira</option>');
+                     $('#drop_filial').append('<option value="EDB0201018 - Ouro Preto">EDB0201018 - Ouro Preto</option>');
+                     $('#drop_filial').append('<option value="EDB0201019 - Luiz Antonio">EDB0201019 - Luiz Antonio</option>');
+                     $('#drop_filial').append('<option value="EDB0201020 - Orlandia">EDB0201020 - Orlandia</option>');
+                     $('#drop_filial').append('<option value="OWB301100 - Operação Olímpia">OWB301100 - Operação Olímpia</option>');
+                     $('#drop_filial').append('<option value="BWB100100 - Suplidos (Dac)">BWB100100 - Suplidos (Dac)</option>');
+                     $('#drop_filial').append('<option value="BWB300100 - Ampliação Ete Rp">BWB300100 - Ampliação Ete Rp</option>');
+                     $('#drop_filial').append('<option value="OWB301300 - Operação Birigui">OWB301300 - Operação Birigui</option>');
+                     $('#drop_filial').append('<option value="BWB200100 - Consórcio (Integração Ete Construção)">BWB200100 - Consórcio (Integração Ete Construção)</option>');
+                     $('#drop_filial').append('<option value="BWB200200 - Consórcio (Integração Est.Elevatória)">BWB200200 - Consórcio (Integração Est.Elevatória)</option>');
+                     $('#drop_filial').append('<option value="BWB200300 - Consórcio (Integração Obra Gestão Coml)">BWB200300 - Consórcio (Integração Obra Gestão Coml)</option>');
+                     $('#drop_filial').append('<option value="BLB200100 - Consórcio (Integração Const.Redes Colet.)">BLB200100 - Consórcio (Integração Const.Redes Colet.)</option>');
+                     $('#drop_filial').append('<option value="CWB200100 - Consórcio (Integração Adm.Consórcio)">CWB200100 - Consórcio (Integração Adm.Consórcio)</option>');
+                     $('#drop_filial').append('<option value="BLB300103 - 9 - Genova E Veneza">BLB300103 - 9 - Genova E Veneza</option>');
+                     $('#drop_filial').append('<option value="BLB300107 - 14 - Quinta Da Alvorada">BLB300107 - 14 - Quinta Da Alvorada</option>');
+                     $('#drop_filial').append('<option value="BLB300108 - 15 - Quinta Da Boa Vista">BLB300108 - 15 - Quinta Da Boa Vista</option>');
+                     $('#drop_filial').append('<option value="BLB300109 - 17 - Princesa Izabel">BLB300109 - 17 - Princesa Izabel</option>');
+                     $('#drop_filial').append('<option value="BLB300112 - 21 - Tanquinho">BLB300112 - 21 - Tanquinho</option>');
+                     $('#drop_filial').append('<option value="BLB300114 - 23 - Coletor Eee Feapam">BLB300114 - 23 - Coletor Eee Feapam</option>');
+                     $('#drop_filial').append('<option value="BLB300117 - 27 - Antártica">BLB300117 - 27 - Antártica</option>');
+                     $('#drop_filial').append('<option value="BLB300118 - 28 - Simioni">BLB300118 - 28 - Simioni</option>');
+                     $('#drop_filial').append('<option value="BLB300119 - 28A - Fav.Simioni">BLB300119 - 28A - Fav.Simioni</option>');
+                     $('#drop_filial').append('<option value="BLB300120 - 29 - Alfredo Ravaneli">BLB300120 - 29 - Alfredo Ravaneli</option>');
+                     $('#drop_filial').append('<option value="BLB300121 - 30 - Campos">BLB300121 - 30 - Campos</option>');
+                     $('#drop_filial').append('<option value="BLB300122 - 31 - Catetos">BLB300122 - 31 - Catetos</option>');
+                     $('#drop_filial').append('<option value="BLB300126 - 34 - Palmeiras">BLB300126 - 34 - Palmeiras</option>');
+                     $('#drop_filial').append('<option value="BLB300127 - 35 - Retiro Saudoso">BLB300127 - 35 - Retiro Saudoso</option>');
+                     $('#drop_filial').append('<option value="BLB300128 - 36 - Salgado Filho">BLB300128 - 36 - Salgado Filho</option>');
+                     $('#drop_filial').append('<option value="BLB300129 - 37 - Manuel Dias">BLB300129 - 37 - Manuel Dias</option>');
+                     $('#drop_filial').append('<option value="BLB300130 - 37A - Andradas">BLB300130 - 37A - Andradas</option>');
+                     $('#drop_filial').append('<option value="BLB300131 - 39 - Patriarca">BLB300131 - 39 - Patriarca</option>');
+                     $('#drop_filial').append('<option value="BLB300134 - 42 - Leo Gomes">BLB300134 - 42 - Leo Gomes</option>');
+                     $('#drop_filial').append('<option value="BLB300136 - 44 - Pq.Lagos">BLB300136 - 44 - Pq.Lagos</option>');
+                     $('#drop_filial').append('<option value="BLB300137 - 45 - Rib Preto Me Guat Calil">BLB300137 - 45 - Rib Preto Me Guat Calil</option>');
+                     $('#drop_filial').append('<option value="BLB300139 - 47 - Ret Saudoso Uniseb">BLB300139 - 47 - Ret Saudoso Uniseb</option>');
+                     $('#drop_filial').append('<option value="BLB300100 - 1-11 - Condominio Recreativa">BLB300100 - 1-11 - Condominio Recreativa</option>');
+                     $('#drop_filial').append('<option value="BLB300101 - 2-3-4-5-16  Caiçara">BLB300101 - 2-3-4-5-16  Caiçara</option>');
+                     $('#drop_filial').append('<option value="BLB300102 - 7 25 - Córrego Esgoto">BLB300102 - 7 25 - Córrego Esgoto</option>');
+                     $('#drop_filial').append('<option value="BLB300104 - 10 - Limeira">BLB300104 - 10 - Limeira</option>');
+                     $('#drop_filial').append('<option value="BLB300105 - 12 - Vista Alegre">BLB300105 - 12 - Vista Alegre</option>');
+                     $('#drop_filial').append('<option value="BLB300106 - 13 - Pq Chacrinha">BLB300106 - 13 - Pq Chacrinha</option>');
+                     $('#drop_filial').append('<option value="BLB300110 - 18 - Colina Verde">BLB300110 - 18 - Colina Verde</option>');
+                     $('#drop_filial').append('<option value="BLB300111 - 20 - Condanim">BLB300111 - 20 - Condanim</option>');
+                     $('#drop_filial').append('<option value="BLB300113 - 22 - Califórnia Rev2">BLB300113 - 22 - Califórnia Rev2</option>');
+                     $('#drop_filial').append('<option value="BLB300115 - 24 - Horto">BLB300115 - 24 - Horto</option>');
+                     $('#drop_filial').append('<option value="BLB300116 - 26 - Tanquinho">BLB300116 - 26 - Tanquinho</option>');
+                     $('#drop_filial').append('<option value="BLB300123 - 32 - Macaúbas Rev2">BLB300123 - 32 - Macaúbas Rev2</option>');
+                     $('#drop_filial').append('<option value="BLB300124 - 32A Macaúbas Rev1">BLB300124 - 32A Macaúbas Rev1</option>');
+                     $('#drop_filial').append('<option value="BLB300125 - 33 - Laureano">BLB300125 - 33 - Laureano</option>');
+                     $('#drop_filial').append('<option value="BLB300132 - 40 - Silvio Aoyama">BLB300132 - 40 - Silvio Aoyama</option>');
+                     $('#drop_filial').append('<option value="BLB300133 - 41 - Tem J Batista">BLB300133 - 41 - Tem J Batista</option>');
+                     $('#drop_filial').append('<option value="BLB300135 - 43 - Rib.Preto">BLB300135 - 43 - Rib.Preto</option>');
+                     $('#drop_filial').append('<option value="BLB300138 - 46 - Palmares">BLB300138 - 46 - Palmares</option>');
+                     $('#drop_filial').append('<option value="BLB300140 - Adminstração Interceptores">BLB300140 - Adminstração Interceptores</option>');
+                     //PEPs Antigos
+                     //$('#drop_filial').append('<option value="OWB300600.03.18.00.0 - Operação Catanduva">OWB300600.03.18.00.0  - Operação Catanduva</option>');
+                     //$('#drop_filial').append('<option value="CPB300100.03.18.00.0 - Operação Americana">CPB300100.03.18.00.0 - Operação Americana</option>');
+                     //$('#drop_filial').append('<option value="OWB300900.03.18.00.0 - Ampliação ETE RP">OWB300900.03.18.00.0 - Ampliação ETE RP</option>');
+                     //$('#drop_filial').append('<option value="BLB300140.97.01.15.5 - Novos Inteceptores">BLB300140.97.01.15.5 - Novos Inteceptores</option>');
+                     //$('#drop_filial').append('<option value="EDB0201019 - Luiz Antonio">EDB0201019 - Luiz Antonio</option>');
+                     //$('#drop_filial').append('<option value="EDB0201020 - Orlandia">EDB0201020 - Orlandia</option>');
+                     //$('#drop_filial').append('<option value="OWB301100 - Operacao Olimpia">OWB301100 - Operacao Olimpia</option>');                  
+                     //$('#drop_filial').append('<option value="EDB0201 - Novos Negócios">EDB0201 - Novos Negócios</option>');
+                     //$('#drop_filial').append('<option value="EDB0701 - Gestão Técnica">EDB0701 - Gestão Técnica</option>');
+                     //$('#drop_filial').append('<option value="EDB0702 - Gestão de Obras">EDB0702 - Gestão de Obras</option>');                  
+                     //Centro de Custos Novos
+                     $('#drop_filial').append('<option value="BCB400101 - Consórcio Vale do Paraiba">BCB400101 - Consórcio Vale do Paraiba</option>');
+                     $('#drop_filial').append('<option value="BCB400102 - Consórcio Alma">BCB400102 - Consórcio Alma</option>');
+                     //Fim Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if (v == 'GS INIMA INDUSTRIAL S.A.') {
+                     $('#drop_filial').append('<option value="ENB0101 - ADM">ENB0101 - ADM</option>');
+                     $('#drop_filial').append('<option value="ENB0102 - Novos Negocios Un Industrial">ENB0102 - Novos Negocios Un Industrial</option>');
+                     $('#drop_filial').append('<option value="ENB0102001 - Projeto Ramal Anchieta">ENB0102001 - Projeto Ramal Anchieta</option>');
+                  }
+                  else if (v == 'COMASA - COMPANHIA AGUAS DE SANTA RITA S.A.') {
+                     //PEPs Antigos
+                     //$('#drop_filial').append('<option value="CPB300200.03.18.00.0 - Administração">CPB300200.03.18.00.0 - Administração</option>');
+                     //$('#drop_filial').append('<option value="OWB300700.03.18.00.0 - E.T.E Santa Rita">OWB300700.03.18.00.0 - E.T.E Santa Rita</option>');
+                     //$('#drop_filial').append('<option value="OPB300200.03.18.00.0 - E.T.A Santa Rita">OPB300200.03.18.00.0 - E.T.A Santa Rita</option>');
+                     //$('#drop_filial').append('<option value="CGB300300.03.18.00.0 - Gestão Comercial">CGB300300.03.18.00.0 - Gestão Comercial</option>');
+                     //$('#drop_filial').append('<option value="CPB300200.03.43.00.0 - Treinamentos e Cursos">CPB300200.03.43.00.0 - Treinamentos e Cursos</option>');
+                     //Centro de Custos Novos
+                     $('#drop_filial').append('<option value="CPB300201 - ADM">CPB300201 - ADM</option>');
+                     $('#drop_filial').append('<option value="OWB300701 - ETE Santa Rita">OWB300701 - ETE Santa Rita</option>');
+                     $('#drop_filial').append('<option value="OPB300201 - ETA Santa Rita">OPB300201 - ETA Santa Rita</option>');
+                     $('#drop_filial').append('<option value="CGB300301 - Gestão Comercial">CGB300301 - Gestão Comercial</option>');
+                     $('#drop_filial').append('<option value="BWB300700 - Obra Sistema Esgotamento Sanitário">BWB300700 - Obra Sistema Esgotamento Sanitário</option>');
+                  }
+                  else if (v == 'CAEPA - COMPANHIA DE AGUA E ESGOTO DE PARAIBUNA S/A') {
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID 14465
+                     //PEPs Antigos
+                     //$('#drop_filial').append('<option value="CPB300100.03.18.00.0 - Administração">CPB300100.03.18.00.0 - Administração</option>');
+                     //$('#drop_filial').append('<option value="OPB300100.03.18.00.0 - E.T.A">OPB300100.03.18.00.0 - E.T.A</option>');
+                     //$('#drop_filial').append('<option value="OWB300500.03.18.00.0 - E.T.E Paraibuna">OWB300500.03.18.00.0 - E.T.E Paraibuna</option>');
+                     //$('#drop_filial').append('<option value="CGB300200.03.18.00.0 - Gestão Comercial">CGB300200.03.18.00.0 - Gestão Comercial</option>');
+                     //Centro de Custos Novos
+                     $('#drop_filial').append('<option value="CPB300101 - Administração">CPB300101 - Administração</option>');
+                     $('#drop_filial').append('<option value="CGB300201 - Gestão Comercial">CGB300201 - Gestão Comercial</option>');
+                     $('#drop_filial').append('<option value="OPB300101 - ETA Paraibuna">OPB300101 - ETA Paraibuna</option>');
+                     $('#drop_filial').append('<option value="OWB300501 - ETE Paraibuna">OWB300501 - ETE Paraibuna</option>');
+                     $('#drop_filial').append('<option value="BWB300600 - Obra Sistema Esgotamento Sanitário">BWB300600 - Obra Sistema Esgotamento Sanitário</option>');
+                     $('#drop_filial').append('<option value="BPB300200 - Obra Sistema Abastecimento Água">BPB300200 - Obra Sistema Abastecimento Água</option>');
+                     //Fim Inclusão Matheus Nobrega 19.04.2021 - ID 14465
+                  }
+                  else if (v == 'OURO PRETO SERVIÇOS DE SANEAMENTO S.A.'){
+                     $('#drop_filial').append('<option value="CPB300401 - Administrativo">CPB300401 - Administrativo</option>');
+                     $('#drop_filial').append('<option value="CPB300402 - Comunicação">CPB300402 - Comunicação</option>');
+                     $('#drop_filial').append('<option value="CGB300501 - Gestão de Clientes">CGB300501 - Gestão de Clientes</option>');
+                     $('#drop_filial').append('<option value="CGB300502 - Gestão de Serviços">CGB300502 - Gestão de Serviços</option>');
+                     $('#drop_filial').append('<option value="CGB300503 - Gestão de Faturamento e Cobrança">CGB300503 - Gestão de Faturamento e Cobrança</option>');
+                     $('#drop_filial').append('<option value="OPB300401 - Centro Operacional Saneouro">OPB300401 - Centro Operacional Saneouro</option>');
+                     $('#drop_filial').append('<option value="OPB300402 - ETA Itacolomi">OPB300402 - ETA Itacolomi</option>');
+                     $('#drop_filial').append('<option value="OPB300403 - ETA Jardim Botânico">OPB300403 - ETA Jardim Botânico</option>');
+                     $('#drop_filial').append('<option value="OPB300404 - ETA Antonio Pereira">OPB300404 - ETA Antonio Pereira</option>');
+                     $('#drop_filial').append('<option value="OPB300411 - Centro Operacional Cachoeira do Campo">OPB300411 - Centro Operacional Cachoeira do Campo</option>');
+                     $('#drop_filial').append('<option value="OPB300412 - ETA Funil">OPB300412 - ETA Funil</option>');
+                     $('#drop_filial').append('<option value="OPB300413 - ETA Vila Alegre">OPB300413 - ETA Vila Alegre</option>');
+                     $('#drop_filial').append('<option value="OPB300414 - ETA Vila Amarantina">OPB300414 - ETA Vila Amarantina</option>');
+                     $('#drop_filial').append('<option value="OPB300421 - Distribuição">OPB300421 - Distribuição</option>');
+                     $('#drop_filial').append('<option value="OPB300422 - Poços">OPB300422 - Poços</option>');
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //Centro de Custo Que Não Consta na Planilha
+                     //$('#drop_filial').append('<option value="OWB300903 - Coleta de Esgoto">OWB300903 - Coleta de Esgoto</option>');
+                     //Centros de Custos Novos
+                     $('#drop_filial').append('<option value="OWB301001 - Coleta de Esgoto Redes e EEE">OWB301001 - Coleta de Esgoto Redes e EEE</option>');
+                     $('#drop_filial').append('<option value="OWB301002 - Tratamento de Esgoto ETE">OWB301002 - Tratamento de Esgoto ETE</option>');
+                     //Fim Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if (v == 'GS INIMA SERVICOS DE SANEAMENTO LTDA') {
+                     $('#drop_filial').append('<option value="ENB1101 - ADM">ENB1101 - ADM</option>');
+                     $('#drop_filial').append('<option value="ENB1102 - GEST. OBRAS">ENB1102 - GEST. OBRAS</option>');
+                     $('#drop_filial').append('<option value="ENB1103 - Gestão de Serviços">ENB1103 - Gestão de Serviços</option>');
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //Centros de Custos Que Não Constam na Planilha
+                     $('#drop_filial').append('<option value="BMBB01101 - Construção Eta Iv - Samar">BMBB01101 - Construção Eta Iv - Samar</option>');
+                     $('#drop_filial').append('<option value="BMBB01102 - Gerenciamento De Obra - Comasa">BMBB01102 - Gerenciamento De Obra - Comasa</option>');
+                     $('#drop_filial').append('<option value="BMBB01103 - Gerenciamento De Obra - Caepa">BMBB01103 - Gerenciamento De Obra - Caepa</option>');
+                     $('#drop_filial').append('<option value="BMBB01104 - Gerenciamento De Obra - Samar">BMBB01104 - Gerenciamento De Obra - Samar</option>');
+                     $('#drop_filial').append('<option value="BMBB01109 - Ampliação Ete - 3ª Fase - Sesamm">BMBB01109 - Ampliação Ete - 3ª Fase - Sesamm</option>');
+                     $('#drop_filial').append('<option value="BMBB01110 - Reparo De Rede Coletora - Ribeirão Preto">BMBB01110 - Reparo De Rede Coletora - Ribeirão Preto</option>');
+                     $('#drop_filial').append('<option value="BMBB01100 - Contrato Saneouro (Recadastramento Coml)">BMBB01100 - Contrato Saneouro (Recadastramento Coml)</option>');
+                     $('#drop_filial').append('<option value="BMBB01105 - Modelagem Hidraulica - Saneouro">BMBB01105 - Modelagem Hidraulica - Saneouro</option>');
+                     $('#drop_filial').append('<option value="BMBB01106 - Modelagem Hidraulica - Caepa">BMBB01106 - Modelagem Hidraulica - Caepa</option>');
+                     $('#drop_filial').append('<option value="BMBB01107 - Modelagem Hidraulica - Comasa">BMBB01107 - Modelagem Hidraulica - Comasa</option>');
+                     $('#drop_filial').append('<option value="BMBB01108 - Modelagem Hidraulica - Samar">BMBB01108 - Modelagem Hidraulica - Samar</option>');
+                     //Fim Inclusao Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if(v == 'AQUAPOLO AMBIENTAL S/A'){ // AQP_BPM_ADM_SolicitacaoViagens_Viagens
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //Desativação Centros de Lucro
+                     //$('#drop_filial').append('<option value="IRB502 - ADM. AQUAPOLO">IRB502 - ADM. AQUAPOLO</option>');
+                     //$('#drop_filial').append('<option value="IRB302 - OPERAÇÃO AQUAPOLO">IRB302 - OPERAÇÃO AQUAPOLO</option>');
+                     //Centros de Custos Novos
+                     $('#drop_filial').append('<option value="IRB3020101 - Diretoria Técnica">IRB3020101 - Diretoria Técnica</option>');
+                     $('#drop_filial').append('<option value="IRB3020102 - Engenharia">IRB3020102 - Engenharia</option>');
+                     $('#drop_filial').append('<option value="IRB3020103 - Projetos">IRB3020103 - Projetos</option>');
+                     $('#drop_filial').append('<option value="IRB3020201 - Operação">IRB3020201 - Operação</option>');
+                     $('#drop_filial').append('<option value="IRB3020202 - Laboratório">IRB3020202 - Laboratório</option>');
+                     $('#drop_filial').append('<option value="IRB3020301 - Manutenção Elétrica">IRB3020301 - Manutenção Elétrica</option>');
+                     $('#drop_filial').append('<option value="IRB3020302 - Instrumentação / Automação">IRB3020302 - Instrumentação / Automação</option>');
+                     $('#drop_filial').append('<option value="IRB3020303 - Manutenção Mecânica">IRB3020303 - Manutenção Mecânica</option>');
+                     $('#drop_filial').append('<option value="IRB3020401 - Segurança">IRB3020401 - Segurança</option>');
+                     $('#drop_filial').append('<option value="IRB3020402 - Saúde Ocupacional">IRB3020402 - Saúde Ocupacional</option>');
+                     $('#drop_filial').append('<option value="IRB3020403 - Meio Ambiente">IRB3020403 - Meio Ambiente</option>');
+                     $('#drop_filial').append('<option value="IRB3020404 - Qualidade da Água">IRB3020404 - Qualidade da Água</option>');
+                     $('#drop_filial').append('<option value="IRB3020405 - Qualidade Total">IRB3020405 - Qualidade Total</option>');
+                     $('#drop_filial').append('<option value="IRB5020101 - Diretoria">IRB5020101 - Diretoria</option');
+                     $('#drop_filial').append('<option value="IRB5020102 - Comercial">IRB5020102 - Comercial</option');
+                     $('#drop_filial').append('<option value="IRB5020103 - Resp. Sócio-Ambiental">IRB5020103 - Resp. Sócio-Ambiental</option');
+                     $('#drop_filial').append('<option value="IRB5020201 - Gerencia Adm./Fin.">IRB5020201 - Gerencia Adm./Fin.</option');
+                     $('#drop_filial').append('<option value="IRB5020202 - Administrativo">IRB5020202 - Administrativo</option');
+                     $('#drop_filial').append('<option value="IRB5020203 - Recursos Humanos">IRB5020203 - Recursos Humanos</option');
+                     $('#drop_filial').append('<option value="IRB5020204 - Tecnologia da Informação">IRB5020204 - Tecnologia da Informação</option');
+                     $('#drop_filial').append('<option value="IRB5020205 - Suprimentos">IRB5020205 - Suprimentos</option');
+                     $('#drop_filial').append('<option value="IRB5020206 - Contabilidade/Fiscal/Financeiro">IRB5020206 - Contabilidade/Fiscal/Financeiro</option');
+                     $('#drop_filial').append('<option value="IRB5020207 - Comunicação">IRB5020207 - Comunicação</option');
+                     //Fim Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if(v == 'GS INIMA INDUSTRIAL JECEABA S.A.'){
+                     //Inicio Inclusão Matheus Nobrega 19.04.2021 - ID14465
+                     //Desativação Centros de Lucro
+                     //$('#drop_filial').append('<option value="IRB502 - ADM. AQUAPOLO">IRB502 - ADM. AQUAPOLO</option>');
+                     //$('#drop_filial').append('<option value="IRB302 - OPERAÇÃO AQUAPOLO">IRB302 - OPERAÇÃO AQUAPOLO</option>');
+                     //Centros de Custos Novos
+                     //$('#drop_filial').append('<option value="IRB501 - ADM. JECEABA">IRB501 - ADM. JECEABA</option>');
+                     //$('#drop_filial').append('<option value="IRB301 - OPERAÇÃO JECEABA">IRB301 - OPERAÇÃO JECEABA</option>');
+                     //Centros de Custos Novos
+                     $('#drop_filial').append('<option value="IRB3010101 - Gerencia de O&M">IRB3010101 - Gerencia de O&M</option>');
+                     $('#drop_filial').append('<option value="IRB3010102 - Engenharia">IRB3010102 - Engenharia</option>');
+                     $('#drop_filial').append('<option value="IRB3010103 - Engenharia de Processo">IRB3010103 - Engenharia de Processo</option>');
+                     $('#drop_filial').append('<option value="IRB3010201 - Coordenação de Água">IRB3010201 - Coordenação de Água</option>');
+                     $('#drop_filial').append('<option value="IRB3010202 - Águas e Efluentes">IRB3010202 - Águas e Efluentes</option>');
+                     $('#drop_filial').append('<option value="IRB3010203 - Captação">IRB3010203 - Captação</option>');
+                     $('#drop_filial').append('<option value="IRB3010204 - ETE I Águas">IRB3010204 - ETE I Águas</option>');
+                     $('#drop_filial').append('<option value="IRB3010205 - ETE I Tratamento de Efluentes">IRB3010205 - ETE I Tratamento de Efluentes</option>');
+                     $('#drop_filial').append('<option value="IRB3010206 - ETE II">IRB3010206 - ETE II</option>');
+                     $('#drop_filial').append('<option value="IRB3010207 - ETE III">IRB3010207 - ETE III</option>');
+                     $('#drop_filial').append('<option value="IRB3010208 - ETE IV">IRB3010208 - ETE IV</option>');
+                     $('#drop_filial').append('<option value="IRB3010209 - ETE V">IRB3010209 - ETE V</option>');
+                     $('#drop_filial').append('<option value="IRB3010210 - ETE VI">IRB3010210 - ETE VI</option>');
+                     $('#drop_filial').append('<option value="IRB3010301 - Energia">IRB3010301 - Energia</option>');
+                     $('#drop_filial').append('<option value="IRB3010401 - Coordenação de Resíduos">IRB3010401 - Coordenação de Resíduos</option>');
+                     $('#drop_filial').append('<option value="IRB3010402 - Resíduos">IRB3010402 - Resíduos</option>');
+                     $('#drop_filial').append('<option value="IRB3010403 - Movimentação">IRB3010403 - Movimentação</option>');
+                     $('#drop_filial').append('<option value="IRB3010404 - Equip. Móveis de Resíduos / O&M">IRB3010404 - Equip. Móveis de Resíduos / O&M</option>');
+                     $('#drop_filial').append('<option value="IRB3010405 - Tribotécnica">IRB3010405 - Tribotécnica</option>');
+                     $('#drop_filial').append('<option value="IRB3010501 - Coordenação Manutenção">IRB3010501 - Coordenação Manutenção</option>');
+                     $('#drop_filial').append('<option value="IRB3010502 - Oficina">IRB3010502 - Oficina</option>');
+                     $('#drop_filial').append('<option value="IRB3010503 - Planejamento da Manutenção">IRB3010503 - Planejamento da Manutenção</option>');
+                     $('#drop_filial').append('<option value="IRB3010504 - Ferramentaria">IRB3010504 - Ferramentaria</option>');
+                     $('#drop_filial').append('<option value="IRB3010505 - Rede de Água e Esgoto">IRB3010505 - Rede de Água e Esgoto</option>');
+                     $('#drop_filial').append('<option value="IRB3010506 - Eletromecânica">IRB3010506 - Eletromecânica</option>');
+                     $('#drop_filial').append('<option value="IRB3010507 - Eletromecânica ETE-I">IRB3010507 - Eletromecânica ETE-I</option>');
+                     $('#drop_filial').append('<option value="IRB3010508 - Eletromecânica ETE-II">IRB3010508 - Eletromecânica ETE-II</option>');
+                     $('#drop_filial').append('<option value="IRB3010509 - Eletromecânica ETE-III">IRB3010509 - Eletromecânica ETE-III</option>');
+                     $('#drop_filial').append('<option value="IRB3010510 - Eletromecânica ETE-IV">IRB3010510 - Eletromecânica ETE-IV</option>');
+                     $('#drop_filial').append('<option value="IRB3010511 - Eletromecânica ETE-V">IRB3010511 - Eletromecânica ETE-V</option>');
+                     $('#drop_filial').append('<option value="IRB3010512 - Eletromecânica ETE-VI">IRB3010512 - Eletromecânica ETE-VI</option>');
+                     $('#drop_filial').append('<option value="IRB3010513 - Eletromecânica Captação">IRB3010513 - Eletromecânica Captação</option>');
+                     $('#drop_filial').append('<option value="IRB3010514 - Manutenção Predial">IRB3010514 - Manutenção Predial</option>');
+                     $('#drop_filial').append('<option value="IRB3010601 - Coordenação de QSMS">IRB3010601 - Coordenação de QSMS</option>');
+                     $('#drop_filial').append('<option value="IRB3010602 - Segurança">IRB3010602 - Segurança</option>');
+                     $('#drop_filial').append('<option value="IRB3010603 - Meio Ambiente">IRB3010603 - Meio Ambiente</option>');
+                     $('#drop_filial').append('<option value="IRB3010604 - Saúde">IRB3010604 - Saúde</option>');
+                     $('#drop_filial').append('<option value="IRB3010605 - Qualidade da água/Laboratório">IRB3010605 - Qualidade da água/Laboratório</option>');
+                     $('#drop_filial').append('<option value="IRB3010606 - Qualidade Total">IRB3010606 - Qualidade Total</option>');
+                     $('#drop_filial').append('<option value="IRB5010101 - Diretoria">IRB5010101 - Diretoria</option>');
+                     $('#drop_filial').append('<option value="IRB5010201 - Gerencia Adm./Fin.">IRB5010201 - Gerencia Adm./Fin.</option>');
+                     $('#drop_filial').append('<option value="IRB5010202 - Administrativo">IRB5010202 - Administrativo</option>');
+                     $('#drop_filial').append('<option value="IRB5010203 - Recursos Humanos">IRB5010203 - Recursos Humanos</option>');
+                     $('#drop_filial').append('<option value="IRB5010204 - Tecnologia da Informação">IRB5010204 - Tecnologia da Informação</option>');
+                     $('#drop_filial').append('<option value="IRB5010205 - Suprimentos">IRB5010205 - Suprimentos</option>');
+                     $('#drop_filial').append('<option value="IRB5010206 - Contabilidade/Fiscal/Financeiro">IRB5010206 - Contabilidade/Fiscal/Financeiro</option>');
+                     //Fim da Inclusao Matheus Nobrega 19.04.2021 - ID14465
+                  }
+                  else if(v == 'GS INIMA INDUSTRIAL TRIUNFO S.A'){
+                     //Inicio da Inclusão Matheus Nobrega 19.04.2021 - IJ14465
+                     //Desativação Centros de Lucro
+                     //$('#drop_filial').append('<option value="IRB503 - ADM. TRIUNFO">IRB503 - ADM. TRIUNFO</option>');
+                     //$('#drop_filial').append('<option value="IRB303 - OPERAÇÃO TRIUNFO">IRB303 - OPERAÇÃO TRIUNFO</option>');
+                     //Centros de Custo Novos
+                     $('#drop_filial').append('<option value="IRB3030101 - Gerencia Operacional">IRB3030101 - Gerencia Operacional</option>');
+                     $('#drop_filial').append('<option value="IRB3030102 - Engenharia Processos">IRB3030102 - Engenharia Processos</option>');
+                     $('#drop_filial').append('<option value="IRB3030103 - Engenharia Projetos">IRB3030103 - Engenharia Projetos</option>');
+                     $('#drop_filial').append('<option value="IRB3030201 - Operação">IRB3030201 - Operação</option>');
+                     $('#drop_filial').append('<option value="IRB3030301 - Genrencia manutenção">IRB3030301 - Genrencia manutenção</option>');
+                     $('#drop_filial').append('<option value="IRB3030302 - Manutenção Industrial">IRB3030302 - Manutenção Industrial</option>');
+                     $('#drop_filial').append('<option value="IRB3030303 - Manutenção Civil">IRB3030303 - Manutenção Civil</option>');
+                     $('#drop_filial').append('<option value="IRB3030304 - Manutenção Predial">IRB3030304 - Manutenção Predial</option>');
+                     $('#drop_filial').append('<option value="IRB3030401 - Coordenação">IRB3030401 - Coordenação</option>');
+                     $('#drop_filial').append('<option value="IRB3030402 - Saúde">IRB3030402 - Saúde</option>');
+                     $('#drop_filial').append('<option value="IRB3030403 - Segurança">IRB3030403 - Segurança</option>');
+                     $('#drop_filial').append('<option value="IRB3030404 - Meio Ambiente">IRB3030404 - Meio Ambiente</option>');
+                     $('#drop_filial').append('<option value="IRB3030405 - Qualidade Água / Laboratório">IRB3030405 - Qualidade Água / Laboratório</option>');
+                     $('#drop_filial').append('<option value="IRB5030101 - Diretoria">IRB5030101 - Diretoria</option>');
+                     $('#drop_filial').append('<option value="IRB5030201 - Gerencia Adm./Fin.">IRB5030201 - Gerencia Adm./Fin.</option>');
+                     $('#drop_filial').append('<option value="IRB5030202 - Administrativo">IRB5030202 - Administrativo</option>');
+                     $('#drop_filial').append('<option value="IRB5030203 - Recursos Humanos">IRB5030203 - Recursos Humanos</option>');
+                     $('#drop_filial').append('<option value="IRB5030204 - Tecnologia da informação">IRB5030204 - Tecnologia da informação</option>');
+                     $('#drop_filial').append('<option value="IRB5030205 - Suprimentos">IRB5030205 - Suprimentos</option>');
+                     $('#drop_filial').append('<option value="IRB5030206 - Contabilidade/Fiscal/Financeiro">IRB5030206 - Contabilidade/Fiscal/Financeiro</option>');
+                     //Fim da Inclusão.
+                  }
+                  else if(v == 'ARAUCÁRIA SANEAMENTO S.A.'){
+                     $('#drop_filial').append('<option value="CWB300400 - ETE Campos do Jordão">CWB300400 - ETE Campos do Jordão</option>');
+                  }
+                  else if(v == 'SANEVAP - SANEAMENTO DO VALE DO PARAIBA S.A.'){
+                     $('#drop_filial').append('<option value="CWB300500 - ETE São José dos Campos">CWB300500 - ETE São José dos Campos</option>');
+                  }
+                  else if(v == 'SANEL SANEAMENTO DE LUIZ ANTONIO S.A.'){
+                     $('#drop_filial').append('<option value="CGB300601 - Gestão Comercial">CGB300601 - Gestão Comercial</option>');
+                     $('#drop_filial').append('<option value="CPB300501 - Administrativo">CPB300501 - Administrativo</option>');
+                     $('#drop_filial').append('<option value="OPB300501 - Sistema Abast. Água">OPB300501 - Sistema Abast. Água</option>');
+                     $('#drop_filial').append('<option value="OWB301201 - Sistema Esgoto Sanit.">OWB301201 - Sistema Esgoto Sanit.</option>');
+                  }
+               }*/
+            </script>
+            <script type="text/javascript">
+               $(function() {
+                  var mobile = /Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i
+                        .test(navigator.userAgent)
+                  if (mobile) {
+                     document.getElementById('datasaida').type = 'date';
+                     document.getElementById('dataret').type = 'date';
+                     document.getElementById('datarec').type = 'date';
+                     document.getElementById('dtent').type = 'date';
+                     document.getElementById('dtdev').type = 'date';
+                     document.getElementById('dataprog').type = 'date';
+               
+                     $("#datasaida").datepicker();
+                     $("#dataret").datepicker();
+                     $("#datarec").datepicker();
+                     $("#dtent").datepicker();
+                     $("#dtdev").datepicker();
+                     $("#dataprog").datepicker();
+               
+                  } else {
+                     FLUIGC.calendar('#dataret');
+                     FLUIGC.calendar('#datarec');
+                     FLUIGC.calendar('#dtent');
+                     FLUIGC.calendar('#dtdev');
+                     FLUIGC.calendar('#dataprog');
+                     FLUIGC.calendar('#datasaida');
+               
+                     var onlytime = FLUIGC.calendar('#horasaida', {
+                        pickDate : false,
+                        pickTime : true,
+                        sideBySide : false
+                     });
+               
+                     var onlytime2 = FLUIGC.calendar('#horaret', {
+                        pickDate : false,
+                        pickTime : true,
+                        sideBySide : false
+                     });
+               
+                     //    $(function() {
+                     //  $(".chosen-select").chosen();
+                     // $(".chosen-select-deselect").chosen({ allow_single_deselect: true });
+                     //$(".chosen-select").chosen({no_results_text: "Não Encontrado"});
+                     //});
+               
+                  }
+               
+               });
+               // select
+               var select = document.getElementById("drop_veic");
+               // input
+               
+               // quando o muda o select para veÃ­culo prÃ³prio desabilita o campo de Motorista
+               
+               //fuÃ±cao nova para data do android
+               
+               //var mySimpleCalendar = FLUIGC.calendar('#datarec');
+               
+               //testando
+               //$(function(){
+               //         $("#datarec").datepicker()
+               //         var mobile = /Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)
+               //       function datapickerDisable() {
+               //       if (mobile){
+               //       $('#datarec').DatePicker(Context context)
+               //   }
+               // else {
+               // var mySimpleCalendar = FLUIGC.calendar('#datarec');
+               //   }
+               //                   }
+               // });
+               
+               $('#drop_eixo')
+                     .on(
+                           'change',
+                           function() {
+                              $('#drop_subeixo').empty();
+                              var eixo = $(this).find(":selected").val();
+                              if (eixo == "Holding") {
+                                 $("#drop_subeixo").append(
+                                       new Option("Project Finance"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Jurídico"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Controladoria"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "Cominicação Estratégica"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Ouvidoria"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Novos Negócios"));
+                                 $("#drop_subeixo").append(
+                                       new Option(
+                                             "Gestão de Contratos"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Técnico"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Engenharia"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "Segurança da Informação"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "GEP - G. Estrat. de Pessoas"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "Governaça Corporativa"));
+                              } else if (eixo == "Obras") {
+                                 $("#drop_subeixo").append(
+                                       new Option(
+                                             "Obras(grande porte)"));
+                              } else if (eixo == "Operacao") {
+                                 $("#drop_subeixo").append(
+                                       new Option(
+                                             "Operação de ETA/ETE"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "Manutenção Operacional"));
+                                 $("#drop_subeixo").append(
+                                       new Option("ADM. Operacional"));
+                              } else if (eixo == "Comercial") {
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "Gestão de Clientes"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "Gestão de Serviços"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "Gestão de Receita"));
+                                 $("#drop_subeixo").append(
+                                       new Option("ADM. Comercial"));
+                              } else if (eixo == "Servicos") {
+                                 $("#drop_subeixo").append(
+                                       new Option("ADM. Serviços"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Facilities"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Manutenção Geral"));
+                              } else if (eixo == "QSMS") {
+                                 $("#drop_subeixo").append(
+                                       new Option("Qualidade"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Segurança"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Meio Ambiente"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Saúde"));
+                              } else if (eixo == "CSC") {
+                                 $("#drop_subeixo").append(
+                                       new Option("Financeiro"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Contabilidade"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Fiscal"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Suprimentos"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "T.I. - Tecnologia de Informação"));
+                                 $("#drop_subeixo").append(
+                                       new Option(
+                                             "D.P. Depto. Pessoal"));
+                                 $("#drop_subeixo")
+                                       .append(
+                                             new Option(
+                                                   "R.H. Recursos Humanos"));
+                                 $("#drop_subeixo").append(
+                                       new Option("Comunicação"));
+                                 $("#drop_subeixo").append(
+                                       new Option("ADM. CSC"));
+                              }
+                           });
+            </script>
+            <script>
+               $('#veic_crtl').on('change', function () {
+               
+               var optionSelected = $("option:selected", this);
+               var valueSelected = this.value;
+                if(valueSelected == 'sim'){
+                    $("#lblmotorista").show();
+                    $("#drop_mot").show();
+               
+               }else{
+                    $("#lblmotorista").hide();
+                    $("#drop_mot").hide();
+                }
+               });
+            </script>
+            <script>
+               function myFunction() {
+                  var diferencaDias = document.getElementById("somadata").value;
+
+                  if (diferencaDias < 7){
+                     //alert("Data Saída menor que 7 dias, necessário preenchimento do Campo Observação");
+                  }
+               
+                  if(diferencaDias < 5){
+                     document.getElementById("valoradiantamento").disabled = true;
+                     document.getElementById("tipomoeda").disabled = true;
+                     document.getElementById("datarec").disabled = true;
+                  }else{
+                     document.getElementById("valoradiantamento").disabled = false;
+                     document.getElementById("tipomoeda").disabled = false;
+                     document.getElementById("datarec").disabled = false;
+                  }
+               
+               }
+               
+            </script>
+            <script language="JavaScript" type="text/javascript">
+               function limite(textarea) {
+                  var max = 40;
+                  if (form.obs.value.length < max) {
+                     //alert("Se Data Saída menor que 7 dias, para encaminhar o formulário será necessário preenchimento de 40 caracteres");
+                     //alert("Se data de saída menor que 7 dias, para encaminhar o formulário será necessário preenchimento de 40 caracteres no campo 'Observação', conforme item 8.2.2 da política de viagens.");
+                     return false;
+                  } else
+                     return true;
+               }
+            </script>
+         </form>
+      </div>
+   </body>
+</html>
